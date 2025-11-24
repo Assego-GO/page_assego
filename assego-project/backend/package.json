@@ -1,0 +1,24 @@
+{
+  "name": "assego-backend",
+  "version": "1.0.0",
+  "description": "API Backend para o site ASSEGO",
+  "main": "src/server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js"
+  },
+  "keywords": ["assego", "api", "nodejs", "express"],
+  "author": "ASSEGO",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "helmet": "^7.1.0",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
+}

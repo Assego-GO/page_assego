@@ -1,0 +1,184 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ========================================
+   ESTILOS GLOBAIS - ASSEGO
+   ======================================== */
+
+/* Reset e base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  @apply font-sans bg-[#050A18] text-gray-100 antialiased overflow-x-hidden;
+  @apply selection:bg-gold-500 selection:text-black;
+}
+
+/* ========================================
+   GLASSMORPHISM
+   ======================================== */
+
+.glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+.glass-nav {
+  background: rgba(5, 10, 24, 0.8);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* ========================================
+   GRADIENTES DE TEXTO
+   ======================================== */
+
+.text-gradient-gold {
+  background: linear-gradient(to right, #FACC15, #EAB308, #CA8A04);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ========================================
+   ANIMAÇÕES DE REVEAL
+   ======================================== */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ========================================
+   BACKGROUND SLIDER
+   ======================================== */
+
+.bg-slide {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 2s ease-in-out;
+  z-index: 0;
+}
+
+.bg-slide.active {
+  opacity: 1;
+  z-index: 1;
+}
+
+/* ========================================
+   EFEITO 3D TILT
+   ======================================== */
+
+.tilt-card {
+  transform-style: preserve-3d;
+  transform: perspective(1000px);
+  transition: transform 0.3s ease-out;
+}
+
+.tilt-card:hover {
+  transform: perspective(1000px) rotateX(var(--rotateX, 0)) rotateY(var(--rotateY, 0)) scale3d(1.02, 1.02, 1.02);
+}
+
+/* ========================================
+   SCROLLBAR CUSTOMIZADA
+   ======================================== */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #050A18;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #4B5563;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #EAB308;
+}
+
+/* ========================================
+   COMPONENTES UTILITÁRIOS
+   ======================================== */
+
+@layer components {
+  /* Botão primário (dourado) */
+  .btn-primary {
+    @apply px-8 py-4 bg-gold-500 text-black font-bold text-lg rounded-full overflow-hidden;
+    @apply shadow-[0_0_30px_rgba(255,223,0,0.3)] hover:shadow-[0_0_50px_rgba(255,223,0,0.5)];
+    @apply transition-all duration-300 relative;
+  }
+
+  .btn-primary::before {
+    content: '';
+    @apply absolute inset-0 w-full h-full bg-white/20 scale-x-0 transition-transform origin-left duration-500;
+  }
+
+  .btn-primary:hover::before {
+    @apply scale-x-100;
+  }
+
+  /* Botão secundário (outline) */
+  .btn-secondary {
+    @apply px-8 py-4 border border-white/20 text-white font-bold text-lg rounded-full;
+    @apply hover:bg-white/10 transition-all backdrop-blur-sm flex items-center gap-2 justify-center;
+  }
+
+  /* Card com efeito glass */
+  .card-glass {
+    @apply bg-white/5 border border-white/10 p-8 rounded-3xl;
+    @apply hover:bg-white/10 transition duration-500 cursor-pointer hover:-translate-y-2;
+  }
+
+  /* Badge/Tag */
+  .badge {
+    @apply inline-flex items-center gap-2 bg-white/5 backdrop-blur-md border border-white/10;
+    @apply rounded-full px-5 py-2 text-xs font-bold tracking-[0.2em] text-gray-300 uppercase;
+  }
+
+  /* Seção padrão */
+  .section {
+    @apply py-32 relative overflow-hidden;
+  }
+
+  /* Container padrão */
+  .container-app {
+    @apply container mx-auto px-6;
+  }
+}
+
+/* ========================================
+   ANIMAÇÕES ESPECIAIS
+   ======================================== */
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(34, 197, 94, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(34, 197, 94, 0.8);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
