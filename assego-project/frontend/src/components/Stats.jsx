@@ -8,7 +8,7 @@ import { useState, useEffect, useRef } from 'react'
 
 // Dados das estatísticas
 const statsData = [
-  { value: 67, suffix: '', label: 'Anos de História' },
+  { value: 69, suffix: '', label: 'Anos de História' },
   { value: 5000, suffix: '+', label: 'Famílias' },
   { value: 24, suffix: 'h', label: 'Jurídico' },
   { value: 100, suffix: '%', label: 'Compromisso' },

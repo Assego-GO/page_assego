@@ -10,12 +10,12 @@ import { WhatsappLogo } from '@phosphor-icons/react'
 function WhatsAppButton() {
   const [isHovered, setIsHovered] = useState(false)
   
-  // Número do WhatsApp (substitua pelo real)
-  const whatsappNumber = '5562999999999'
+  // Número do WhatsApp (ASSEGO oficial)
+  const whatsappNumber = '5562992469099'
   const message = 'Olá! Gostaria de mais informações sobre a ASSEGO.'
   
   // Monta a URL do WhatsApp
-  const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`
+  const whatsappUrl = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodeURIComponent(message)}`
 
   return (
     <a 

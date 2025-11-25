@@ -42,7 +42,7 @@ function Navbar() {
           
           {/* Logo */}
           <a href="#" className="flex items-center gap-4 group">
-            <div className="relative w-35 h-35 md:w-35 md:h-20">
+            <div className="relative w-24 h-24 md:w-32 md:h-30">
               <div className="absolute inset-0 bg-gold-500 rounded-lg blur-lg opacity-30 group-hover:opacity-60 transition duration-500"></div>
               <img 
                 src="/logo.png" 

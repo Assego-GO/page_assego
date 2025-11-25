@@ -4,7 +4,7 @@
  * ========================================
  */
 
-import { InstagramLogo, FacebookLogo } from '@phosphor-icons/react'
+import { InstagramLogo, FacebookLogo, YoutubeLogo } from '@phosphor-icons/react'
 
 function Footer() {
   const currentYear = new Date().getFullYear()
@@ -16,13 +16,12 @@ function Footer() {
           
           {/* Logo e Descrição */}
           <div className="col-span-1 md:col-span-1">
-            <div className="flex items-center justify-center md:justify-start gap-3 mb-6">
+            <div className="flex items-center justify-center md:justify-start gap-4 mb-6">
               <img 
                 src="/logo.png" 
                 alt="ASSEGO" 
-                className="w-12 h-12 rounded-full object-cover shadow-sm" 
+                className="w-20 h-20 object-contain drop-shadow-lg mix-blend-lighten" 
               />
-              <span className="font-display font-bold text-2xl tracking-widest">ASSEGO</span>
             </div>
             <p className="text-gray-500 text-sm leading-relaxed">
               A Associação dos Subtenentes e Sargentos do Estado de Goiás (Assego), 
@@ -76,18 +75,31 @@ function Footer() {
             {/* Redes Sociais */}
             <div className="flex justify-center md:justify-start gap-4 mt-6">
               <a 
-                href="#" 
+                href="https://instagram.com/assego/" 
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-gray-400 hover:text-white transition"
                 aria-label="Instagram"
               >
                 <InstagramLogo size={28} />
               </a>
               <a 
-                href="#" 
+                href="https://pt-br.facebook.com/assego/" 
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-gray-400 hover:text-white transition"
                 aria-label="Facebook"
               >
                 <FacebookLogo size={28} />
+              </a>
+              <a 
+                href="https://www.youtube.com/@assegooficial1707" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-white transition"
+                aria-label="YouTube"
+              >
+                <YoutubeLogo size={28} />
               </a>
             </div>
           </div>

@@ -9,9 +9,10 @@ import { ArrowRight, PlayCircle, CaretDown } from '@phosphor-icons/react'
 
 // Imagens de fundo para o slider
 const backgroundImages = [
-  'https://images.unsplash.com/photo-1551855350-c86caeaf8707?q=80&w=1920&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1535353204385-d35c87c25a9d?q=80&w=1920&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1605218427368-35b012180767?q=80&w=1920&auto=format&fit=crop'
+  '/foto8.JPG',
+  '/foto2.JPG',
+  '/foto3.JPG',
+  
 ]
 
 function Hero() {
@@ -95,11 +96,7 @@ function Hero() {
         </div>
       </div>
 
-      {/* Indicador de scroll */}
-      <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20 flex flex-col items-center animate-bounce opacity-50">
-        <span className="text-[10px] tracking-[0.3em] uppercase mb-2">Explore</span>
-        <CaretDown size={28} />
-      </div>
+     
     </section>
   )
 }
