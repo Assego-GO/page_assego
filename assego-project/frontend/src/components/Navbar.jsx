@@ -7,13 +7,17 @@
  */
 
 import { useState, useEffect } from 'react'
-import { List, X, UserCircle } from '@phosphor-icons/react'
+import { List, X, CaretDown } from '@phosphor-icons/react'
 
 function Navbar() {
   // Estado para controlar menu mobile
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   // Estado para efeito de scroll
   const [isScrolled, setIsScrolled] = useState(false)
+  // Estado para controlar qual dropdown está aberto
+  const [activeDropdown, setActiveDropdown] = useState(null)
+  // Estado para controlar a rádio
+  const [isRadioOpen, setIsRadioOpen] = useState(false)
 
   // Detecta scroll para mudar estilo da navbar
   useEffect(() => {
@@ -25,18 +29,66 @@ function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Links de navegação
-  const navLinks = [
-    { href: '#missao', label: 'MISSÃO' },
-    { href: '#clube', label: 'CLUBE' },
-    { href: '#atividades', label: 'ESPORTES' },
-    { href: '#convenios', label: 'PARCEIROS' },
+  // Abrir player da rádio em popup
+  const openRadioPlayer = () => {
+    // Abre o player em uma janela popup pequena
+    const width = 400
+    const height = 600
+    const left = window.screen.width - width - 20
+    const top = 100
+    
+    window.open(
+      'https://player.hdradios.net/player-app-multi-plataforma/7272?app-multi=1764095784',
+      'RadioAssego',
+      `width=${width},height=${height},left=${left},top=${top},resizable=yes,scrollbars=no,status=no,menubar=no,toolbar=no`
+    )
+    setIsRadioOpen(true)
+  }
+
+  // Estrutura do menu com dropdowns
+  const menuItems = [
+    {
+      label: 'SOBRE',
+      hasDropdown: true,
+      items: [
+        { label: 'Nossa História', href: '#historia' },
+        { label: 'Diretoria', href: '#diretoria' },
+        { label: 'Estrutura Organizacional', href: '#estrutura' },
+        { label: 'Transparência', href: '#transparencia' },
+      ]
+    },
+    {
+      label: 'ASSOCIADO',
+      hasDropdown: true,
+      items: [
+        { label: 'Benefícios', href: '#beneficios' },
+        { label: 'Serviços', href: '#servicos' },
+        { label: 'Parcerias', href: '#convenios' },
+        { label: 'Ouvidoria', href: 'https://ouvidoria.assego.com.br/', external: true },
+      ]
+    },
+    {
+      label: 'CLUBE',
+      hasDropdown: true,
+      items: [
+        { label: 'Sede Goiânia', href: '#clube' },
+        { label: 'Hotel ASSEGO Aruanã', href: '#hotel-aruana' },
+        { label: 'Pousada ASSEGO Aruanã', href: '#pousada-aruana' },
+        { label: 'Esportes', href: '#atividades' },
+        { label: 'Reservas', href: '#reservas' },
+      ]
+    },
+    {
+      label: 'JURÍDICO',
+      href: '#juridico',
+      hasDropdown: false
+    },
   ]
 
   return (
     <header 
-      className={`fixed w-full z-50 transition-all duration-500 glass-nav ${
-        isScrolled ? 'py-2 bg-[#050A18]/95 shadow-2xl' : 'py-4 md:py-6'
+      className={`fixed w-full z-[100] transition-all duration-500 glass-nav ${
+        isScrolled ? 'py-2 bg-[#050A18]/80 shadow-2xl' : 'py-4 md:py-6 bg-[#050A18]/20'
       }`}
     >
       <div className="container mx-auto px-6">
@@ -60,17 +112,88 @@ function Navbar() {
           </a>
 
           {/* Desktop Menu */}
-          <nav className="hidden md:flex items-center space-x-6 lg:space-x-10">
-            {navLinks.map((link) => (
-              <a 
-                key={link.href}
-                href={link.href} 
-                className={`font-medium text-gray-300 hover:text-white transition hover:tracking-widest duration-300 ${
-                  isScrolled ? 'text-xs' : 'text-sm'
+          <nav className="hidden lg:flex items-center space-x-6 xl:space-x-8">
+            
+            {/* Player Rádio Voz - Lado Esquerdo */}
+            <button
+              onClick={openRadioPlayer}
+              className={`flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-gold-500/50 rounded-full transition-all duration-300 group ${
+                isScrolled ? 'px-2 py-1' : 'px-3 py-1.5'
+              }`}
+              title="Ouvir Rádio Voz ASSEGO"
+            >
+              {/* Ícone da Rádio */}
+              <img 
+                src="/iconeradio.png" 
+                alt="Rádio Voz" 
+                className={`object-contain transition-all duration-300 group-hover:scale-110 ${
+                  isScrolled ? 'w-6 h-6' : 'w-8 h-8'
                 }`}
+              />
+              
+              <span className={`text-gray-300 group-hover:text-gold-400 font-medium hidden xl:block transition-colors ${
+                isScrolled ? 'text-[10px]' : 'text-xs'
+              }`}>
+                Rádio Voz
+              </span>
+            </button>
+
+            {menuItems.map((item, index) => (
+              <div 
+                key={index}
+                className="relative group"
+                onMouseEnter={() => item.hasDropdown && setActiveDropdown(index)}
+                onMouseLeave={() => setActiveDropdown(null)}
               >
-                {link.label}
-              </a>
+                {item.hasDropdown ? (
+                  <>
+                    <button 
+                      className={`font-medium text-gray-300 hover:text-white transition duration-300 flex items-center gap-1 ${
+                        isScrolled ? 'text-xs' : 'text-sm'
+                      }`}
+                    >
+                      {item.label}
+                      <CaretDown 
+                        size={14} 
+                        className={`transition-transform duration-300 ${
+                          activeDropdown === index ? 'rotate-180' : ''
+                        }`}
+                      />
+                    </button>
+                    
+                    {/* Dropdown */}
+                    <div className={`absolute top-full left-0 mt-2 w-56 bg-[#0F172A]/80 backdrop-blur-2xl border border-white/20 rounded-xl shadow-2xl overflow-hidden transition-all duration-300 z-[100] ${
+                      activeDropdown === index 
+                        ? 'opacity-100 visible translate-y-0' 
+                        : 'opacity-0 invisible -translate-y-2 pointer-events-none'
+                    }`}>
+                      {item.items.map((subItem, subIndex) => (
+                        <a
+                          key={subIndex}
+                          href={subItem.href}
+                          target={subItem.external ? '_blank' : undefined}
+                          rel={subItem.external ? 'noopener noreferrer' : undefined}
+                          className="block px-5 py-3 text-sm text-gray-200 hover:text-white hover:bg-white/10 transition-all duration-200 border-b border-white/10 last:border-0 font-medium"
+                        >
+                          {subItem.label}
+                          {subItem.external && <span className="ml-1 text-xs">↗</span>}
+                        </a>
+                      ))}
+                    </div>
+                  </>
+                ) : (
+                  <a 
+                    href={item.href}
+                    target={item.external ? '_blank' : undefined}
+                    rel={item.external ? 'noopener noreferrer' : undefined}
+                    className={`font-medium text-gray-300 hover:text-white transition duration-300 ${
+                      isScrolled ? 'text-xs' : 'text-sm'
+                    }`}
+                  >
+                    {item.label}
+                  </a>
+                )}
+              </div>
             ))}
             
             {/* Botão Quero Me Associar */}
@@ -91,7 +214,7 @@ function Navbar() {
           {/* Mobile Menu Button */}
           <button 
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden text-white text-3xl hover:text-gold-400 transition"
+            className="lg:hidden text-white text-3xl hover:text-gold-400 transition"
             aria-label="Menu"
           >
             {isMenuOpen ? <X /> : <List />}
@@ -101,24 +224,80 @@ function Navbar() {
 
       {/* Mobile Menu */}
       <div 
-        className={`md:hidden bg-[#050A18]/95 backdrop-blur-xl border-t border-white/10 absolute w-full z-50 transition-all duration-300 ${
-          isMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
+        className={`lg:hidden bg-[#050A18]/95 backdrop-blur-xl border-t border-white/10 absolute w-full z-[110] transition-all duration-300 ${
+          isMenuOpen ? 'opacity-100 visible max-h-screen' : 'opacity-0 invisible max-h-0'
         }`}
       >
-        <div className="flex flex-col p-8 space-y-6 text-center">
-          {navLinks.map((link) => (
-            <a 
-              key={link.href}
-              href={link.href} 
-              className="text-gray-300 hover:text-gold-400 text-xl font-display font-bold"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              {link.label}
-            </a>
+        <div className="flex flex-col p-6 space-y-4">
+          {/* Player Rádio Mobile */}
+          <button
+            onClick={openRadioPlayer}
+            className="flex items-center justify-center gap-3 bg-white/5 border border-white/10 rounded-full px-4 py-3 mb-2 hover:bg-white/10 transition"
+          >
+            <img 
+              src="/iconeradio.png" 
+              alt="Rádio Voz" 
+              className="w-10 h-10 object-contain"
+            />
+            <div className="flex flex-col text-left">
+              <span className="text-white font-bold text-sm">Rádio Voz ASSEGO</span>
+              <span className="text-gray-400 text-xs">Clique para ouvir ao vivo</span>
+            </div>
+          </button>
+
+          {menuItems.map((item, index) => (
+            <div key={index}>
+              {item.hasDropdown ? (
+                <>
+                  <button
+                    onClick={() => setActiveDropdown(activeDropdown === index ? null : index)}
+                    className="w-full text-left text-gray-300 hover:text-gold-400 text-lg font-display font-bold flex items-center justify-between"
+                  >
+                    {item.label}
+                    <CaretDown 
+                      size={16} 
+                      className={`transition-transform duration-300 ${
+                        activeDropdown === index ? 'rotate-180' : ''
+                      }`}
+                    />
+                  </button>
+                  {/* Submenu Mobile */}
+                  <div className={`ml-4 mt-2 space-y-2 overflow-hidden transition-all duration-300 ${
+                    activeDropdown === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                  }`}>
+                    {item.items.map((subItem, subIndex) => (
+                      <a
+                        key={subIndex}
+                        href={subItem.href}
+                        target={subItem.external ? '_blank' : undefined}
+                        rel={subItem.external ? 'noopener noreferrer' : undefined}
+                        className="block text-gray-400 hover:text-gold-400 text-sm py-2"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        {subItem.label}
+                        {subItem.external && <span className="ml-1 text-xs">↗</span>}
+                      </a>
+                    ))}
+                  </div>
+                </>
+              ) : (
+                <a 
+                  href={item.href}
+                  target={item.external ? '_blank' : undefined}
+                  rel={item.external ? 'noopener noreferrer' : undefined}
+                  className="text-gray-300 hover:text-gold-400 text-lg font-display font-bold"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {item.label}
+                </a>
+              )}
+            </div>
           ))}
+          
           <a 
             href="#filiar" 
-            className="text-black bg-gold-500 hover:bg-gold-600 rounded-full py-3 mt-4 font-bold transition"
+            className="text-black bg-gold-500 hover:bg-gold-600 rounded-full py-3 mt-4 font-bold transition text-center"
+            onClick={() => setIsMenuOpen(false)}
           >
             QUERO ME ASSOCIAR
           </a>

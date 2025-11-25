@@ -12,6 +12,7 @@ const backgroundImages = [
   '/foto8.JPG',
   '/foto2.JPG',
   '/foto3.JPG',
+  '/foto11.jpg',
   
 ]
 
