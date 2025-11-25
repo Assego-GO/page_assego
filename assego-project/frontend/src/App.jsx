@@ -20,7 +20,7 @@ import Destinations from './components/Destinations'
 import Social from './components/Social'
 import CTA from './components/CTA'
 import Footer from './components/Footer'
-import WhatsAppButton from './components/WhatsAppButton'
+import SocialButtons from './components/SocialButtons'
 
 // Hook customizado para animações de scroll
 import useScrollReveal from './hooks/useScrollReveal'
@@ -49,8 +49,8 @@ function App() {
       {/* Rodapé */}
       <Footer />
       
-      {/* Botão flutuante do WhatsApp */}
-      <WhatsAppButton />
+      {/* Botões flutuantes das redes sociais */}
+      <SocialButtons />
     </>
   )
 }
