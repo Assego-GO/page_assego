@@ -92,6 +92,7 @@ function Navbar() {
   ]
 
   return (
+    <>
     <div className="fixed top-0 left-0 w-full z-[100]">
       {/* Navbar Principal com Rádio Integrada */}
       <header 
@@ -163,7 +164,7 @@ function Navbar() {
                       </button>
                       
                       {/* Dropdown */}
-                      <div className={`absolute top-full left-0 pt-2 w-56 transition-all duration-300 z-[100] ${
+                      <div className={`absolute top-full left-0 pt-2 w-56 transition-all duration-300 z-[200] ${
                         activeDropdown === index 
                           ? 'opacity-100 visible translate-y-0' 
                           : 'opacity-0 invisible -translate-y-2 pointer-events-none'
@@ -174,18 +175,18 @@ function Navbar() {
                               <Link
                                 key={subIndex}
                                 to={subItem.href}
-                                className="block px-5 py-3 text-sm text-gray-200 hover:text-white hover:bg-white/10 transition-all duration-200 border-b border-white/10 last:border-0 font-medium"
+                                className="block px-5 py-3 text-sm text-gray-200 hover:text-white hover:bg-[#1e293b] transition-all duration-200 border-b border-white/10 last:border-0 font-medium"
                                 onClick={() => setActiveDropdown(null)}
                               >
                                 {subItem.label}
                               </Link>
                             ) : (
-                              <a
+                            <a
                                 key={subIndex}
                                 href={subItem.href}
                                 target={subItem.external ? '_blank' : undefined}
                                 rel={subItem.external ? 'noopener noreferrer' : undefined}
-                                className="block px-5 py-3 text-sm text-gray-200 hover:text-white hover:bg-white/10 transition-all duration-200 border-b border-white/10 last:border-0 font-medium"
+                                className="block px-5 py-3 text-sm text-gray-200 hover:text-white hover:bg-[#1e293b] transition-all duration-200 border-b border-white/10 last:border-0 font-medium"
                                 onClick={() => setActiveDropdown(null)}
                               >
                                 {subItem.label}
@@ -344,27 +345,28 @@ function Navbar() {
           </div>
         </div>
       </header>
+    </div>
 
-      {/* Ticker de Notícias */}
-      <div className="w-full bg-[#000e72] overflow-hidden">
-        <div className="flex items-center h-8">
-          <div className="animate-marquee whitespace-nowrap flex items-center">
-            <span className="text-white text-sm font-medium mx-8 flex items-center gap-2">
-              <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>
-              Toda Quarta-Feira às 19 horas tem podcast ao vivo da ASSEGO com o presidente Subtenente Sérgio
-            </span>
-            <span className="text-white text-sm font-medium mx-8 flex items-center gap-2">
-              <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>
-              Toda Quarta-Feira às 19 horas tem podcast ao vivo da ASSEGO com o presidente Subtenente Sérgio
-            </span>
-            <span className="text-white text-sm font-medium mx-8 flex items-center gap-2">
-              <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>
-              Toda Quarta-Feira às 19 horas tem podcast ao vivo da ASSEGO com o presidente Subtenente Sérgio
-            </span>
-          </div>
+    {/* Ticker de Notícias - Separado do navbar para ficar atrás do dropdown */}
+    <div className="fixed top-[84px] md:top-[88px] left-0 w-full bg-[#000e72]/60 backdrop-blur-sm overflow-hidden z-[90]">
+      <div className="flex items-center h-8">
+        <div className="animate-marquee whitespace-nowrap flex items-center">
+          <span className="text-white text-sm font-medium mx-8 flex items-center gap-2">
+            <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>
+            Toda Quarta-Feira às 19 horas tem podcast ao vivo da ASSEGO com o presidente Subtenente Sérgio
+          </span>
+          <span className="text-white text-sm font-medium mx-8 flex items-center gap-2">
+            <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>
+            Toda Quarta-Feira às 19 horas tem podcast ao vivo da ASSEGO com o presidente Subtenente Sérgio
+          </span>
+          <span className="text-white text-sm font-medium mx-8 flex items-center gap-2">
+            <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>
+            Toda Quarta-Feira às 19 horas tem podcast ao vivo da ASSEGO com o presidente Subtenente Sérgio
+          </span>
         </div>
       </div>
     </div>
+    </>
   )
 }
 

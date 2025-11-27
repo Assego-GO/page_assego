@@ -16,9 +16,11 @@ import Hero from './components/Hero'
 import Stats from './components/Stats'
 import Partners from './components/Partners'
 import Infrastructure from './components/Infrastructure'
+import JuridicoSection from './components/JuridicoSection'
 import Activities from './components/Activities'
 import Destinations from './components/Destinations'
 import Social from './components/Social'
+import ClubGallery from './components/ClubGallery'
 import CTA from './components/CTA'
 import Footer from './components/Footer'
 import SocialButtons from './components/SocialButtons'
@@ -42,9 +44,11 @@ function HomePage() {
       <Stats />
       <Partners />
       <Infrastructure />
+      <JuridicoSection />
       <Activities />
       <Destinations />
       <Social />
+      <ClubGallery />
       <CTA />
     </main>
   )
