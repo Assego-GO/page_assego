@@ -44,12 +44,6 @@ function Navbar() {
   // Estrutura do menu com dropdowns
   const menuItems = [
     {
-      label: 'INÍCIO',
-      href: '/',
-      hasDropdown: false,
-      isRoute: true
-    },
-    {
       label: 'SOBRE',
       hasDropdown: true,
       items: [
@@ -91,7 +85,6 @@ function Navbar() {
       items: [
         { label: 'ASSEGO WebTV', href: 'https://www.youtube.com/@assegooficial1707', external: true },
         { label: 'Informativo', href: '/informativo', isRoute: true },
-        { label: 'Podcast ASSEGO', href: 'https://www.youtube.com/@assegooficial1707', external: true },
         { label: 'Rádio Voz ASSEGO', href: 'https://player.hdradios.net/player-app-multi-plataforma/7272?app-multi=1764095784', external: true },
       ]
     },
@@ -314,15 +307,15 @@ function Navbar() {
         <div className="animate-marquee whitespace-nowrap flex items-center">
           <span className="text-white text-sm font-medium mx-8 flex items-center gap-2">
             <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>
-            Toda Quarta-Feira às 19 horas tem podcast ao vivo da ASSEGO com o presidente Subtenente Sérgio
+            Às quartas-feiras, às 19 horas, acompanhe no YouTube oficial da ASSEGO o podcast ao vivo com o presidente Subtenente Sérgio.
           </span>
           <span className="text-white text-sm font-medium mx-8 flex items-center gap-2">
             <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>
-            Toda Quarta-Feira às 19 horas tem podcast ao vivo da ASSEGO com o presidente Subtenente Sérgio
+            Às quartas-feiras, às 19 horas, acompanhe no YouTube oficial da ASSEGO o podcast ao vivo com o presidente Subtenente Sérgio.
           </span>
           <span className="text-white text-sm font-medium mx-8 flex items-center gap-2">
             <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>
-            Toda Quarta-Feira às 19 horas tem podcast ao vivo da ASSEGO com o presidente Subtenente Sérgio
+            Às quartas-feiras, às 19 horas, acompanhe no YouTube oficial da ASSEGO o podcast ao vivo com o presidente Subtenente Sérgio.
           </span>
         </div>
       </div>

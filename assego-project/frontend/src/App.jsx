@@ -30,6 +30,7 @@ import Diretoria from './pages/Diretoria'
 import Historia from './pages/Historia'
 import ConselhoFiscal from './pages/ConselhoFiscal'
 import Juridico from './pages/Juridico'
+import Informativo from './pages/Informativo'
 
 // Hook customizado para animações de scroll
 import useScrollReveal from './hooks/useScrollReveal'
@@ -76,6 +77,7 @@ function App() {
           <Route path="/historia" element={<Historia />} />
           <Route path="/conselho-fiscal" element={<ConselhoFiscal />} />
           <Route path="/juridico" element={<Juridico />} />
+          <Route path="/informativo" element={<Informativo />} />
         </Routes>
       </Layout>
     </Router>
