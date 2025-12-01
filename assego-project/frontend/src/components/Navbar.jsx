@@ -3,13 +3,14 @@
  * Navbar - Barra de Navegação Responsiva
  * ========================================
  * 
- * VERSÃO SEM RÁDIO
  * Compacta automaticamente ao fazer scroll
  */
 
 import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { List, X, CaretDown } from '@phosphor-icons/react'
+import RadioPlayer from './RadioPlayer'
+import RadioPlayerMobile from './RadioPlayerMobile'
 
 function Navbar() {
   // Estado para controlar menu mobile
@@ -73,11 +74,10 @@ function Navbar() {
       label: 'CLUBE',
       hasDropdown: true,
       items: [
-        { label: 'Sede Goiânia', href: '#clube' },
-        { label: 'Hotel ASSEGO Aruanã', href: '#hotel-aruana' },
-        { label: 'Pousada ASSEGO Aruanã', href: '#pousada-aruana' },
-        { label: 'Esportes', href: '#atividades' },
-        { label: 'Reservas', href: '#reservas' },
+        { label: 'Parque Aquático', href: '/parque-aquatico', isRoute: true },
+        { label: 'Hotel ASSEGO', href: '/hotel-assego', isRoute: true },
+        { label: 'Pousada Aruanã', href: '/pousada-aruana', isRoute: true },
+        { label: 'Espaço ASSEGO', href: '/espaco-assego', isRoute: true },
       ]
     },
     {
@@ -97,12 +97,38 @@ function Navbar() {
         { label: 'Rádio Voz ASSEGO', href: 'https://player.hdradios.net/player-app-multi-plataforma/7272?app-multi=1764095784', external: true },
       ]
     },
+    {
+      label: 'CONTATO',
+      href: '/contato',
+      hasDropdown: false,
+      isRoute: true
+    },
   ]
 
   return (
     <>
-    <div className="fixed top-0 left-0 w-full z-[100]">
-      {/* Navbar Principal */}
+    {/* Ticker de Notícias - Topo */}
+    <div className="fixed top-0 left-0 w-full bg-[#000e72]/40 backdrop-blur-sm overflow-hidden z-[110]">
+      <div className="flex items-center h-8">
+        <div className="animate-marquee whitespace-nowrap flex items-center">
+          <span className="text-white text-xs font-medium mx-8 flex items-center gap-2">
+            <span className="w-2 h-2 bg-gold-400 rounded-full animate-pulse"></span>
+            Toda Quarta-Feira às 19 horas tem podcast ao vivo da ASSEGO com o presidente Subtenente Sérgio
+          </span>
+          <span className="text-white text-xs font-medium mx-8 flex items-center gap-2">
+            <span className="w-2 h-2 bg-gold-400 rounded-full animate-pulse"></span>
+            Toda Quarta-Feira às 19 horas tem podcast ao vivo da ASSEGO com o presidente Subtenente Sérgio
+          </span>
+          <span className="text-white text-xs font-medium mx-8 flex items-center gap-2">
+            <span className="w-2 h-2 bg-gold-400 rounded-full animate-pulse"></span>
+            Toda Quarta-Feira às 19 horas tem podcast ao vivo da ASSEGO com o presidente Subtenente Sérgio
+          </span>
+        </div>
+      </div>
+    </div>
+
+    {/* Navbar Principal */}
+    <div className="fixed top-8 left-0 w-full z-[100]">
       <header 
         className="w-full transition-all duration-500 glass-nav py-2 bg-[#050A18]/80 shadow-2xl"
       >
@@ -134,7 +160,7 @@ function Navbar() {
                   {item.hasDropdown ? (
                     <>
                       <button 
-                        className="font-medium text-gray-300 hover:text-white transition duration-300 flex items-center gap-1 text-xs h-10"
+                        className="font-semibold text-gray-300 hover:text-white transition duration-300 flex items-center gap-1 text-sm h-10"
                       >
                         {item.label}
                         <CaretDown 
@@ -182,7 +208,7 @@ function Navbar() {
                   ) : item.isRoute ? (
                     <Link 
                       to={item.href}
-                      className="font-medium text-gray-300 hover:text-white transition duration-300 text-xs h-10 flex items-center"
+                      className="font-semibold text-gray-300 hover:text-white transition duration-300 text-sm h-10 flex items-center"
                     >
                       {item.label}
                     </Link>
@@ -191,7 +217,7 @@ function Navbar() {
                       href={item.href}
                       target={item.external ? '_blank' : undefined}
                       rel={item.external ? 'noopener noreferrer' : undefined}
-                      className="font-medium text-gray-300 hover:text-white transition duration-300 text-xs h-10 flex items-center"
+                      className="font-semibold text-gray-300 hover:text-white transition duration-300 text-sm h-10 flex items-center"
                     >
                       {item.label}
                     </a>
@@ -204,10 +230,13 @@ function Navbar() {
                 href="#filiar" 
                 className="group relative overflow-hidden rounded-full bg-gold-500 hover:bg-gold-600 transition-all duration-300 px-4 py-2"
               >
-                <span className="relative font-bold text-black flex items-center gap-2 transition-all duration-300 text-xs">
+                <span className="relative font-bold text-black flex items-center gap-2 transition-all duration-300 text-sm">
                   QUERO ME ASSOCIAR
                 </span>
               </a>
+
+              {/* Player Rádio Voz */}
+              <RadioPlayer />
             </nav>
 
             {/* Mobile: Menu Button */}
@@ -304,29 +333,12 @@ function Navbar() {
             >
               QUERO ME ASSOCIAR
             </a>
+
+            {/* Player Rádio no Menu Mobile */}
+            <RadioPlayerMobile />
           </div>
         </div>
       </header>
-    </div>
-
-    {/* Ticker de Notícias */}
-    <div className="fixed top-[84px] md:top-[88px] left-0 w-full bg-[#000e72]/70 backdrop-blur-sm overflow-hidden z-[90]">
-      <div className="flex items-center h-9">
-        <div className="animate-marquee whitespace-nowrap flex items-center">
-          <span className="text-white text-sm font-medium mx-8 flex items-center gap-2">
-            <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>
-            Toda Quarta-Feira às 19 horas tem podcast ao vivo da ASSEGO com o presidente Subtenente Sérgio
-          </span>
-          <span className="text-white text-sm font-medium mx-8 flex items-center gap-2">
-            <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>
-            Toda Quarta-Feira às 19 horas tem podcast ao vivo da ASSEGO com o presidente Subtenente Sérgio
-          </span>
-          <span className="text-white text-sm font-medium mx-8 flex items-center gap-2">
-            <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>
-            Toda Quarta-Feira às 19 horas tem podcast ao vivo da ASSEGO com o presidente Subtenente Sérgio
-          </span>
-        </div>
-      </div>
     </div>
     </>
   )

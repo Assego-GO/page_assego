@@ -4,21 +4,14 @@
  * ========================================
  */
 
-import { useState, useRef, useEffect } from 'react'
-import { Play, Pause, SpeakerHigh, SpeakerLow, SpeakerNone, Broadcast, Plus, Minus } from '@phosphor-icons/react'
+import { useState, useRef } from 'react'
+import { Play, Pause, Broadcast } from '@phosphor-icons/react'
 
 function RadioPlayer() {
   const [isPlaying, setIsPlaying] = useState(false)
-  const [volume, setVolume] = useState(0.8)
   const audioRef = useRef(null)
 
   const streamUrl = 'https://sv14.hdradios.net:7272/stream'
-
-  useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.volume = volume
-    }
-  }, [volume])
 
   const togglePlay = () => {
     if (audioRef.current) {
@@ -29,59 +22,47 @@ function RadioPlayer() {
         setIsPlaying(false)
       } else {
         audioRef.current.src = streamUrl
+        audioRef.current.volume = 0.8
         audioRef.current.play().catch(e => console.log('Autoplay blocked:', e))
         setIsPlaying(true)
       }
     }
   }
 
-  const increaseVolume = () => {
-    const newVolume = Math.min(1, volume + 0.1)
-    setVolume(newVolume)
-    if (audioRef.current) {
-      audioRef.current.volume = newVolume
-    }
-  }
-
-  const decreaseVolume = () => {
-    const newVolume = Math.max(0, volume - 0.1)
-    setVolume(newVolume)
-    if (audioRef.current) {
-      audioRef.current.volume = newVolume
-    }
-  }
-
-  const getVolumeIcon = () => {
-    if (volume === 0) return <SpeakerNone size={12} weight="fill" />
-    if (volume < 0.5) return <SpeakerLow size={12} weight="fill" />
-    return <SpeakerHigh size={12} weight="fill" />
-  }
-
   return (
-    <div className="hidden md:flex items-center gap-2 bg-black/50 backdrop-blur border border-white/10 rounded-full px-3 py-1.5 flex-shrink-0">
+    <div className={`hidden md:flex items-center gap-3 backdrop-blur-md rounded-full px-4 py-2 flex-shrink-0 transition-all duration-500 ${
+      isPlaying 
+        ? 'bg-gradient-to-r from-gold-500/20 to-gold-600/10 border border-gold-500/30 shadow-[0_0_20px_rgba(255,193,7,0.15)]' 
+        : 'bg-black/40 border border-white/10 hover:border-white/20'
+    }`}>
       {/* Audio Element */}
       <audio ref={audioRef} preload="none" />
 
-      {/* Ícone da Rádio */}
+      {/* Ícone da Rádio com efeito */}
       <div className="relative flex-shrink-0">
+        <div className={`absolute inset-0 rounded-full blur-md transition-opacity duration-500 ${
+          isPlaying ? 'bg-gold-500/40 opacity-100' : 'opacity-0'
+        }`}></div>
         <img 
           src="/iconeradio.png" 
           alt="Rádio Voz" 
-          className="w-7 h-7 object-contain"
+          className={`relative w-8 h-8 object-contain transition-transform duration-300 ${
+            isPlaying ? 'scale-110' : ''
+          }`}
         />
         {isPlaying && (
-          <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-green-500 rounded-full animate-pulse"></span>
+          <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-green-500 rounded-full animate-pulse shadow-[0_0_8px_#22c55e]"></span>
         )}
       </div>
 
       {/* Info */}
-      <div className="hidden lg:flex flex-col leading-none mx-1">
-        <span className="text-white text-[10px] font-bold">Rádio Voz ASSEGO</span>
-        <span className="text-[9px] flex items-center gap-1">
+      <div className="hidden lg:flex flex-col leading-tight">
+        <span className="text-white text-xs font-bold tracking-wide">Rádio Voz ASSEGO</span>
+        <span className="text-[10px] flex items-center gap-1">
           {isPlaying ? (
             <>
-              <Broadcast size={9} className="text-green-400" />
-              <span className="text-green-400">AO VIVO</span>
+              <Broadcast size={10} weight="fill" className="text-green-400 animate-pulse" />
+              <span className="text-green-400 font-medium">AO VIVO</span>
             </>
           ) : (
             <span className="text-gray-400">Clique ▶</span>
@@ -92,51 +73,31 @@ function RadioPlayer() {
       {/* Botão Play/Pause */}
       <button
         onClick={togglePlay}
-        className={`flex items-center justify-center w-8 h-8 rounded-full transition-all duration-300 hover:scale-110 flex-shrink-0 ${
+        className={`relative flex items-center justify-center w-10 h-10 rounded-full transition-all duration-300 hover:scale-110 flex-shrink-0 overflow-hidden ${
           isPlaying 
-            ? 'bg-gold-500 hover:bg-gold-600' 
-            : 'bg-[#000e72] hover:bg-[#001090]'
+            ? 'bg-gradient-to-br from-gold-400 to-gold-600 shadow-[0_0_15px_rgba(255,193,7,0.4)]' 
+            : 'bg-gradient-to-br from-[#000e72] to-[#001090] hover:shadow-[0_0_15px_rgba(0,14,114,0.5)]'
         }`}
         title={isPlaying ? 'Pausar' : 'Ouvir Rádio'}
       >
+        {/* Efeito de brilho interno */}
+        <div className="absolute inset-0 bg-gradient-to-t from-transparent to-white/20 rounded-full"></div>
+        
         {isPlaying ? (
-          <Pause size={14} weight="fill" className="text-black" />
+          <Pause size={18} weight="fill" className="relative text-black" />
         ) : (
-          <Play size={14} weight="fill" className="text-white ml-0.5" />
+          <Play size={18} weight="fill" className="relative text-white ml-0.5" />
         )}
       </button>
 
-      {/* Controles de Volume */}
-      <div className="flex items-center gap-1">
-        <button
-          onClick={decreaseVolume}
-          className="flex items-center justify-center w-6 h-6 text-gray-400 hover:text-white hover:bg-white/10 rounded transition-all"
-          title="Diminuir volume"
-        >
-          <Minus size={12} weight="bold" />
-        </button>
-        
-        <span className="text-gray-300">
-          {getVolumeIcon()}
-        </span>
-
-        <button
-          onClick={increaseVolume}
-          className="flex items-center justify-center w-6 h-6 text-gray-400 hover:text-white hover:bg-white/10 rounded transition-all"
-          title="Aumentar volume"
-        >
-          <Plus size={12} weight="bold" />
-        </button>
-      </div>
-
       {/* Indicador de onda sonora animada */}
       {isPlaying && (
-        <div className="hidden xl:flex items-end gap-0.5 h-4 ml-1">
-          <span className="w-1 bg-gold-400 rounded-full animate-pulse" style={{ height: '40%', animationDelay: '0ms' }}></span>
-          <span className="w-1 bg-gold-400 rounded-full animate-pulse" style={{ height: '80%', animationDelay: '150ms' }}></span>
-          <span className="w-1 bg-gold-400 rounded-full animate-pulse" style={{ height: '50%', animationDelay: '300ms' }}></span>
-          <span className="w-1 bg-gold-400 rounded-full animate-pulse" style={{ height: '90%', animationDelay: '450ms' }}></span>
-          <span className="w-1 bg-gold-400 rounded-full animate-pulse" style={{ height: '60%', animationDelay: '600ms' }}></span>
+        <div className="hidden xl:flex items-end gap-0.5 h-5">
+          <span className="w-1 bg-gradient-to-t from-gold-600 to-gold-400 rounded-full animate-[soundwave_0.5s_ease-in-out_infinite]" style={{ height: '40%' }}></span>
+          <span className="w-1 bg-gradient-to-t from-gold-600 to-gold-400 rounded-full animate-[soundwave_0.5s_ease-in-out_infinite_0.1s]" style={{ height: '80%' }}></span>
+          <span className="w-1 bg-gradient-to-t from-gold-600 to-gold-400 rounded-full animate-[soundwave_0.5s_ease-in-out_infinite_0.2s]" style={{ height: '50%' }}></span>
+          <span className="w-1 bg-gradient-to-t from-gold-600 to-gold-400 rounded-full animate-[soundwave_0.5s_ease-in-out_infinite_0.3s]" style={{ height: '90%' }}></span>
+          <span className="w-1 bg-gradient-to-t from-gold-600 to-gold-400 rounded-full animate-[soundwave_0.5s_ease-in-out_infinite_0.4s]" style={{ height: '60%' }}></span>
         </div>
       )}
     </div>

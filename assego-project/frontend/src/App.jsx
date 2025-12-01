@@ -35,6 +35,10 @@ import Podcast from './pages/Podcast'
 import Beneficios from './pages/Beneficios'
 import Servicos from './pages/Servicos'
 import Parcerias from './pages/Parcerias'
+import ParqueAquatico from './pages/Parqueaquatico.jsx'
+import HotelAssego from './pages/Hotelassego.jsx'
+import PousadaAruana from './pages/Pousadaaruana.jsx'
+import EspacoAssego from './pages/Espacoassego.jsx'
 
 // Hook customizado para animações de scroll
 import useScrollReveal from './hooks/useScrollReveal'
@@ -86,6 +90,10 @@ function App() {
           <Route path="/beneficios" element={<Beneficios />} />
           <Route path="/servicos" element={<Servicos />} />
           <Route path="/parcerias" element={<Parcerias />} />
+          <Route path="/parque-aquatico" element={<ParqueAquatico />} />
+          <Route path="/hotel-assego" element={<HotelAssego />} />
+          <Route path="/pousada-aruana" element={<PousadaAruana />} />
+          <Route path="/espaco-assego" element={<EspacoAssego />} />
         </Routes>
       </Layout>
     </Router>

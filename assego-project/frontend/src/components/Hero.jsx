@@ -9,12 +9,13 @@ import { ArrowRight, PlayCircle, CaretDown } from '@phosphor-icons/react'
 
 // Imagens de fundo para o slider
 const backgroundImages = [
-  '/foto8.JPG',
-  '/foto2.JPG',
-  '/foto3.JPG',
-  '/foto11.jpg',
-  '/foto13.jpg',
-  
+  '/public/foto1.jpg',
+  '/public/foto2.jpg',
+  '/public/foto3.jpg',
+  '/public/foto11.jpg',
+  '/public/foto8.jpg',
+  '/public/foto4.jpg',
+  '/public/foto14.jpg',
 ]
 
 function Hero() {
@@ -54,12 +55,29 @@ function Hero() {
       <div className="container mx-auto px-6 relative z-20 text-center pt-20">
         <div className="max-w-5xl mx-auto reveal active">
           
-          {/* Badge flutuante */}
-          <div className="inline-flex items-center gap-2 bg-white/5 backdrop-blur-md border border-white/10 rounded-full px-5 py-2 mb-8 animate-float">
-            <span className="w-2 h-2 bg-green-500 rounded-full shadow-[0_0_10px_#22c55e]"></span>
-            <span className="text-xs font-bold tracking-[0.2em] text-gray-300 uppercase">
-              Associação Oficial desde 1956
-            </span>
+          {/* Badge flutuante com logos */}
+          <div className="inline-flex items-center gap-4 mb-8 animate-float">
+            {/* Logo Polícia Militar */}
+            <img 
+              src="/logopolicia.png" 
+              alt="Polícia Militar de Goiás" 
+              className="w-12 h-12 md:w-14 md:h-14 object-contain drop-shadow-lg"
+            />
+            
+            {/* Badge central */}
+            <div className="flex items-center gap-2 bg-white/5 backdrop-blur-md border border-white/10 rounded-full px-5 py-2">
+              <span className="w-2 h-2 bg-green-500 rounded-full shadow-[0_0_10px_#22c55e]"></span>
+              <span className="text-xs font-bold tracking-[0.2em] text-gray-300 uppercase">
+                Associação Oficial desde 1956
+              </span>
+            </div>
+            
+            {/* Logo Corpo de Bombeiros */}
+            <img 
+              src="/logobombeiro.png" 
+              alt="Corpo de Bombeiros Militar de Goiás" 
+              className="w-12 h-12 md:w-14 md:h-14 object-contain drop-shadow-lg"
+            />
           </div>
           
           {/* Título principal */}
@@ -98,7 +116,6 @@ function Hero() {
         </div>
       </div>
 
-     
     </section>
   )
 }
