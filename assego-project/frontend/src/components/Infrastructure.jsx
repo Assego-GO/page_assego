@@ -14,7 +14,7 @@ const facilities = [
     id: 1,
     title: 'Parque Aquático',
     subtitle: 'Piscinas aquecidas, toboáguas e área infantil segura.',
-    image: 'https://images.unsplash.com/photo-1575429198097-0414ec08e8cd?q=80&w=800',
+    image: '/public/Infraimagens/foto2.jpg',
     icon: Drop,
     size: 'large' // Ocupa 2 colunas e 2 linhas
   },

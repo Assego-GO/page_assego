@@ -4,14 +4,13 @@
  * ========================================
  * 
  * Compacta automaticamente ao fazer scroll
- * Inclui barra de rádio integrada no topo
  */
 
 import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { List, X, CaretDown } from '@phosphor-icons/react'
-import RadioPlayer from './Radioplayer.jsx'
-import RadioPlayerMobile from './Radioplayermobile.jsx'
+import RadioPlayer from './RadioPlayer'
+import RadioPlayerMobile from './RadioPlayerMobile'
 
 function Navbar() {
   // Estado para controlar menu mobile
@@ -47,6 +46,12 @@ function Navbar() {
   // Estrutura do menu com dropdowns
   const menuItems = [
     {
+      label: 'INÍCIO',
+      href: '/',
+      hasDropdown: false,
+      isRoute: true
+    },
+    {
       label: 'SOBRE',
       hasDropdown: true,
       items: [
@@ -59,9 +64,9 @@ function Navbar() {
       label: 'ASSOCIADO',
       hasDropdown: true,
       items: [
-        { label: 'Benefícios', href: '#beneficios' },
-        { label: 'Serviços', href: '#servicos' },
-        { label: 'Parcerias', href: '#convenios' },
+        { label: 'Benefícios', href: '/beneficios', isRoute: true },
+        { label: 'Serviços', href: '/servicos', isRoute: true },
+        { label: 'Parcerias', href: '/parcerias', isRoute: true },
         { label: 'Ouvidoria', href: 'https://ouvidoria.assego.com.br/', external: true },
       ]
     },
@@ -76,7 +81,6 @@ function Navbar() {
         { label: 'Reservas', href: '#reservas' },
       ]
     },
-
     {
       label: 'JURÍDICO',
       href: '/juridico',
@@ -87,8 +91,10 @@ function Navbar() {
       label: 'COMUNICAÇÃO',
       hasDropdown: true,
       items: [
+        { label: 'Podcast ASSEGO', href: '/podcast', isRoute: true },
         { label: 'ASSEGO WebTV', href: 'https://www.youtube.com/@assegooficial1707', external: true },
-        { label: 'Informativo', href: '#informativo' },
+        { label: 'Revista ASSEGO', href: '/revista', isRoute: true },
+        { label: 'Informativo', href: '/informativo', isRoute: true },
         { label: 'Rádio Voz ASSEGO', href: 'https://player.hdradios.net/player-app-multi-plataforma/7272?app-multi=1764095784', external: true },
       ]
     },
@@ -97,7 +103,7 @@ function Navbar() {
   return (
     <>
     <div className="fixed top-0 left-0 w-full z-[100]">
-      {/* Navbar Principal com Rádio Integrada */}
+      {/* Navbar Principal */}
       <header 
         className="w-full transition-all duration-500 glass-nav py-2 bg-[#050A18]/80 shadow-2xl"
       >
@@ -108,29 +114,28 @@ function Navbar() {
             <Link to="/" className="flex items-center gap-3 md:gap-4 group flex-shrink-0">
               {/* Container da logo - tamanho fixo compacto */}
               <div className="relative w-16 h-16 md:w-20 md:h-20">
-                <div className="absolute inset-0 bg-gold-500 rounded-lg blur-lg opacity-30 group-hover:opacity-60 transition duration-500"></div>
                 <img 
                   src="/logo.png" 
                   alt="ASSEGO" 
-                  className="relative w-full h-full object-contain drop-shadow-2xl group-hover:scale-110 transition duration-300 mix-blend-lighten" 
+                  className="w-full h-full object-contain group-hover:scale-105 transition duration-300" 
                 />
               </div>
             </Link>
 
             {/* Desktop Menu */}
-            <nav className="hidden lg:flex items-center gap-3">
+            <nav className="hidden lg:flex items-center gap-4">
 
               {menuItems.map((item, index) => (
                 <div 
                   key={index}
-                  className="relative"
+                  className="relative flex items-center"
                   onMouseEnter={() => item.hasDropdown && setActiveDropdown(index)}
                   onMouseLeave={() => setActiveDropdown(null)}
                 >
                   {item.hasDropdown ? (
                     <>
                       <button 
-                        className="font-medium text-gray-300 hover:text-white transition duration-300 flex items-center gap-1 text-xs py-2"
+                        className="font-medium text-gray-300 hover:text-white transition duration-300 flex items-center gap-1 text-xs h-10"
                       >
                         {item.label}
                         <CaretDown 
@@ -178,7 +183,7 @@ function Navbar() {
                   ) : item.isRoute ? (
                     <Link 
                       to={item.href}
-                      className="font-medium text-gray-300 hover:text-white transition duration-300 text-xs"
+                      className="font-medium text-gray-300 hover:text-white transition duration-300 text-xs h-10 flex items-center"
                     >
                       {item.label}
                     </Link>
@@ -187,7 +192,7 @@ function Navbar() {
                       href={item.href}
                       target={item.external ? '_blank' : undefined}
                       rel={item.external ? 'noopener noreferrer' : undefined}
-                      className="font-medium text-gray-300 hover:text-white transition duration-300 text-xs"
+                      className="font-medium text-gray-300 hover:text-white transition duration-300 text-xs h-10 flex items-center"
                     >
                       {item.label}
                     </a>
@@ -311,20 +316,20 @@ function Navbar() {
       </header>
     </div>
 
-    {/* Ticker de Notícias - Barra de ponta a ponta igual mobile */}
+    {/* Ticker de Notícias */}
     <div className="fixed top-[84px] md:top-[88px] left-0 w-full bg-[#000e72]/70 backdrop-blur-sm overflow-hidden z-[90]">
-      <div className="flex items-center h-7">
+      <div className="flex items-center h-9">
         <div className="animate-marquee whitespace-nowrap flex items-center">
-          <span className="text-white text-xs font-medium mx-8 flex items-center gap-2">
-            <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></span>
+          <span className="text-white text-sm font-medium mx-8 flex items-center gap-2">
+            <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>
             Toda Quarta-Feira às 19 horas tem podcast ao vivo da ASSEGO com o presidente Subtenente Sérgio
           </span>
-          <span className="text-white text-xs font-medium mx-8 flex items-center gap-2">
-            <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></span>
+          <span className="text-white text-sm font-medium mx-8 flex items-center gap-2">
+            <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>
             Toda Quarta-Feira às 19 horas tem podcast ao vivo da ASSEGO com o presidente Subtenente Sérgio
           </span>
-          <span className="text-white text-xs font-medium mx-8 flex items-center gap-2">
-            <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></span>
+          <span className="text-white text-sm font-medium mx-8 flex items-center gap-2">
+            <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>
             Toda Quarta-Feira às 19 horas tem podcast ao vivo da ASSEGO com o presidente Subtenente Sérgio
           </span>
         </div>

@@ -23,7 +23,7 @@ import Social from './components/Social'
 import ClubGallery from './components/ClubGallery'
 import CTA from './components/CTA'
 import Footer from './components/Footer'
-import SocialButtons from './components/SocialButtons'
+import SocialButtons from './components/Socialbuttons.jsx'
 
 // Páginas
 import Diretoria from './pages/Diretoria'
@@ -31,6 +31,10 @@ import Historia from './pages/Historia'
 import ConselhoFiscal from './pages/ConselhoFiscal'
 import Juridico from './pages/Juridico'
 import Informativo from './pages/Informativo'
+import Podcast from './pages/Podcast'
+import Beneficios from './pages/Beneficios'
+import Servicos from './pages/Servicos'
+import Parcerias from './pages/Parcerias'
 
 // Hook customizado para animações de scroll
 import useScrollReveal from './hooks/useScrollReveal'
@@ -78,6 +82,10 @@ function App() {
           <Route path="/conselho-fiscal" element={<ConselhoFiscal />} />
           <Route path="/juridico" element={<Juridico />} />
           <Route path="/informativo" element={<Informativo />} />
+          <Route path="/podcast" element={<Podcast />} />
+          <Route path="/beneficios" element={<Beneficios />} />
+          <Route path="/servicos" element={<Servicos />} />
+          <Route path="/parcerias" element={<Parcerias />} />
         </Routes>
       </Layout>
     </Router>

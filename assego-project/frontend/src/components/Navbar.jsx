@@ -3,6 +3,7 @@
  * Navbar - Barra de Navegação Responsiva
  * ========================================
  * 
+ * VERSÃO SEM RÁDIO
  * Compacta automaticamente ao fazer scroll
  */
 
@@ -62,9 +63,9 @@ function Navbar() {
       label: 'ASSOCIADO',
       hasDropdown: true,
       items: [
-        { label: 'Benefícios', href: '#beneficios' },
-        { label: 'Serviços', href: '#servicos' },
-        { label: 'Parcerias', href: '#convenios' },
+        { label: 'Benefícios', href: '/beneficios', isRoute: true },
+        { label: 'Serviços', href: '/servicos', isRoute: true },
+        { label: 'Parcerias', href: '/parcerias', isRoute: true },
         { label: 'Ouvidoria', href: 'https://ouvidoria.assego.com.br/', external: true },
       ]
     },
@@ -89,9 +90,10 @@ function Navbar() {
       label: 'COMUNICAÇÃO',
       hasDropdown: true,
       items: [
+        { label: 'Podcast ASSEGO', href: '/podcast', isRoute: true },
         { label: 'ASSEGO WebTV', href: 'https://www.youtube.com/@assegooficial1707', external: true },
+        { label: 'Revista ASSEGO', href: '/revista', isRoute: true },
         { label: 'Informativo', href: '/informativo', isRoute: true },
-        { label: 'Podcast ASSEGO', href: 'https://www.youtube.com/@assegooficial1707', external: true },
         { label: 'Rádio Voz ASSEGO', href: 'https://player.hdradios.net/player-app-multi-plataforma/7272?app-multi=1764095784', external: true },
       ]
     },
@@ -111,11 +113,10 @@ function Navbar() {
             <Link to="/" className="flex items-center gap-3 md:gap-4 group flex-shrink-0">
               {/* Container da logo - tamanho fixo compacto */}
               <div className="relative w-16 h-16 md:w-20 md:h-20">
-                <div className="absolute inset-0 bg-gold-500 rounded-lg blur-lg opacity-30 group-hover:opacity-60 transition duration-500"></div>
                 <img 
                   src="/logo.png" 
                   alt="ASSEGO" 
-                  className="relative w-full h-full object-contain drop-shadow-2xl group-hover:scale-110 transition duration-300 mix-blend-lighten" 
+                  className="w-full h-full object-contain group-hover:scale-105 transition duration-300" 
                 />
               </div>
             </Link>
@@ -126,14 +127,14 @@ function Navbar() {
               {menuItems.map((item, index) => (
                 <div 
                   key={index}
-                  className="relative"
+                  className="relative flex items-center"
                   onMouseEnter={() => item.hasDropdown && setActiveDropdown(index)}
                   onMouseLeave={() => setActiveDropdown(null)}
                 >
                   {item.hasDropdown ? (
                     <>
                       <button 
-                        className="font-medium text-gray-300 hover:text-white transition duration-300 flex items-center gap-1 text-xs py-2"
+                        className="font-medium text-gray-300 hover:text-white transition duration-300 flex items-center gap-1 text-xs h-10"
                       >
                         {item.label}
                         <CaretDown 
@@ -181,7 +182,7 @@ function Navbar() {
                   ) : item.isRoute ? (
                     <Link 
                       to={item.href}
-                      className="font-medium text-gray-300 hover:text-white transition duration-300 text-xs"
+                      className="font-medium text-gray-300 hover:text-white transition duration-300 text-xs h-10 flex items-center"
                     >
                       {item.label}
                     </Link>
@@ -190,7 +191,7 @@ function Navbar() {
                       href={item.href}
                       target={item.external ? '_blank' : undefined}
                       rel={item.external ? 'noopener noreferrer' : undefined}
-                      className="font-medium text-gray-300 hover:text-white transition duration-300 text-xs"
+                      className="font-medium text-gray-300 hover:text-white transition duration-300 text-xs h-10 flex items-center"
                     >
                       {item.label}
                     </a>
