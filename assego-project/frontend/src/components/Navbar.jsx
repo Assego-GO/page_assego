@@ -227,7 +227,9 @@ function Navbar() {
               
               {/* Botão Quero Me Associar */}
               <a 
-                href="#filiar" 
+                href="https://assego.net.br/associe/index.php" 
+                target="_blank"
+                rel="noopener noreferrer"
                 className="group relative overflow-hidden rounded-full bg-gold-500 hover:bg-gold-600 transition-all duration-300 px-4 py-2"
               >
                 <span className="relative font-bold text-black flex items-center gap-2 transition-all duration-300 text-sm">
@@ -327,7 +329,9 @@ function Navbar() {
             ))}
             
             <a 
-              href="#filiar" 
+              href="https://assego.net.br/associe/index.php" 
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-black bg-gold-500 hover:bg-gold-600 rounded-full py-3 mt-4 font-bold transition text-center"
               onClick={() => setIsMenuOpen(false)}
             >

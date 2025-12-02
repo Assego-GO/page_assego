@@ -9,12 +9,11 @@ import { ArrowRight, PlayCircle, CaretDown } from '@phosphor-icons/react'
 
 // Imagens de fundo para o slider
 const backgroundImages = [
-  '/public/foto1.jpg',
+  '/public/foto15.jpg',
   '/public/foto2.jpg',
   '/public/foto3.jpg',
   '/public/foto11.jpg',
-  '/public/foto8.jpg',
-  '/public/foto4.jpg',
+  '/public/foto15.jpg',
   '/public/foto14.jpg',
 ]
 
