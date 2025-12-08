@@ -16,6 +16,7 @@ import Hero from './components/Hero'
 import Stats from './components/Stats'
 import Partners from './components/Partners'
 import Infrastructure from './components/Infrastructure'
+import AppSection from './components/Appsection.jsx'
 import JuridicoSection from './components/JuridicoSection'
 import Activities from './components/Activities'
 import Destinations from './components/Destinations'
@@ -55,6 +56,7 @@ function HomePage() {
       <Stats />
       <Partners />
       <Infrastructure />
+      <AppSection />
       <JuridicoSection />
       <Activities />
       <Destinations />

@@ -68,6 +68,7 @@ function Navbar() {
         { label: 'Serviços', href: '/servicos', isRoute: true },
         { label: 'Parcerias', href: '/parcerias', isRoute: true },
         { label: 'Ouvidoria', href: 'https://ouvidoria.assego.com.br/', external: true },
+        { label: 'Jurídico', href: '/juridico', isRoute: true },
       ]
     },
     {
@@ -79,12 +80,6 @@ function Navbar() {
         { label: 'Pousada Aruanã', href: '/pousada-aruana', isRoute: true },
         { label: 'Espaço ASSEGO', href: '/espaco-assego', isRoute: true },
       ]
-    },
-    {
-      label: 'JURÍDICO',
-      href: '/juridico',
-      hasDropdown: false,
-      isRoute: true
     },
     {
       label: 'COMUNICAÇÃO',
