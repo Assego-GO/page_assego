@@ -165,7 +165,7 @@ function AppSection() {
                   {/* Tela */}
                   <div className="relative w-full h-full bg-black rounded-[1.75rem] overflow-hidden">
                     <img 
-                      src="/app-preview.jpeg" 
+                      src="/app-preview.png" 
                       alt="ASSEGO App Preview"
                       className="w-full h-full object-cover"
                     />

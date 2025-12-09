@@ -1,411 +1,277 @@
 /**
  * ========================================
- * Informativo - Página de Notícias da ASSEGO
+ * Informativo - Página de Notícias
  * ========================================
+ * 
+ * Busca notícias do Supabase e exibe em grid
  */
 
 import { useState, useEffect } from 'react'
-import { Newspaper, Calendar, MagnifyingGlass, CaretLeft, CaretRight, Tag } from '@phosphor-icons/react'
+import { Link } from 'react-router-dom'
+import { Newspaper, Calendar, Tag, ArrowRight, MagnifyingGlass } from '@phosphor-icons/react'
+import { getNoticiasPublicadas, getNoticiasDestaque } from '../lib/Supabase'
 
 function Informativo() {
-  const [searchTerm, setSearchTerm] = useState('')
-  const [selectedCategory, setSelectedCategory] = useState('Todas')
-  const [currentPage, setCurrentPage] = useState(1)
-  const [currentSlide, setCurrentSlide] = useState(0)
+  const [noticias, setNoticias] = useState([])
+  const [destaques, setDestaques] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [categoriaAtiva, setCategoriaAtiva] = useState('Todas')
+  const [busca, setBusca] = useState('')
 
-  // Imagens do carrossel de fundo
-  const backgroundImages = [
-    'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1920&q=80',
-    'https://images.unsplash.com/photo-1586339949916-3e9457bef6d3?w=1920&q=80',
-    'https://images.unsplash.com/photo-1495020689067-958852a7765e?w=1920&q=80',
-  ]
+  // Categorias disponíveis
+  const categorias = ['Todas', 'Institucional', 'Benefícios', 'Jurídico', 'Lazer', 'Comunicação', 'Geral']
 
-  // Trocar slide automaticamente
+  // Buscar notícias ao carregar
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % backgroundImages.length)
-    }, 5000)
-    return () => clearInterval(interval)
+    async function fetchNoticias() {
+      setLoading(true)
+      const [todasNoticias, noticiasDestaque] = await Promise.all([
+        getNoticiasPublicadas(),
+        getNoticiasDestaque()
+      ])
+      setNoticias(todasNoticias)
+      setDestaques(noticiasDestaque)
+      setLoading(false)
+    }
+    fetchNoticias()
   }, [])
 
-  // Categorias de notícias
-  const categorias = ['Todas', 'Institucional', 'Jurídico', 'Eventos', 'Esportes', 'Social']
-
-  // Notícias (mock data - substituir por dados reais)
-  const noticias = [
-    {
-      id: 1,
-      titulo: 'ASSEGO conquista vitória histórica em ação coletiva',
-      resumo: 'O Departamento Jurídico da ASSEGO obteve decisão favorável que beneficia mais de 2.000 associados em ação sobre diferenças salariais.',
-      imagem: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&q=80',
-      data: '25 Nov 2024',
-      categoria: 'Jurídico',
-      destaque: true,
-    },
-    {
-      id: 2,
-      titulo: 'Torneio de Futsal reúne mais de 20 equipes na sede',
-      resumo: 'O campeonato anual de futsal da ASSEGO contou com a participação de policiais e bombeiros militares de todo o estado.',
-      imagem: 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=800&q=80',
-      data: '22 Nov 2024',
-      categoria: 'Esportes',
-      destaque: false,
-    },
-    {
-      id: 3,
-      titulo: 'Projeto Acolher celebra 10 anos de atividades',
-      resumo: 'O projeto social que atende crianças com necessidades especiais completa uma década de dedicação e amor ao próximo.',
-      imagem: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=800&q=80',
-      data: '20 Nov 2024',
-      categoria: 'Social',
-      destaque: true,
-    },
-    {
-      id: 4,
-      titulo: 'Nova diretoria toma posse para o biênio 2024-2026',
-      resumo: 'Em cerimônia solene, a nova diretoria da ASSEGO foi empossada com a presença de autoridades militares e civis.',
-      imagem: 'https://images.unsplash.com/photo-1560439514-4e9645039924?w=800&q=80',
-      data: '15 Nov 2024',
-      categoria: 'Institucional',
-      destaque: false,
-    },
-    {
-      id: 5,
-      titulo: 'Confraternização de fim de ano será em dezembro',
-      resumo: 'A tradicional festa de confraternização dos associados está marcada para o dia 14 de dezembro na sede do clube.',
-      imagem: 'https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=800&q=80',
-      data: '10 Nov 2024',
-      categoria: 'Eventos',
-      destaque: false,
-    },
-    {
-      id: 6,
-      titulo: 'Parceria com novo plano de saúde é firmada',
-      resumo: 'Associados agora contam com mais uma opção de plano de saúde com descontos exclusivos para toda a família.',
-      imagem: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80',
-      data: '05 Nov 2024',
-      categoria: 'Institucional',
-      destaque: false,
-    },
-    {
-      id: 7,
-      titulo: 'Curso de defesa pessoal para dependentes',
-      resumo: 'A ASSEGO oferece curso gratuito de defesa pessoal para filhos e cônjuges de associados aos sábados.',
-      imagem: 'https://images.unsplash.com/photo-1555597673-b21d5c935865?w=800&q=80',
-      data: '01 Nov 2024',
-      categoria: 'Esportes',
-      destaque: false,
-    },
-    {
-      id: 8,
-      titulo: 'Ação judicial garante promoção a 150 sargentos',
-      resumo: 'Mais uma vitória do jurídico: sargentos que estavam há anos aguardando promoção foram beneficiados.',
-      imagem: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&q=80',
-      data: '28 Out 2024',
-      categoria: 'Jurídico',
-      destaque: false,
-    },
-  ]
-
-  // Filtrar notícias
+  // Filtrar notícias por categoria e busca
   const noticiasFiltradas = noticias.filter(noticia => {
-    const matchSearch = noticia.titulo.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                       noticia.resumo.toLowerCase().includes(searchTerm.toLowerCase())
-    const matchCategory = selectedCategory === 'Todas' || noticia.categoria === selectedCategory
-    return matchSearch && matchCategory
+    const matchCategoria = categoriaAtiva === 'Todas' || noticia.categoria === categoriaAtiva
+    const matchBusca = noticia.titulo.toLowerCase().includes(busca.toLowerCase()) ||
+                       noticia.resumo?.toLowerCase().includes(busca.toLowerCase())
+    return matchCategoria && matchBusca
   })
 
-  // Notícias em destaque
-  const noticiasDestaque = noticias.filter(n => n.destaque)
-
-  // Paginação
-  const noticiasPerPage = 6
-  const totalPages = Math.ceil(noticiasFiltradas.length / noticiasPerPage)
-  const noticiasExibidas = noticiasFiltradas.slice(
-    (currentPage - 1) * noticiasPerPage,
-    currentPage * noticiasPerPage
-  )
+  // Formatar data
+  const formatarData = (data) => {
+    return new Date(data).toLocaleDateString('pt-BR', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric'
+    })
+  }
 
   return (
-    <main className="bg-[#050A18] min-h-screen">
+    <div className="min-h-screen bg-[#050A18]">
       
-      {/* Hero Section com Carrossel */}
-      <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
-        {/* Background Slides */}
-        <div className="absolute inset-0">
-          {backgroundImages.map((img, index) => (
-            <div
-              key={index}
-              className={`absolute inset-0 transition-opacity duration-1000 ${
-                index === currentSlide ? 'opacity-100' : 'opacity-0'
-              }`}
-            >
-              <img 
-                src={img} 
-                alt="" 
-                className="w-full h-full object-cover"
-              />
-            </div>
-          ))}
-          {/* Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-b from-[#050A18] via-[#050A18]/70 to-[#050A18]"></div>
-        </div>
+      {/* Hero Section */}
+      <section className="relative pt-32 pb-20 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-[#000e72]/30 to-transparent"></div>
+        <div className="absolute top-20 left-0 w-96 h-96 bg-gold-500/10 rounded-full blur-[150px]"></div>
+        
+        <div className="container mx-auto px-6 relative z-10">
+          {/* Logos */}
+          <div className="flex items-center justify-center gap-6 mb-8">
+            <img src="/logo.png" alt="ASSEGO" className="w-20 h-20 object-contain" />
+            <div className="w-px h-16 bg-white/20"></div>
+            <img src="/logopre.png" alt="Presidente" className="w-16 h-20 object-contain" />
+          </div>
 
-        {/* Conteúdo */}
-        <div className="container mx-auto px-6 relative z-10 pt-32 pb-16">
-          <div className="text-center max-w-4xl mx-auto">
-            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur border border-white/20 rounded-full px-5 py-2 mb-6">
-              <Newspaper size={18} className="text-gold-400" />
-              <span className="text-sm text-gray-300 font-medium">Fique por dentro</span>
-            </div>
-            
-            <h1 className="font-display font-black text-4xl md:text-5xl lg:text-6xl text-white mb-6">
-              Informativo <span className="text-gold-400">ASSEGO</span>
+          <div className="text-center">
+            <span className="inline-flex items-center gap-2 bg-gold-500/10 border border-gold-500/30 text-gold-400 px-4 py-2 rounded-full text-sm font-bold mb-6">
+              <Newspaper size={18} />
+              INFORMATIVO ASSEGO
+            </span>
+            <h1 className="font-display font-black text-4xl md:text-6xl text-white mb-4">
+              Notícias e <span className="text-gradient-gold">Comunicados</span>
             </h1>
-            
-            <p className="text-gray-300 text-lg md:text-xl max-w-2xl mx-auto mb-10">
-              Acompanhe as últimas notícias, conquistas e eventos da nossa associação.
+            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+              Fique por dentro de tudo que acontece na ASSEGO. Novidades, conquistas e informações importantes para você, associado.
             </p>
+          </div>
+        </div>
+      </section>
 
-            {/* Barra de busca */}
-            <div className="relative max-w-xl mx-auto">
-              <MagnifyingGlass size={20} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+      {/* Barra de Busca e Filtros */}
+      <section className="py-8 border-y border-white/10 bg-[#0a0f1c]">
+        <div className="container mx-auto px-6">
+          <div className="flex flex-col md:flex-row gap-6 items-center justify-between">
+            {/* Busca */}
+            <div className="relative w-full md:w-96">
+              <MagnifyingGlass size={20} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" />
               <input
                 type="text"
                 placeholder="Buscar notícias..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full bg-white/10 backdrop-blur border border-white/20 rounded-full py-4 pl-12 pr-6 text-white placeholder-gray-400 focus:outline-none focus:border-gold-500/50 transition"
+                value={busca}
+                onChange={(e) => setBusca(e.target.value)}
+                className="w-full pl-12 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-gold-500/50 transition"
               />
             </div>
-          </div>
-        </div>
 
-        {/* Indicadores do carrossel */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-10">
-          {backgroundImages.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentSlide(index)}
-              className={`w-2 h-2 rounded-full transition-all ${
-                index === currentSlide ? 'bg-gold-500 w-6' : 'bg-white/30'
-              }`}
-            />
-          ))}
+            {/* Categorias */}
+            <div className="flex flex-wrap gap-2 justify-center">
+              {categorias.map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => setCategoriaAtiva(cat)}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                    categoriaAtiva === cat
+                      ? 'bg-gold-500 text-black'
+                      : 'bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white'
+                  }`}
+                >
+                  {cat}
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
       {/* Notícias em Destaque */}
-      <section className="py-16 bg-[#0B1221]">
-        <div className="container mx-auto px-6">
-          <div className="flex items-center gap-3 mb-10">
-            <span className="w-1 h-8 bg-gold-500 rounded-full"></span>
-            <h2 className="text-2xl md:text-3xl font-display font-bold text-white">Destaques</h2>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-6">
-            {noticiasDestaque.map((noticia) => (
-              <article 
-                key={noticia.id}
-                className="group relative h-[350px] md:h-[400px] rounded-3xl overflow-hidden cursor-pointer"
-              >
-                <img 
-                  src={noticia.imagem} 
-                  alt={noticia.titulo}
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
-                
-                <div className="absolute top-6 left-6">
-                  <span className="bg-gold-500 text-black text-xs font-bold px-3 py-1.5 rounded-full">
-                    {noticia.categoria}
-                  </span>
-                </div>
-
-                <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
-                  <div className="flex items-center gap-4 text-gray-300 text-sm mb-3">
-                    <span className="flex items-center gap-1.5">
-                      <Calendar size={14} />
-                      {noticia.data}
-                    </span>
-                  </div>
-                  <h3 className="text-xl md:text-2xl font-bold text-white mb-3 group-hover:text-gold-400 transition">
-                    {noticia.titulo}
-                  </h3>
-                  <p className="text-gray-300 line-clamp-2">{noticia.resumo}</p>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Filtros por Categoria */}
-      <section className="py-8 bg-[#050A18] border-y border-white/10">
-        <div className="container mx-auto px-6">
-          <div className="flex flex-wrap gap-3 justify-center">
-            {categorias.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => {
-                  setSelectedCategory(cat)
-                  setCurrentPage(1)
-                }}
-                className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all ${
-                  selectedCategory === cat
-                    ? 'bg-gold-500 text-black'
-                    : 'bg-white/5 text-gray-300 hover:bg-white/10 border border-white/10'
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Lista de Notícias */}
-      <section className="py-16 bg-[#050A18]">
-        <div className="container mx-auto px-6">
-          <div className="flex items-center gap-3 mb-10">
-            <span className="w-1 h-8 bg-[#000e72] rounded-full"></span>
-            <h2 className="text-2xl md:text-3xl font-display font-bold text-white">
-              {selectedCategory === 'Todas' ? 'Todas as Notícias' : selectedCategory}
+      {destaques.length > 0 && categoriaAtiva === 'Todas' && busca === '' && (
+        <section className="py-16 bg-[#050A18]">
+          <div className="container mx-auto px-6">
+            <h2 className="text-2xl font-display font-bold text-white mb-8 flex items-center gap-3">
+              <span className="w-1 h-8 bg-gold-500 rounded-full"></span>
+              Destaques
             </h2>
-          </div>
 
-          {noticiasExibidas.length > 0 ? (
-            <>
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {noticiasExibidas.map((noticia) => (
-                  <article 
-                    key={noticia.id}
-                    className="group bg-white/5 border border-white/10 rounded-2xl overflow-hidden hover:border-gold-500/30 transition-all duration-300 cursor-pointer hover:-translate-y-1"
-                  >
-                    <div className="relative h-48 overflow-hidden">
-                      <img 
-                        src={noticia.imagem} 
-                        alt={noticia.titulo}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                      />
-                      <div className="absolute top-4 left-4">
-                        <span className="bg-[#000e72] text-white text-xs font-medium px-3 py-1.5 rounded-full flex items-center gap-1">
-                          <Tag size={12} />
-                          {noticia.categoria}
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="p-6">
-                      <div className="flex items-center gap-4 text-gray-400 text-xs mb-3">
-                        <span className="flex items-center gap-1.5">
-                          <Calendar size={12} />
-                          {noticia.data}
-                        </span>
-                      </div>
-                      
-                      <h3 className="text-lg font-bold text-white mb-3 group-hover:text-gold-400 transition line-clamp-2">
+            <div className="grid md:grid-cols-3 gap-6">
+              {destaques.map((noticia, index) => (
+                <Link
+                  key={noticia.id}
+                  to={`/informativo/${noticia.id}`}
+                  className={`group relative overflow-hidden rounded-2xl ${
+                    index === 0 ? 'md:col-span-2 md:row-span-2' : ''
+                  }`}
+                >
+                  <div className={`relative ${index === 0 ? 'h-[400px] md:h-full' : 'h-[200px]'}`}>
+                    <img
+                      src={noticia.imagem_url || '/noticias/placeholder.jpg'}
+                      alt={noticia.titulo}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      onError={(e) => { e.target.src = 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800' }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
+                    
+                    <div className="absolute bottom-0 left-0 right-0 p-6">
+                      <span className="inline-block bg-gold-500 text-black text-xs font-bold px-3 py-1 rounded-full mb-3">
+                        {noticia.categoria}
+                      </span>
+                      <h3 className={`font-display font-bold text-white mb-2 group-hover:text-gold-400 transition ${
+                        index === 0 ? 'text-2xl md:text-3xl' : 'text-lg'
+                      }`}>
                         {noticia.titulo}
                       </h3>
-                      
-                      <p className="text-gray-400 text-sm line-clamp-3 mb-4">
-                        {noticia.resumo}
-                      </p>
-
-                      <span className="text-gold-400 text-sm font-medium flex items-center gap-1 group-hover:gap-2 transition-all">
-                        Ler mais
-                        <CaretRight size={14} />
+                      {index === 0 && (
+                        <p className="text-gray-300 text-sm line-clamp-2">{noticia.resumo}</p>
+                      )}
+                      <span className="text-gray-500 text-xs mt-2 block">
+                        {formatarData(noticia.data_publicacao)}
                       </span>
                     </div>
-                  </article>
-                ))}
-              </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
-              {/* Paginação */}
-              {totalPages > 1 && (
-                <div className="flex items-center justify-center gap-2 mt-12">
-                  <button
-                    onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-                    disabled={currentPage === 1}
-                    className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white disabled:opacity-30 disabled:cursor-not-allowed hover:bg-white/10 transition"
-                  >
-                    <CaretLeft size={18} />
-                  </button>
+      {/* Lista de Notícias */}
+      <section className="py-16 bg-[#0a0f1c]">
+        <div className="container mx-auto px-6">
+          <h2 className="text-2xl font-display font-bold text-white mb-8 flex items-center gap-3">
+            <span className="w-1 h-8 bg-gold-500 rounded-full"></span>
+            {categoriaAtiva === 'Todas' ? 'Todas as Notícias' : categoriaAtiva}
+            <span className="text-gray-500 text-base font-normal">({noticiasFiltradas.length})</span>
+          </h2>
 
-                  {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                    <button
-                      key={page}
-                      onClick={() => setCurrentPage(page)}
-                      className={`w-10 h-10 rounded-full flex items-center justify-center font-medium transition ${
-                        currentPage === page
-                          ? 'bg-gold-500 text-black'
-                          : 'bg-white/5 text-white hover:bg-white/10'
-                      }`}
-                    >
-                      {page}
-                    </button>
-                  ))}
-
-                  <button
-                    onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
-                    disabled={currentPage === totalPages}
-                    className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white disabled:opacity-30 disabled:cursor-not-allowed hover:bg-white/10 transition"
-                  >
-                    <CaretRight size={18} />
-                  </button>
+          {loading ? (
+            // Loading Skeleton
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[...Array(6)].map((_, i) => (
+                <div key={i} className="bg-white/5 rounded-2xl overflow-hidden animate-pulse">
+                  <div className="h-48 bg-white/10"></div>
+                  <div className="p-6 space-y-3">
+                    <div className="h-4 bg-white/10 rounded w-1/4"></div>
+                    <div className="h-6 bg-white/10 rounded w-3/4"></div>
+                    <div className="h-4 bg-white/10 rounded w-full"></div>
+                  </div>
                 </div>
-              )}
-            </>
+              ))}
+            </div>
+          ) : noticiasFiltradas.length === 0 ? (
+            // Nenhuma notícia encontrada
+            <div className="text-center py-20">
+              <Newspaper size={64} className="text-gray-700 mx-auto mb-4" />
+              <h3 className="text-xl font-bold text-white mb-2">Nenhuma notícia encontrada</h3>
+              <p className="text-gray-500">Tente buscar por outro termo ou categoria.</p>
+            </div>
           ) : (
-            <div className="text-center py-16">
-              <Newspaper size={64} className="mx-auto text-gray-600 mb-4" />
-              <p className="text-gray-400 text-lg">Nenhuma notícia encontrada.</p>
-              <button
-                onClick={() => {
-                  setSearchTerm('')
-                  setSelectedCategory('Todas')
-                }}
-                className="mt-4 text-gold-400 hover:underline"
-              >
-                Limpar filtros
-              </button>
+            // Grid de Notícias
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {noticiasFiltradas.map((noticia) => (
+                <Link
+                  key={noticia.id}
+                  to={`/informativo/${noticia.id}`}
+                  className="group bg-white/5 border border-white/10 rounded-2xl overflow-hidden hover:border-gold-500/30 transition-all duration-300 hover:-translate-y-1"
+                >
+                  {/* Imagem */}
+                  <div className="relative h-48 overflow-hidden">
+                    <img
+                      src={noticia.imagem_url || '/noticias/placeholder.jpg'}
+                      alt={noticia.titulo}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      onError={(e) => { e.target.src = 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800' }}
+                    />
+                    <div className="absolute top-4 left-4">
+                      <span className="bg-[#000e72] text-white text-xs font-bold px-3 py-1 rounded-full">
+                        {noticia.categoria}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Conteúdo */}
+                  <div className="p-6">
+                    <div className="flex items-center gap-2 text-gray-500 text-xs mb-3">
+                      <Calendar size={14} />
+                      {formatarData(noticia.data_publicacao)}
+                    </div>
+                    
+                    <h3 className="font-display font-bold text-white text-lg mb-2 group-hover:text-gold-400 transition line-clamp-2">
+                      {noticia.titulo}
+                    </h3>
+                    
+                    <p className="text-gray-400 text-sm line-clamp-2 mb-4">
+                      {noticia.resumo}
+                    </p>
+
+                    <span className="inline-flex items-center gap-2 text-gold-400 text-sm font-medium group-hover:gap-3 transition-all">
+                      Ler mais <ArrowRight size={16} />
+                    </span>
+                  </div>
+                </Link>
+              ))}
             </div>
           )}
         </div>
       </section>
 
-      {/* Newsletter */}
-      <section className="py-20 bg-gradient-to-r from-[#000e72] to-[#001090] relative overflow-hidden">
-        {/* Decoração */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-[100px]"></div>
-        
-        <div className="container mx-auto px-6 relative z-10">
-          <div className="max-w-2xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-white mb-4">
-              Receba nossas novidades
-            </h2>
-            <p className="text-blue-100/80 text-lg mb-8">
-              Cadastre seu e-mail e fique por dentro de todas as notícias e eventos da ASSEGO.
-            </p>
-
-            <form className="flex flex-col sm:flex-row gap-4" onSubmit={(e) => e.preventDefault()}>
-              <input
-                type="email"
-                placeholder="Seu melhor e-mail"
-                className="flex-1 bg-white/10 border border-white/20 rounded-full py-4 px-6 text-white placeholder-blue-200/50 focus:outline-none focus:border-white/40 transition"
-              />
-              <button
-                type="submit"
-                className="bg-gold-500 hover:bg-gold-600 text-black font-bold py-4 px-8 rounded-full transition-all hover:scale-105"
-              >
-                Cadastrar
-              </button>
-            </form>
-          </div>
+      {/* CTA Revista */}
+      <section className="py-16 bg-gradient-to-r from-[#000e72] to-blue-900">
+        <div className="container mx-auto px-6 text-center">
+          <h2 className="font-display font-bold text-2xl md:text-3xl text-white mb-4">
+            Confira também nossa Revista ASSEGO
+          </h2>
+          <p className="text-white/80 mb-8 max-w-xl mx-auto">
+            Edição completa com todas as novidades, conquistas e informações da associação.
+          </p>
+          <a
+            href="/Revista_ASSEGO_2025_web.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 bg-white text-[#000e72] px-8 py-4 rounded-full font-bold hover:bg-gray-100 transition-all hover:scale-105"
+          >
+            <Newspaper size={20} />
+            VER REVISTA DIGITAL
+          </a>
         </div>
       </section>
-
-    </main>
+    </div>
   )
 }
 
