@@ -15,6 +15,7 @@ import { createClient } from '@supabase/supabase-js'
 const supabaseUrl = 'https://ysxjepahskkvzzriuiqa.supabase.co' // Ex: https://xxxxx.supabase.co
 const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlzeGplcGFoc2trdnp6cml1aXFhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUyODU2NDUsImV4cCI6MjA4MDg2MTY0NX0.TrlbkVsotYLxTyf06FCUBvkYs5yUMjffrCEgGODvcog' // Ex: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 
+
 export const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
 /**
@@ -82,6 +83,75 @@ export async function getNoticiasPorCategoria(categoria) {
     return []
   }
   return data
+}
+
+// ========================================
+// UPLOAD DE IMAGENS
+// ========================================
+
+/**
+ * Faz upload de uma imagem para o Supabase Storage
+ * @param {File} file - Arquivo de imagem
+ * @param {string} bucket - Nome do bucket (ex: 'noticias')
+ * @returns {Promise<{url: string, error: any}>}
+ */
+export async function uploadImagem(file, bucket = 'noticias') {
+  try {
+    // Gerar nome único para o arquivo
+    const fileExt = file.name.split('.').pop()
+    const fileName = `${Date.now()}-${Math.random().toString(36).substring(2)}.${fileExt}`
+    const filePath = `${fileName}`
+
+    // Fazer upload
+    const { data, error } = await supabase.storage
+      .from(bucket)
+      .upload(filePath, file, {
+        cacheControl: '3600',
+        upsert: false
+      })
+
+    if (error) {
+      console.error('Erro no upload:', error)
+      return { url: null, error }
+    }
+
+    // Obter URL pública
+    const { data: urlData } = supabase.storage
+      .from(bucket)
+      .getPublicUrl(filePath)
+
+    return { url: urlData.publicUrl, error: null }
+  } catch (err) {
+    console.error('Erro no upload:', err)
+    return { url: null, error: err }
+  }
+}
+
+/**
+ * Deleta uma imagem do Supabase Storage
+ * @param {string} url - URL completa da imagem
+ * @param {string} bucket - Nome do bucket
+ */
+export async function deletarImagem(url, bucket = 'noticias') {
+  try {
+    // Extrair o nome do arquivo da URL
+    const urlParts = url.split('/')
+    const fileName = urlParts[urlParts.length - 1]
+
+    const { error } = await supabase.storage
+      .from(bucket)
+      .remove([fileName])
+
+    if (error) {
+      console.error('Erro ao deletar imagem:', error)
+      return { error }
+    }
+
+    return { success: true }
+  } catch (err) {
+    console.error('Erro ao deletar imagem:', err)
+    return { error: err }
+  }
 }
 
 // ========================================

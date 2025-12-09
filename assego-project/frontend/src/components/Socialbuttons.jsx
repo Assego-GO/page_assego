@@ -3,10 +3,12 @@
  * SocialButtons - Botões Flutuantes Lateral
  * ========================================
  * 
- * Compacta ao fazer scroll, expande ao hover
+ * Na página inicial: expandido no topo, compacta ao scroll, expande ao hover
+ * Nas outras páginas: sempre compactado, expande ao hover
  */
 
 import { useState, useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 import { InstagramLogo, YoutubeLogo } from '@phosphor-icons/react'
 
 // Ícone customizado do WhatsApp (contorno + telefone preenchido)
@@ -24,10 +26,12 @@ const WhatsAppIcon = ({ size = 32 }) => (
 )
 
 function SocialButtons() {
-  const [isExpanded, setIsExpanded] = useState(false)
+  const location = useLocation()
+  const isHomePage = location.pathname === '/'
+  const [isHovered, setIsHovered] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
   
-  // Detecta scroll para compactar
+  // Detecta scroll (só importa na home)
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 200)
@@ -36,7 +40,7 @@ function SocialButtons() {
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
-  
+
   // Redes sociais (WhatsApp primeiro = fica embaixo com flex-col-reverse)
   const socialLinks = [
     {
@@ -69,22 +73,30 @@ function SocialButtons() {
     }
   ]
 
-  // Tamanho dos botões baseado no scroll
-  const buttonSize = isScrolled ? 'w-14 h-14' : 'w-16 h-16'
-  const iconSize = isScrolled ? 32 : 36
-  const gap = isScrolled ? 'gap-2' : 'gap-3'
+  // Lógica de visibilidade:
+  // - Na home: mostra tudo se não scrollou OU se está com hover
+  // - Nas outras páginas: só mostra tudo se está com hover
+  const shouldShowAll = isHomePage 
+    ? (!isScrolled || isHovered)  // Home: expandido no topo, compacta ao scroll, expande ao hover
+    : isHovered                    // Outras páginas: só expande ao hover
+
+  // Tamanho dos botões baseado no estado
+  const isCompact = isHomePage ? isScrolled : true
+  const buttonSize = isCompact && !isHovered ? 'w-14 h-14' : 'w-16 h-16'
+  const iconSize = isCompact && !isHovered ? 32 : 36
+  const gap = isCompact && !isHovered ? 'gap-2' : 'gap-3'
 
   return (
     <div 
       className={`fixed right-6 md:right-8 bottom-4 z-50 flex flex-col-reverse ${gap} transition-all duration-300`}
-      onMouseEnter={() => setIsExpanded(true)}
-      onMouseLeave={() => setIsExpanded(false)}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
       {socialLinks.map((social, index) => {
         const Icon = social.icon
         // WhatsApp é o primeiro (index 0), deve estar sempre visível
         const isWhatsApp = social.id === 'whatsapp'
-        const isVisible = !isScrolled || isExpanded || isWhatsApp
+        const isVisible = shouldShowAll || isWhatsApp
         
         return (
           <div
@@ -108,7 +120,7 @@ function SocialButtons() {
               {/* Tooltip */}
               <span 
                 className={`absolute right-20 top-1/2 -translate-y-1/2 bg-white text-gray-900 text-xs font-bold px-3 py-2 rounded-lg shadow-xl whitespace-nowrap transition-all duration-300 ${
-                  isExpanded ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-2 pointer-events-none'
+                  isHovered ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-2 pointer-events-none'
                 }`}
               >
                 {social.label}

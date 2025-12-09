@@ -1,16 +1,16 @@
 /**
  * ========================================
- * Admin - Painel de Gerenciamento de Notícias
+ * AssegoPanel - Painel de Gerenciamento de Notícias
  * ========================================
  * 
- * Acesse: /admin
+ * Acesse: /assego_panel
  * Requer login com email/senha cadastrado no Supabase
  */
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { 
   SignOut, Plus, Pencil, Trash, Eye, EyeSlash, Star, 
-  Check, X 
+  Check, X, UploadSimple, Image, Spinner 
 } from '@phosphor-icons/react'
 import { 
   supabase, 
@@ -19,16 +19,21 @@ import {
   logoutAdmin,
   criarNoticia,
   atualizarNoticia,
-  deletarNoticia
-} from '../lib/Supabase'
+  deletarNoticia,
+  uploadImagem
+} from '../lib/Supabase.js'
 
-function Admin() {
+function AssegoPanel() {
   const [session, setSession] = useState(null)
   const [loading, setLoading] = useState(true)
   const [noticias, setNoticias] = useState([])
   const [modalAberto, setModalAberto] = useState(false)
   const [noticiaEditando, setNoticiaEditando] = useState(null)
   const [salvando, setSalvando] = useState(false)
+  const [uploading, setUploading] = useState(false)
+
+  // Ref para o input de arquivo
+  const fileInputRef = useRef(null)
 
   // Form de login
   const [email, setEmail] = useState('')
@@ -45,6 +50,9 @@ function Admin() {
     destaque: false,
     publicado: true
   })
+
+  // Preview da imagem
+  const [imagemPreview, setImagemPreview] = useState('')
 
   const categorias = ['Geral', 'Institucional', 'Benefícios', 'Jurídico', 'Lazer', 'Comunicação']
 
@@ -103,6 +111,7 @@ function Admin() {
       destaque: false,
       publicado: true
     })
+    setImagemPreview('')
     setModalAberto(true)
   }
 
@@ -117,7 +126,61 @@ function Admin() {
       destaque: noticia.destaque || false,
       publicado: noticia.publicado
     })
+    setImagemPreview(noticia.imagem_url || '')
     setModalAberto(true)
+  }
+
+  // Função para fazer upload da imagem
+  async function handleUploadImagem(e) {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    // Validar tipo de arquivo
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif']
+    if (!allowedTypes.includes(file.type)) {
+      alert('Tipo de arquivo não permitido. Use JPG, PNG, WebP ou GIF.')
+      return
+    }
+
+    // Validar tamanho (máx 5MB)
+    const maxSize = 5 * 1024 * 1024 // 5MB
+    if (file.size > maxSize) {
+      alert('Arquivo muito grande. Máximo 5MB.')
+      return
+    }
+
+    setUploading(true)
+
+    // Mostrar preview local enquanto faz upload
+    const localPreview = URL.createObjectURL(file)
+    setImagemPreview(localPreview)
+
+    // Fazer upload para o Supabase
+    const { url, error } = await uploadImagem(file, 'noticias')
+
+    if (error) {
+      alert('Erro ao fazer upload da imagem. Verifique se o bucket está configurado corretamente.')
+      setImagemPreview(formNoticia.imagem_url)
+      setUploading(false)
+      return
+    }
+
+    // Atualizar formulário com a URL do Supabase
+    setFormNoticia({ ...formNoticia, imagem_url: url })
+    setImagemPreview(url)
+    setUploading(false)
+
+    // Limpar o preview local
+    URL.revokeObjectURL(localPreview)
+  }
+
+  // Remover imagem
+  function removerImagem() {
+    setFormNoticia({ ...formNoticia, imagem_url: '' })
+    setImagemPreview('')
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ''
+    }
   }
 
   async function handleSalvar() {
@@ -179,11 +242,11 @@ function Admin() {
   // Tela de Login
   if (!session) {
     return (
-      <div className="min-h-screen bg-[#050A18] flex items-center justify-center p-6">
+      <div className="min-h-screen bg-[#050A18] flex items-center justify-center p-6 pt-40">
         <div className="w-full max-w-md">
           <div className="text-center mb-8">
             <img src="/logo.png" alt="ASSEGO" className="w-20 h-20 mx-auto mb-4" />
-            <h1 className="text-2xl font-bold text-white">Painel Admin</h1>
+            <h1 className="text-2xl font-bold text-white">Painel ASSEGO</h1>
             <p className="text-gray-500">Faça login para gerenciar as notícias</p>
           </div>
 
@@ -230,7 +293,7 @@ function Admin() {
 
   // Painel Admin
   return (
-    <div className="min-h-screen bg-[#050A18] pt-24 pb-12">
+    <div className="min-h-screen bg-[#050A18] pt-36 pb-12">
       <div className="container mx-auto px-6">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
@@ -273,12 +336,16 @@ function Admin() {
                   <tr key={noticia.id} className="hover:bg-white/5 transition">
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-4">
-                        {noticia.imagem_url && (
+                        {noticia.imagem_url ? (
                           <img
                             src={noticia.imagem_url}
                             alt=""
                             className="w-12 h-12 object-cover rounded-lg hidden sm:block"
                           />
+                        ) : (
+                          <div className="w-12 h-12 bg-white/10 rounded-lg hidden sm:flex items-center justify-center">
+                            <Image size={20} className="text-gray-500" />
+                          </div>
                         )}
                         <div>
                           <p className="text-white font-medium line-clamp-1">{noticia.titulo}</p>
@@ -365,6 +432,100 @@ function Admin() {
 
             {/* Form */}
             <div className="p-6 space-y-5">
+              {/* Upload de Imagem */}
+              <div>
+                <label className="block text-gray-400 text-sm mb-2">Imagem da Notícia</label>
+                
+                {/* Área de Upload/Preview */}
+                <div className="relative">
+                  {imagemPreview ? (
+                    // Preview da imagem
+                    <div className="relative rounded-xl overflow-hidden">
+                      <img
+                        src={imagemPreview}
+                        alt="Preview"
+                        className="w-full h-48 object-cover"
+                      />
+                      <div className="absolute inset-0 bg-black/50 opacity-0 hover:opacity-100 transition flex items-center justify-center gap-3">
+                        <button
+                          type="button"
+                          onClick={() => fileInputRef.current?.click()}
+                          className="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition"
+                        >
+                          <UploadSimple size={18} />
+                          Trocar
+                        </button>
+                        <button
+                          type="button"
+                          onClick={removerImagem}
+                          className="bg-red-500/20 hover:bg-red-500/30 text-red-400 px-4 py-2 rounded-lg flex items-center gap-2 transition"
+                        >
+                          <Trash size={18} />
+                          Remover
+                        </button>
+                      </div>
+                      {uploading && (
+                        <div className="absolute inset-0 bg-black/70 flex items-center justify-center">
+                          <div className="flex items-center gap-2 text-white">
+                            <Spinner size={24} className="animate-spin" />
+                            Enviando...
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    // Área de upload vazia
+                    <button
+                      type="button"
+                      onClick={() => fileInputRef.current?.click()}
+                      disabled={uploading}
+                      className="w-full h-48 border-2 border-dashed border-white/20 rounded-xl hover:border-gold-500/50 transition flex flex-col items-center justify-center gap-3 bg-white/5"
+                    >
+                      {uploading ? (
+                        <>
+                          <Spinner size={32} className="text-gold-500 animate-spin" />
+                          <span className="text-gray-400">Enviando imagem...</span>
+                        </>
+                      ) : (
+                        <>
+                          <UploadSimple size={32} className="text-gray-500" />
+                          <span className="text-gray-400">Clique para selecionar uma imagem</span>
+                          <span className="text-gray-600 text-xs">JPG, PNG, WebP ou GIF (máx. 5MB)</span>
+                        </>
+                      )}
+                    </button>
+                  )}
+
+                  {/* Input de arquivo oculto */}
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/jpeg,image/png,image/webp,image/gif"
+                    onChange={handleUploadImagem}
+                    className="hidden"
+                  />
+                </div>
+
+                {/* Ou inserir URL manualmente */}
+                <div className="mt-3">
+                  <div className="flex items-center gap-2 text-gray-500 text-xs mb-2">
+                    <div className="flex-1 h-px bg-white/10"></div>
+                    <span>ou insira a URL da imagem</span>
+                    <div className="flex-1 h-px bg-white/10"></div>
+                  </div>
+                  <input
+                    type="text"
+                    value={formNoticia.imagem_url}
+                    onChange={(e) => {
+                      setFormNoticia({...formNoticia, imagem_url: e.target.value})
+                      setImagemPreview(e.target.value)
+                    }}
+                    className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white text-sm focus:outline-none focus:border-gold-500"
+                    placeholder="https://exemplo.com/imagem.jpg"
+                  />
+                </div>
+              </div>
+
               {/* Título */}
               <div>
                 <label className="block text-gray-400 text-sm mb-2">Título *</label>
@@ -396,18 +557,6 @@ function Admin() {
                   onChange={(e) => setFormNoticia({...formNoticia, conteudo: e.target.value})}
                   className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:border-gold-500 h-48 resize-none"
                   placeholder="Texto completo da notícia"
-                />
-              </div>
-
-              {/* URL da Imagem */}
-              <div>
-                <label className="block text-gray-400 text-sm mb-2">URL da Imagem</label>
-                <input
-                  type="text"
-                  value={formNoticia.imagem_url}
-                  onChange={(e) => setFormNoticia({...formNoticia, imagem_url: e.target.value})}
-                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:border-gold-500"
-                  placeholder="/noticias/imagem.jpg ou URL externa"
                 />
               </div>
 
@@ -459,7 +608,7 @@ function Admin() {
               </button>
               <button
                 onClick={handleSalvar}
-                disabled={salvando}
+                disabled={salvando || uploading}
                 className="flex items-center gap-2 bg-gold-500 hover:bg-gold-600 disabled:opacity-50 text-black font-bold px-6 py-3 rounded-xl transition"
               >
                 {salvando ? (
@@ -477,4 +626,4 @@ function Admin() {
   )
 }
 
-export default Admin
+export default AssegoPanel

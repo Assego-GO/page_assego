@@ -34,7 +34,7 @@ import ConselhoFiscal from './pages/ConselhoFiscal'
 import Juridico from './pages/Juridico'
 import Informativo from './pages/Informativo'
 import NoticiaDetalhe from './pages/Noticiadetalhe.jsx'
-import Admin from './pages/Admin'
+import AssegoPanel from './pages/AssegoPanel'
 import Podcast from './pages/Podcast'
 import Beneficios from './pages/Beneficios'
 import Servicos from './pages/Servicos'
@@ -94,7 +94,7 @@ function App() {
           <Route path="/juridico" element={<Juridico />} />
           <Route path="/informativo" element={<Informativo />} />
           <Route path="/informativo/:id" element={<NoticiaDetalhe />} />
-          <Route path="/admin" element={<Admin />} />
+          <Route path="/assego_panel" element={<AssegoPanel />} />
           <Route path="/podcast" element={<Podcast />} />
           <Route path="/beneficios" element={<Beneficios />} />
           <Route path="/servicos" element={<Servicos />} />
