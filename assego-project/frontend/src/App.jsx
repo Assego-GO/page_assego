@@ -23,6 +23,7 @@ import Destinations from './components/Destinations'
 import Social from './components/Social'
 import ClubGallery from './components/ClubGallery'
 import CTA from './components/CTA'
+import InstagramFeed from './components/InstagramFeed'
 import Footer from './components/Footer'
 import SocialButtons from './components/SocialButtons'
 import ScrollToTop from './components/ScrollToTop'
@@ -36,9 +37,8 @@ import Informativo from './pages/Informativo'
 import NoticiaDetalhe from './pages/Noticiadetalhe.jsx'
 import AssegoPanel from './pages/AssegoPanel'
 import Podcast from './pages/Podcast'
-import Beneficios from './pages/Beneficios'
+import Vantagens from './pages/Vantagens.jsx'
 import Servicos from './pages/Servicos'
-import Parcerias from './pages/Parcerias'
 import ParqueAquatico from './pages/ParqueAquatico'
 import HotelAssego from './pages/HotelAssego'
 import PousadaAruana from './pages/PousadaAruana'
@@ -65,6 +65,7 @@ function HomePage() {
       <Social />
       <ClubGallery />
       <CTA />
+      <InstagramFeed />
     </main>
   )
 }
@@ -96,9 +97,8 @@ function App() {
           <Route path="/informativo/:id" element={<NoticiaDetalhe />} />
           <Route path="/assego_panel" element={<AssegoPanel />} />
           <Route path="/podcast" element={<Podcast />} />
-          <Route path="/beneficios" element={<Beneficios />} />
+          <Route path="/vantagens" element={<Vantagens />} />
           <Route path="/servicos" element={<Servicos />} />
-          <Route path="/parcerias" element={<Parcerias />} />
           <Route path="/parque-aquatico" element={<ParqueAquatico />} />
           <Route path="/hotel-assego" element={<HotelAssego />} />
           <Route path="/pousada-aruana" element={<PousadaAruana />} />

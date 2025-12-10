@@ -5,13 +5,16 @@
  */
 
 import { useState, useEffect } from 'react'
-import { Scales, Shield, Users, Gavel, MapPin, Phone, Clock, CheckCircle, TrendUp, CaretDown } from '@phosphor-icons/react'
+import { Scales, Shield, Users, Gavel, MapPin, Phone, Clock, CheckCircle, TrendUp, CaretDown, Buildings, WhatsappLogo, ArrowRight } from '@phosphor-icons/react'
+import MapaGoias from '../components/MapaGoias'
 
 function Juridico() {
   // Estado para controlar o slide atual do carrossel
   const [currentSlide, setCurrentSlide] = useState(0)
   // Estado para expandir/recolher equipe
   const [showEquipe, setShowEquipe] = useState(false)
+  // Estado para FAQ
+  const [faqAberto, setFaqAberto] = useState(null)
   
   // Imagens do carrossel de fundo
   const backgroundImages = [
@@ -53,16 +56,20 @@ function Juridico() {
     { numero: '23', label: 'Ações Coletivas', icon: TrendUp },
   ]
 
-  // Áreas de atuação
-  const areasAtuacao = [
-    'Diferenças Salariais',
-    'Promoções de Praças e Oficiais',
-    'Proteção de Direitos',
-    'Garantia de Justiça',
-    'Ações Coletivas',
-    'Ações Individuais',
-    'Esfera Administrativa',
-    'Esfera Judicial',
+  // Perguntas Frequentes
+  const faqData = [
+    {
+      pergunta: 'Como faço para me associar?',
+      resposta: 'Para associar, se faz necessário o preenchimento do formulário o qual se encontra em nosso site ou ir de encontro com algum diretor ou na sede da ASSEGO e solicitar a ficha de filiação.'
+    },
+    {
+      pergunta: 'Qual o valor mensal? Qual a forma de pagamento?',
+      resposta: 'O valor do Clube Social é R$ 133,98. Caso houver interesse em incluir os serviços jurídicos será incluído uma taxa de R$ 33,49. O pagamento é feito no contracheque ou em conta.'
+    },
+    {
+      pergunta: 'Posso aderir somente os serviços jurídicos?',
+      resposta: 'Não, somente é possível contratar o clube social e incluir os serviços jurídicos.'
+    }
   ]
 
   return (
@@ -94,9 +101,9 @@ function Juridico() {
           {/* Logos */}
           <div className="flex items-center justify-center gap-6 mb-8">
             <img 
-              src="/logo.png" 
-              alt="ASSEGO" 
-              className="w-20 h-20 md:w-28 md:h-28 object-contain drop-shadow-2xl"
+              src="/logojuridico.png" 
+              alt="Logo Juridico" 
+              className="w-16 h-16 md:w-24 md:h-24 object-contain drop-shadow-2xl"
             />
             <div className="w-px h-16 md:h-20 bg-white/20"></div>
             <img 
@@ -216,136 +223,161 @@ function Juridico() {
         </div>
       </section>
 
-      {/* Atendimento Completo */}
+      {/* SEÇÃO: Escritórios pelo Goiás com MAPA GEOJSON */}
       <section className="py-20 bg-[#050A18]">
         <div className="container mx-auto px-6">
-          <div className="text-center mb-16">
-            <span className="text-blue-400 font-bold tracking-widest text-xs uppercase">Cobertura</span>
-            <h2 className="font-display font-bold text-3xl md:text-4xl text-white mt-2">
-              Assistência Jurídica Completa
+          <div className="text-center mb-12">
+            <span className="inline-flex items-center gap-2 bg-[#000e72]/50 text-blue-300 px-4 py-2 rounded-full text-sm font-bold mb-4">
+              <Buildings size={18} />
+              PRESENÇA ESTADUAL
+            </span>
+            <h2 className="font-display font-bold text-3xl md:text-4xl text-white mb-4">
+              Escritórios por Todo o <span className="text-blue-400">Estado de Goiás</span>
             </h2>
-          </div>
-
-          <div className="max-w-4xl mx-auto">
-            <div className="bg-white/5 backdrop-blur border border-white/10 rounded-3xl p-8 md:p-12">
-              <p className="text-gray-300 text-lg leading-relaxed mb-8">
-                Atualmente, <strong className="text-white">mais de 7 mil associados</strong> recebem assistência jurídica completa, abrangendo tanto a esfera administrativa quanto a judicial. Para isso, a ASSEGO investiu na ampliação e qualificação de sua equipe, formada por advogados, estagiários, assistentes, peritos e contadores, oferecendo <span className="text-blue-400">atendimento presencial, virtual e online</span>, garantindo proximidade e agilidade na solução das demandas.
-              </p>
-              
-              <p className="text-gray-300 text-lg leading-relaxed mb-8">
-                A cobertura se estende não apenas aos policiais e bombeiros militares da ativa, veteranos e pensionistas, mas também aos seus <strong className="text-white">dependentes legais</strong>. A equipe atua em todas as áreas do Direito, exceto trabalhista e empresarial, garantindo uma defesa especializada e eficiente.
-              </p>
-
-              {/* Áreas de Atuação */}
-              <h3 className="text-white font-bold text-xl mb-6 text-center">Áreas de Atuação</h3>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {areasAtuacao.map((area, index) => (
-                  <div key={index} className="flex items-center gap-2 bg-white/5 rounded-xl p-3">
-                    <CheckCircle size={20} className="text-green-500 flex-shrink-0" />
-                    <span className="text-gray-300 text-sm">{area}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Estrutura */}
-      <section className="py-20 bg-[#0a0f1c]">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-16">
-            <span className="text-blue-400 font-bold tracking-widest text-xs uppercase">Estrutura</span>
-            <h2 className="font-display font-bold text-3xl md:text-4xl text-white mt-2">
-              Modelo de Eficiência e Organização
-            </h2>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            {/* Card Capital */}
-            <div className="bg-gradient-to-br from-[#000e72]/30 to-blue-900/20 border border-[#000e72]/50 rounded-2xl p-8 text-center hover:scale-105 transition-transform">
-              <div className="w-16 h-16 bg-[#000e72] rounded-2xl flex items-center justify-center mx-auto mb-6">
-                <MapPin size={32} className="text-white" />
-              </div>
-              <h3 className="text-white font-bold text-xl mb-3">Capital</h3>
-              <p className="text-gray-400">
-                Sede principal em Goiânia com estrutura completa de atendimento
-              </p>
-            </div>
-
-            {/* Card Regionais */}
-            <div className="bg-gradient-to-br from-[#000e72]/30 to-blue-900/20 border border-[#000e72]/50 rounded-2xl p-8 text-center hover:scale-105 transition-transform">
-              <div className="w-16 h-16 bg-[#000e72] rounded-2xl flex items-center justify-center mx-auto mb-6">
-                <Users size={32} className="text-white" />
-              </div>
-              <h3 className="text-white font-bold text-xl mb-3">15 Regionais</h3>
-              <p className="text-gray-400">
-                Distribuídas no interior de Goiás para atender todos os associados
-              </p>
-            </div>
-
-            {/* Card Advogados */}
-            <div className="bg-gradient-to-br from-[#000e72]/30 to-blue-900/20 border border-[#000e72]/50 rounded-2xl p-8 text-center hover:scale-105 transition-transform">
-              <div className="w-16 h-16 bg-[#000e72] rounded-2xl flex items-center justify-center mx-auto mb-6">
-                <Gavel size={32} className="text-white" />
-              </div>
-              <h3 className="text-white font-bold text-xl mb-3">45 Advogados</h3>
-              <p className="text-gray-400">
-                Equipe especializada e qualificada em diversas áreas do direito
-              </p>
-            </div>
-          </div>
-
-          <div className="text-center mt-12">
-            <p className="text-gray-400 max-w-3xl mx-auto">
-              Composto por 45 advogados, distribuídos entre a Capital e 15 regionais no interior de Goiás, o Departamento Jurídico da ASSEGO tornou-se <strong className="text-white">modelo de eficiência e organização</strong>. Sua estrutura robusta tem atraído entidades representativas de outros estados, que visitam regularmente a associação em busca de inspiração e intercâmbio de experiências.
+            <p className="text-gray-400 max-w-2xl mx-auto">
+              Nossa rede de atendimento jurídico cobre todo o estado, garantindo que você tenha 
+              suporte especializado onde quer que esteja.
             </p>
           </div>
-        </div>
-      </section>
 
-      {/* Coordenação */}
-      <section className="py-20 bg-[#050A18]">
-        <div className="container mx-auto px-6">
-          <div className="max-w-4xl mx-auto">
-            <div className="grid md:grid-cols-2 gap-12 items-center">
-              {/* Foto do Coordenador */}
-              <div className="relative">
-                <div className="absolute -inset-4 bg-gradient-to-br from-[#000e72]/30 to-blue-900/20 rounded-3xl blur-2xl"></div>
-                <div className="relative">
-                  <img 
-                    src="/diretoria/claudio.jpg"
-                    alt="Tenente Cláudio - Coordenador Jurídico"
-                    className="w-full max-w-sm mx-auto rounded-2xl shadow-2xl border-4 border-[#000e72]/30"
-                    onError={(e) => {
-                      e.target.src = `https://ui-avatars.com/api/?name=Ten+Claudio&background=000e72&color=fff&size=400`
-                    }}
-                  />
-                  <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#000e72] to-blue-700 text-white px-6 py-3 rounded-full shadow-xl">
-                    <p className="font-bold text-sm">TENENTE CLÁUDIO</p>
-                    <p className="text-xs text-center opacity-80">Coordenador Jurídico</p>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Mapa GeoJSON */}
+            <div className="order-2 lg:order-1">
+              <MapaGoias />
+            </div>
+
+            {/* Informações */}
+            <div className="space-y-6 order-1 lg:order-2">
+              <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <MapPin size={24} className="text-blue-400" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-bold text-white mb-2">Cobertura Completa</h3>
+                    <p className="text-gray-400 text-sm">
+                      Mais de 15 pontos de atendimento estrategicamente localizados em todas as regiões do estado.
+                    </p>
                   </div>
                 </div>
               </div>
 
-              {/* Citação */}
-              <div className="mt-8 md:mt-0">
-                <div className="bg-white/5 backdrop-blur border border-white/10 rounded-2xl p-8">
-                  <blockquote className="text-xl text-white font-light italic leading-relaxed mb-6">
-                    "Defender seu direito, nossa missão."
-                  </blockquote>
-                  <p className="text-gray-300">
-                    Sob a coordenação do <strong className="text-white">Tenente Cláudio</strong>, o Departamento Jurídico reafirma diariamente seu compromisso com a defesa dos direitos de todos os associados e suas famílias.
-                  </p>
+              <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <Clock size={24} className="text-blue-400" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-bold text-white mb-2">Atendimento Ágil</h3>
+                    <p className="text-gray-400 text-sm">
+                      Advogados de plantão prontos para atender você em qualquer emergência, 24 horas por dia.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <Users size={24} className="text-blue-400" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-bold text-white mb-2">Equipe Especializada</h3>
+                    <p className="text-gray-400 text-sm">
+                      Advogados com experiência em direito militar e administrativo em cada escritório regional.
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* SEÇÃO: Consultar Processo */}
+      <section className="py-16 bg-gradient-to-r from-green-600 to-green-700">
+        <div className="container mx-auto px-6">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+            <div className="text-center md:text-left">
+              <h2 className="font-display font-bold text-2xl sm:text-3xl text-white mb-3">
+                Consultar Processo
+              </h2>
+              <p className="text-white/90 max-w-lg">
+                Faça sua consulta processual com mais facilidade através do nosso WhatsApp. 
+                Acompanhe o andamento do seu caso de forma rápida e prática.
+              </p>
+            </div>
+            <a
+              href="https://api.whatsapp.com/send?phone=5562991152972&text=Ol%C3%A1%20quero%20saber%20como%20esta%20o%20andamento%20do%20meu%20processo."
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-3 bg-white hover:bg-gray-100 text-green-700 font-bold px-8 py-4 rounded-full transition-all hover:scale-105 shadow-lg"
+            >
+              <WhatsappLogo size={24} weight="fill" />
+              Consultar Processo
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* SEÇÃO: Perguntas Frequentes */}
+      <section className="py-20 bg-[#0a0f1c]">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-12">
+            <span className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/30 text-blue-400 px-4 py-2 rounded-full text-sm font-bold mb-4">
+              FAQ
+            </span>
+            <h2 className="font-display font-bold text-3xl md:text-4xl text-white mb-4">
+              Perguntas Frequentes
+            </h2>
+            <p className="text-gray-400">Tire suas dúvidas sobre associação e serviços</p>
+          </div>
+
+          <div className="max-w-3xl mx-auto space-y-4">
+            {faqData.map((item, index) => (
+              <div 
+                key={index}
+                className="bg-white/5 border border-white/10 rounded-2xl overflow-hidden"
+              >
+                <button
+                  onClick={() => setFaqAberto(faqAberto === index ? null : index)}
+                  className="w-full flex items-center justify-between p-5 sm:p-6 text-left"
+                >
+                  <span className="text-white font-medium pr-4">{item.pergunta}</span>
+                  <CaretDown 
+                    size={24} 
+                    className={`text-blue-400 flex-shrink-0 transition-transform duration-300 ${
+                      faqAberto === index ? 'rotate-180' : ''
+                    }`}
+                  />
+                </button>
+                <div 
+                  className={`overflow-hidden transition-all duration-300 ${
+                    faqAberto === index ? 'max-h-96 pb-5 sm:pb-6' : 'max-h-0'
+                  }`}
+                >
+                  <p className="text-gray-400 px-5 sm:px-6">{item.resposta}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* CTA Associe-se */}
+          <div className="text-center mt-12">
+            <p className="text-gray-400 mb-4">Ainda tem dúvidas? Entre em contato conosco!</p>
+            <a
+              href="/#cta"
+              className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-bold px-8 py-4 rounded-full transition-all hover:scale-105"
+            >
+              Associe-se Agora
+              <ArrowRight size={20} weight="bold" />
+            </a>
           </div>
         </div>
       </section>
 
       {/* Contato */}
-      <section className="py-20 bg-[#0a0f1c]">
+      <section className="py-20 bg-[#050A18]">
         <div className="container mx-auto px-6">
           <div className="text-center mb-12">
             <span className="text-blue-400 font-bold tracking-widest text-xs uppercase">Atendimento</span>
@@ -377,7 +409,7 @@ function Juridico() {
       </section>
 
       {/* Equipe Jurídica - Expandível */}
-      <section className="py-20 bg-[#050A18]">
+      <section className="py-20 bg-[#0a0f1c]">
         <div className="container mx-auto px-6">
           <div className="text-center mb-8">
             <span className="text-blue-400 font-bold tracking-widest text-xs uppercase">Time</span>

@@ -15,10 +15,9 @@ function Historia() {
   
   // Imagens do carrossel de fundo
   const backgroundImages = [
-    'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1920&q=80', // Grupo de pessoas
-    'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=1920&q=80', // Reunião
-    'https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=1920&q=80', // Equipe
-    'https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=1920&q=80', // História
+    '/public/foto16.jpg', 
+    '/public/foto17.jpg', 
+    '/public/foto18.jpg', 
   ]
 
   // Trocar slide automaticamente
@@ -56,7 +55,7 @@ function Historia() {
       icon: Users,
     },
     {
-      ano: '2000s',
+      ano: '2014s',
       titulo: 'Modernização',
       descricao: 'Ampliação do clube de lazer com piscina aquecida, campos, quadras e salão de festas.',
       icon: Trophy,

@@ -14,9 +14,8 @@ function Diretoria() {
   // Imagens do carrossel de fundo
   const backgroundImages = [
     '/fotos/diretoria1.jpg',
-    '/fotos/diretoria2.jpg',
-    '/fotos/diretoria3.jpg',
-    '/fotos/reuniao.jpg',
+    '/public/foto11.jpg',
+  
   ]
 
   // Trocar slide automaticamente
@@ -193,11 +192,18 @@ function Diretoria() {
                   </div>
                   <p className="text-xs text-gray-400">Diretor Jurídico</p>
                 </div>
-                <div className="text-center">
-                  <div className="w-12 h-12 bg-gold-500 rounded-full flex items-center justify-center text-black mb-2">
+                  <div className="text-center">
+                  <div className="w-12 h-12 bg-gold-500/20 rounded-full flex items-center justify-center text-gold-400 mb-2">
                     <span className="font-bold">2022</span>
                   </div>
                   <p className="text-xs text-gray-400">Presidente</p>
+                </div>
+                <div className="text-center">
+                  <div className="w-12 h-12 bg-gold-500 rounded-full flex items-center justify-center text-black mb-2">
+                    <span className="font-bold">2026</span>
+                  </div>
+                  <p className="text-xs text-gray-400">Presidente</p>
+
                 </div>
               </div>
             </div>

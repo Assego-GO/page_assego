@@ -9,7 +9,7 @@
 import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { List, X, CaretDown } from '@phosphor-icons/react'
-import RadioPlayer from './RadioPlayer'
+import RadioPlayer from './Radioplayer.jsx'
 import RadioPlayerMobile from './RadioPlayerMobile'
 
 function Navbar() {
@@ -64,9 +64,8 @@ function Navbar() {
       label: 'ASSOCIADO',
       hasDropdown: true,
       items: [
-        { label: 'Benefícios', href: '/beneficios', isRoute: true },
+        { label: 'Vantagens', href: '/vantagens', isRoute: true },
         { label: 'Serviços', href: '/servicos', isRoute: true },
-        { label: 'Parcerias', href: '/parcerias', isRoute: true },
         { label: 'Ouvidoria', href: 'https://ouvidoria.assego.com.br/', external: true },
         { label: 'Jurídico', href: '/juridico', isRoute: true },
       ]

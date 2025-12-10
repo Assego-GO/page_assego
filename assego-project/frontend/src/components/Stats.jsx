@@ -6,9 +6,35 @@
 
 import { useState, useEffect, useRef } from 'react'
 
+// Função para calcular anos de história
+// Aniversário da ASSEGO: 03 de Junho
+// Ano de fundação: 1956 (69 anos em 2025)
+function calcularAnosDeHistoria() {
+  const anoFundacao = 1956
+  const mesAniversario = 6 // Junho
+  const diaAniversario = 3
+  
+  const hoje = new Date()
+  const anoAtual = hoje.getFullYear()
+  const mesAtual = hoje.getMonth() + 1 // getMonth() retorna 0-11
+  const diaAtual = hoje.getDate()
+  
+  // Verifica se já passou o aniversário este ano
+  const jaFezAniversario = 
+    mesAtual > mesAniversario || 
+    (mesAtual === mesAniversario && diaAtual >= diaAniversario)
+  
+  // Calcula os anos
+  const anos = jaFezAniversario 
+    ? anoAtual - anoFundacao 
+    : anoAtual - anoFundacao - 1
+  
+  return anos
+}
+
 // Dados das estatísticas
 const statsData = [
-  { value: 69, suffix: '', label: 'Anos de História' },
+  { value: calcularAnosDeHistoria(), suffix: '', label: 'Anos de História' },
   { value: 5000, suffix: '+', label: 'Famílias' },
   { value: 24, suffix: 'h', label: 'Jurídico' },
   { value: 100, suffix: '%', label: 'Compromisso' },

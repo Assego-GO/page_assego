@@ -4,8 +4,6 @@
  * ========================================
  */
 
-import { Heart } from '@phosphor-icons/react'
-
 function Social() {
   return (
     <section id="social" className="py-32 bg-gray-50 relative">
@@ -20,23 +18,10 @@ function Social() {
             {/* Imagem principal */}
             <div className="relative rounded-[2rem] overflow-hidden shadow-2xl">
               <img 
-                src="https://images.unsplash.com/photo-1516382799247-87df95d790b7?q=80&w=800" 
+                src="/public/foto19.png" 
                 alt="Projeto Social" 
                 className="w-full object-cover"
               />
-              
-              {/* Badge flutuante */}
-              <div className="absolute bottom-8 right-8 bg-white/90 backdrop-blur p-6 rounded-2xl shadow-xl max-w-xs">
-                <div className="flex items-start gap-4">
-                  <Heart size={32} className="text-red-500 flex-shrink-0" weight="fill" />
-                  <div>
-                    <p className="font-bold text-gray-900 text-lg">Projeto Acolher</p>
-                    <p className="text-sm text-gray-500 mt-1">
-                      Dedicado ao desenvolvimento de crianças especiais.
-                    </p>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
 

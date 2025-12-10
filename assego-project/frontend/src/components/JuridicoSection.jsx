@@ -9,9 +9,9 @@ import { Scales, Shield, Users, Gavel, ArrowRight, CheckCircle } from '@phosphor
 
 function JuridicoSection() {
   const destaques = [
-    { numero: '45', label: 'Advogados' },
-    { numero: '15', label: 'Regionais' },
-    { numero: '7.000+', label: 'Atendidos' },
+    { numero: '+45', label: 'Advogados' },
+    { numero: '+15', label: 'Escritórios' },
+    { numero: '40.000+', label: 'Atendidos' },
     { numero: '23', label: 'Ações Coletivas' },
   ]
 

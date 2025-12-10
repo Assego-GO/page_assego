@@ -14,8 +14,7 @@ function ConselhoFiscal() {
   // Imagens do carrossel de fundo
   const backgroundImages = [
     'https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=1920&q=80',
-    'https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=1920&q=80',
-    'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=1920&q=80',
+    
   ]
 
   // Trocar slide automaticamente
