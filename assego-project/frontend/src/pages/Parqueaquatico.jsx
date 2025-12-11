@@ -1,6 +1,6 @@
 /**
  * ========================================
- * Parque Aquático - Sede Goiânia
+ * Parque Aquático - Park Club ASSEGO
  * ========================================
  */
 
@@ -16,19 +16,24 @@ import {
   Calendar,
   ArrowRight,
   CheckCircle,
-  Star,
   Waves,
   Baby,
-  Person
+  Person,
+  Warning,
+  Prohibit,
+  Car,
+  CurrencyDollar,
+  SpeakerHigh,
+  Wine,
+  ForkKnife
 } from '@phosphor-icons/react'
 
 function ParqueAquatico() {
   const [currentSlide, setCurrentSlide] = useState(0)
 
   const backgroundImages = [
-    'https://images.unsplash.com/photo-1575429198097-0414ec08e8cd?w=1920&q=80',
-    'https://images.unsplash.com/photo-1560703030-e03e5c8ffb90?w=1920&q=80',
-    'https://images.unsplash.com/photo-1530549387789-4c1017266635?w=1920&q=80',
+    '/public/foto2.JPG',
+    '/public/foto4.JPG',
   ]
 
   useEffect(() => {
@@ -65,8 +70,8 @@ function ParqueAquatico() {
     },
     {
       icon: Users,
-      titulo: 'Área de Convivência',
-      descricao: 'Espaço amplo para encontros e confraternizações.',
+      titulo: 'Quiosques',
+      descricao: 'Espaço para confraternizações (somente com presença do associado ou cônjuge).',
       cor: 'from-green-500 to-green-700'
     },
     {
@@ -77,13 +82,24 @@ function ParqueAquatico() {
     },
   ]
 
-  const regras = [
-    'Uso obrigatório de trajes de banho adequados',
-    'Crianças menores de 12 anos devem estar acompanhadas',
-    'Proibido uso de objetos de vidro na área da piscina',
-    'Respeite a capacidade máxima de cada piscina',
-    'Duchas obrigatórias antes de entrar na piscina',
-    'Proibido consumo de alimentos dentro das piscinas'
+  const regrasPermitidas = [
+    { icon: CheckCircle, texto: 'Uso de roupas de banho apropriadas nas piscinas' },
+    { icon: SpeakerHigh, texto: 'Caixas de som com volume ambiente (sem atrapalhar quem está ao lado)' },
+    { icon: Users, texto: 'Quiosque somente com presença do associado(a) ou cônjuge' },
+    { icon: Car, texto: 'Estacionamento exclusivo para associados' },
+  ]
+
+  const regrasProibidas = [
+    { icon: Wine, texto: 'Recipientes de vidro nas dependências do clube (garrafas de cerveja, refrigerante, sucos)' },
+    { icon: Prohibit, texto: 'Entrada e uso de NARGUILÉ e CIGARROS ELETRÔNICOS' },
+    { icon: ForkKnife, texto: 'Consumo de alimentos, petiscos e bebidas nas bordas e dentro das piscinas' },
+  ]
+
+  const horarios = [
+    { dia: 'Segunda-feira', horario: 'Fechado', fechado: true },
+    { dia: 'Terça a Sexta-feira', horario: '9:00 às 22:00', fechado: false },
+    { dia: 'Sábado e Domingo', horario: '9:00 às 19:00', fechado: false },
+    { dia: 'Feriados', horario: '9:00 às 19:00', fechado: false },
   ]
 
   return (
@@ -112,7 +128,7 @@ function ParqueAquatico() {
             <div className="flex-1 text-center lg:text-left">
               <div className="inline-flex items-center gap-2 bg-blue-500/20 border border-blue-500/30 rounded-full px-5 py-2 mb-6">
                 <Drop size={18} weight="fill" className="text-blue-400" />
-                <span className="text-sm text-blue-400 font-medium">Sede Goiânia</span>
+                <span className="text-sm text-blue-400 font-medium">Park Club ASSEGO</span>
               </div>
               
               <h1 className="font-display font-black text-4xl md:text-5xl lg:text-6xl text-white mb-6">
@@ -133,7 +149,9 @@ function ParqueAquatico() {
                   <ArrowRight size={20} weight="bold" />
                 </a>
                 <a 
-                  href="tel:6232813177"
+                  href="https://api.whatsapp.com/send/?phone=5562992787173&text&type=phone_number&app_absent=0"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-2 bg-white/10 border border-white/20 text-white font-bold py-4 px-8 rounded-full hover:bg-white/20 transition-all"
                 >
                   <Phone size={20} />
@@ -167,20 +185,44 @@ function ParqueAquatico() {
         </div>
       </section>
 
-      {/* Info Cards */}
+      {/* Aviso Taxa de Convidados */}
+      <section className="py-6 bg-gradient-to-r from-amber-500 to-orange-500">
+        <div className="container mx-auto px-6">
+          <div className="flex flex-col md:flex-row items-center justify-center gap-4 text-center md:text-left">
+            <div className="flex items-center gap-3">
+              <Warning size={28} weight="fill" className="text-black" />
+              <span className="text-black font-bold text-lg">ATENÇÃO:</span>
+            </div>
+            <p className="text-black font-medium">
+              Taxa de <span className="font-black text-xl">R$ 20,00</span> para todos os convidados a partir de 13 anos 
+              que adentrarem à área do Parque Aquático (incluindo bar e sauna).
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Horários de Funcionamento */}
       <section className="py-12 bg-[#0B1221] border-y border-white/10">
         <div className="container mx-auto px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {[
-              { icon: Clock, label: 'Horário', value: '8h às 18h' },
-              { icon: Calendar, label: 'Funcionamento', value: 'Sáb, Dom e Feriados' },
-              { icon: Users, label: 'Capacidade', value: '500 pessoas' },
-              { icon: MapPin, label: 'Local', value: 'Sede Goiânia' },
-            ].map((item, index) => (
-              <div key={index} className="text-center">
-                <item.icon size={32} className="text-blue-400 mx-auto mb-2" />
-                <p className="text-gray-400 text-xs uppercase tracking-wider mb-1">{item.label}</p>
-                <p className="text-white font-bold">{item.value}</p>
+          <h2 className="text-2xl font-display font-bold text-white mb-8 text-center">
+            <Clock size={28} className="inline-block mr-2 text-blue-400" />
+            Horário de Funcionamento
+          </h2>
+          
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+            {horarios.map((item, index) => (
+              <div 
+                key={index} 
+                className={`text-center p-4 rounded-2xl ${
+                  item.fechado 
+                    ? 'bg-red-500/20 border border-red-500/30' 
+                    : 'bg-white/5 border border-white/10'
+                }`}
+              >
+                <p className="text-gray-400 text-sm mb-2">{item.dia}</p>
+                <p className={`font-bold text-lg ${item.fechado ? 'text-red-400' : 'text-white'}`}>
+                  {item.horario}
+                </p>
               </div>
             ))}
           </div>
@@ -195,7 +237,7 @@ function ParqueAquatico() {
               Nossas Atrações
             </h2>
             <p className="text-gray-400 text-lg">
-              Conheça tudo o que o Parque Aquático ASSEGO tem a oferecer.
+              Conheça tudo o que o Park Club ASSEGO tem a oferecer.
             </p>
           </div>
 
@@ -226,10 +268,10 @@ function ParqueAquatico() {
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
-              'https://images.unsplash.com/photo-1575429198097-0414ec08e8cd?w=600&q=80',
-              'https://images.unsplash.com/photo-1530549387789-4c1017266635?w=600&q=80',
-              'https://images.unsplash.com/photo-1560703030-e03e5c8ffb90?w=600&q=80',
-              'https://images.unsplash.com/photo-1519046904884-53103b34b206?w=600&q=80',
+              '/public/foto2.JPG',
+              '/public/foto1.JPG',
+              '/public/foto20.JPG',
+              '/public/foto4.JPG',
             ].map((img, index) => (
               <div key={index} className="group relative aspect-square rounded-2xl overflow-hidden cursor-pointer">
                 <img 
@@ -244,24 +286,59 @@ function ParqueAquatico() {
         </div>
       </section>
 
-      {/* Regras */}
+      {/* Regras de Uso */}
       <section className="py-20 bg-[#050A18]">
         <div className="container mx-auto px-6">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-white mb-8 text-center">
+          <div className="max-w-5xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-white mb-4 text-center">
               Regras de Uso
             </h2>
+            <p className="text-gray-400 text-center mb-12">
+              Para garantir a segurança e o bem-estar de todos, siga as orientações abaixo.
+            </p>
 
-            <div className="grid md:grid-cols-2 gap-4">
-              {regras.map((regra, index) => (
-                <div 
-                  key={index}
-                  className="flex items-start gap-3 bg-white/5 rounded-xl p-4"
-                >
-                  <CheckCircle size={24} weight="fill" className="text-blue-500 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-300">{regra}</span>
+            <div className="grid md:grid-cols-2 gap-8">
+              
+              {/* Permitido */}
+              <div className="bg-green-500/10 border border-green-500/30 rounded-3xl p-8">
+                <h3 className="text-xl font-bold text-green-400 mb-6 flex items-center gap-2">
+                  <CheckCircle size={24} weight="fill" />
+                  Orientações
+                </h3>
+                <div className="space-y-4">
+                  {regrasPermitidas.map((regra, index) => (
+                    <div key={index} className="flex items-start gap-3">
+                      <CheckCircle size={20} weight="fill" className="text-green-500 flex-shrink-0 mt-1" />
+                      <span className="text-gray-300">{regra.texto}</span>
+                    </div>
+                  ))}
                 </div>
-              ))}
+              </div>
+
+              {/* Proibido */}
+              <div className="bg-red-500/10 border border-red-500/30 rounded-3xl p-8">
+                <h3 className="text-xl font-bold text-red-400 mb-6 flex items-center gap-2">
+                  <Prohibit size={24} weight="fill" />
+                  Proibições
+                </h3>
+                <div className="space-y-4">
+                  {regrasProibidas.map((regra, index) => (
+                    <div key={index} className="flex items-start gap-3">
+                      <Prohibit size={20} weight="fill" className="text-red-500 flex-shrink-0 mt-1" />
+                      <span className="text-gray-300">{regra.texto}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+            </div>
+
+            {/* Aviso Estacionamento */}
+            <div className="mt-8 bg-amber-500/20 border border-amber-500/30 rounded-2xl p-6 flex items-center gap-4">
+              <Car size={32} className="text-amber-400 flex-shrink-0" />
+              <p className="text-amber-200 font-medium">
+                <span className="font-bold">ATENÇÃO:</span> O estacionamento é exclusivo para associados.
+              </p>
             </div>
           </div>
         </div>
@@ -277,10 +354,11 @@ function ParqueAquatico() {
               Venha se Refrescar!
             </h2>
             <p className="text-blue-100/80 text-lg mb-8">
-              O Parque Aquático ASSEGO espera você e sua família para momentos inesquecíveis.
+              O Park Club ASSEGO espera você e sua família para momentos inesquecíveis.
             </p>
             <a 
-              href="#filiar"
+              href="https://assego.net.br/associe/index.php"
+              target="_blank"
               className="inline-flex items-center gap-2 bg-white text-blue-600 font-bold py-4 px-10 rounded-full transition-all hover:scale-105 text-lg"
             >
               Quero Me Associar
