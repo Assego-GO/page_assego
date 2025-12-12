@@ -9,7 +9,7 @@
 import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { List, X, CaretDown } from '@phosphor-icons/react'
-import RadioPlayer from './Radioplayer.jsx'
+import RadioPlayer from './RadioPlayer'
 import RadioPlayerMobile from './RadioPlayerMobile'
 
 function Navbar() {
@@ -57,7 +57,6 @@ function Navbar() {
       items: [
         { label: 'Nossa História', href: '/historia', isRoute: true },
         { label: 'Diretoria', href: '/diretoria', isRoute: true },
-        { label: 'Conselho Deliberativo Fiscal', href: '/conselho-fiscal', isRoute: true },
       ]
     },
     {
@@ -65,7 +64,6 @@ function Navbar() {
       hasDropdown: true,
       items: [
         { label: 'Vantagens', href: '/vantagens', isRoute: true },
-        { label: 'Serviços', href: '/servicos', isRoute: true },
         { label: 'Ouvidoria', href: 'https://ouvidoria.assego.com.br/', external: true },
         { label: 'Jurídico', href: '/juridico', isRoute: true },
       ]
@@ -130,7 +128,11 @@ function Navbar() {
           <div className="flex justify-between items-center gap-4">
             
             {/* Logo - Link para Home */}
-            <Link to="/" className="flex items-center gap-3 md:gap-4 group flex-shrink-0">
+            <Link 
+              to="/" 
+              className="flex items-center gap-3 md:gap-4 group flex-shrink-0"
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            >
               {/* Container da logo - tamanho fixo compacto */}
               <div className="relative w-16 h-16 md:w-20 md:h-20">
                 <img 
@@ -178,7 +180,10 @@ function Navbar() {
                                 key={subIndex}
                                 to={subItem.href}
                                 className="block px-5 py-3 text-sm text-gray-200 hover:text-white hover:bg-[#1e293b] transition-all duration-200 border-b border-white/10 last:border-0 font-medium"
-                                onClick={() => setActiveDropdown(null)}
+                                onClick={() => {
+                                  setActiveDropdown(null)
+                                  window.scrollTo({ top: 0, behavior: 'smooth' })
+                                }}
                               >
                                 {subItem.label}
                               </Link>
@@ -203,6 +208,7 @@ function Navbar() {
                     <Link 
                       to={item.href}
                       className="font-semibold text-gray-300 hover:text-white transition duration-300 text-sm h-10 flex items-center"
+                      onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                     >
                       {item.label}
                     </Link>
@@ -280,7 +286,10 @@ function Navbar() {
                             key={subIndex}
                             to={subItem.href}
                             className="block text-gray-400 hover:text-gold-400 text-sm py-2"
-                            onClick={() => setIsMenuOpen(false)}
+                            onClick={() => {
+                              setIsMenuOpen(false)
+                              window.scrollTo({ top: 0, behavior: 'smooth' })
+                            }}
                           >
                             {subItem.label}
                           </Link>
@@ -304,7 +313,10 @@ function Navbar() {
                   <Link 
                     to={item.href}
                     className="text-gray-300 hover:text-gold-400 text-lg font-display font-bold"
-                    onClick={() => setIsMenuOpen(false)}
+                    onClick={() => {
+                      setIsMenuOpen(false)
+                      window.scrollTo({ top: 0, behavior: 'smooth' })
+                    }}
                   >
                     {item.label}
                   </Link>

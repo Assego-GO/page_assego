@@ -1,6 +1,6 @@
 /**
  * ========================================
- * Hotel ASSEGO - Hospedagem em Goiânia
+ * Hotelaria ASSEGO - Dois Hotéis em Goiânia
  * ========================================
  */
 
@@ -14,22 +14,25 @@ import {
   Coffee,
   Clock,
   MapPin,
-  Phone,
   ArrowRight,
   CheckCircle,
-  Star,
-  AirplaneTilt,
   Snowflake,
-  Users
+  WhatsappLogo,
+  ForkKnife,
+  SoccerBall,
+  BuildingOffice,
+  CaretLeft,
+  CaretRight,
+  NavigationArrow
 } from '@phosphor-icons/react'
 
 function HotelAssego() {
   const [currentSlide, setCurrentSlide] = useState(0)
+  const [hotelSlides, setHotelSlides] = useState({})
 
   const backgroundImages = [
-    'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1920&q=80',
-    'https://images.unsplash.com/photo-1582719508461-905c673771fd?w=1920&q=80',
-    'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=1920&q=80',
+    '/public/foto40.jpg',
+    '/public/foto2.JPG',
   ]
 
   useEffect(() => {
@@ -39,36 +42,122 @@ function HotelAssego() {
     return () => clearInterval(interval)
   }, [])
 
-  const quartos = [
+  // Dados dos dois hotéis
+  const hoteis = [
     {
-      tipo: 'Standard Single',
-      descricao: 'Quarto confortável para uma pessoa, ideal para estadias curtas.',
-      capacidade: '1 pessoa',
-      amenidades: ['Cama de solteiro', 'TV', 'Wi-Fi', 'Ar condicionado', 'Frigobar'],
-      imagem: 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600&q=80'
+      id: 'hotel-assego',
+      nome: 'Hotel da ASSEGO',
+      subtitulo: 'Sede Principal',
+      descricao: 'Hospedagem completa na sede da ASSEGO com acesso a toda infraestrutura do clube, incluindo restaurante, campos de futebol e área de lazer.',
+      telefone: '(62) 99192-2321',
+      whatsapp: '5562991922321',
+      endereco: 'Rua 148 - Setor Marista',
+      cidade: 'Goiânia - GO',
+      mapsLink: 'https://maps.app.goo.gl/7zbtxBZGwDBSPufv6',
+      cor: 'from-[#000e72] to-blue-800',
+      imagens: [
+        '/public/foto40.jpg',
+        '/public/foto2.JPG',
+        '/public/foto4.JPG',
+        '/public/foto8.jpg',
+      ],
+      diferenciais: [
+        { icon: ForkKnife, label: 'Restaurante' },
+        { icon: SoccerBall, label: 'Campos de Futebol' },
+        { icon: Car, label: 'Estacionamento' },
+        { icon: BuildingOffice, label: 'Administração' },
+      ],
+      comodidades: [
+        'Wi-Fi Gratuito',
+        'Ar Condicionado',
+        'TV',
+        'Frigobar',
+        'Estacionamento',
+        'Restaurante no local',
+        'Acesso ao clube',
+        'Recepção 24h'
+      ]
     },
     {
-      tipo: 'Standard Duplo',
-      descricao: 'Quarto espaçoso com cama de casal ou duas camas de solteiro.',
-      capacidade: '2 pessoas',
-      amenidades: ['Cama de casal', 'TV', 'Wi-Fi', 'Ar condicionado', 'Frigobar'],
-      imagem: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?w=600&q=80'
-    },
-    {
-      tipo: 'Família',
-      descricao: 'Quarto amplo para famílias com crianças.',
-      capacidade: '4 pessoas',
-      amenidades: ['1 cama casal + 2 solteiro', 'TV', 'Wi-Fi', 'Ar condicionado', 'Frigobar'],
-      imagem: 'https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=600&q=80'
-    },
+      id: 'hotel-24-outubro',
+      nome: 'Hotel 24 de Outubro',
+      subtitulo: 'Parceiro ASSEGO',
+      descricao: 'Hotel parceiro com localização estratégica no Setor Aeroviário, próximo ao aeroporto de Goiânia. Ideal para associados em trânsito.',
+      telefone: '(62) 99346-9190',
+      whatsapp: '5562993469190',
+      endereco: 'Av. 24 de Outubro, Nº 2790 - Setor Aeroviário',
+      cidade: 'Goiânia - GO',
+      mapsLink: 'https://maps.app.goo.gl/9gH5fDxkNDjjYwG98',
+      cor: 'from-cyan-500 to-cyan-700',
+      imagens: [
+        '/public/foto40.jpg',
+        '/public/foto3.JPG',
+        '/public/foto11.jpg',
+        '/public/foto14.jpg',
+      ],
+      diferenciais: [
+        { icon: MapPin, label: 'Próximo ao Aeroporto' },
+        { icon: Coffee, label: 'Café da Manhã' },
+        { icon: Car, label: 'Estacionamento' },
+        { icon: Clock, label: 'Recepção 24h' },
+      ],
+      comodidades: [
+        'Wi-Fi Gratuito',
+        'Ar Condicionado',
+        'TV a Cabo',
+        'Frigobar',
+        'Estacionamento',
+        'Café da Manhã',
+        'Próximo ao aeroporto',
+        'Recepção 24h'
+      ]
+    }
   ]
 
-  const comodidades = [
+  // Inicializar slides dos hotéis
+  useEffect(() => {
+    const initialSlides = {}
+    hoteis.forEach(hotel => {
+      initialSlides[hotel.id] = 0
+    })
+    setHotelSlides(initialSlides)
+  }, [])
+
+  // Auto-play para carrosséis dos hotéis
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setHotelSlides(prev => {
+        const newSlides = { ...prev }
+        hoteis.forEach(hotel => {
+          newSlides[hotel.id] = ((prev[hotel.id] || 0) + 1) % hotel.imagens.length
+        })
+        return newSlides
+      })
+    }, 4000)
+    return () => clearInterval(interval)
+  }, [])
+
+  // Funções de navegação do carrossel
+  const nextSlide = (hotelId, totalImages) => {
+    setHotelSlides(prev => ({
+      ...prev,
+      [hotelId]: ((prev[hotelId] || 0) + 1) % totalImages
+    }))
+  }
+
+  const prevSlide = (hotelId, totalImages) => {
+    setHotelSlides(prev => ({
+      ...prev,
+      [hotelId]: ((prev[hotelId] || 0) - 1 + totalImages) % totalImages
+    }))
+  }
+
+  const comodidadesGerais = [
     { icon: WifiHigh, label: 'Wi-Fi Gratuito' },
     { icon: Car, label: 'Estacionamento' },
     { icon: Coffee, label: 'Café da Manhã' },
     { icon: Snowflake, label: 'Ar Condicionado' },
-    { icon: Television, label: 'TV a Cabo' },
+    { icon: Television, label: 'TV' },
     { icon: Shower, label: 'Chuveiro Quente' },
   ]
 
@@ -94,32 +183,25 @@ function HotelAssego() {
         <div className="container mx-auto px-6 relative z-10 pt-32 pb-16 text-center">
           <div className="inline-flex items-center gap-2 bg-gold-500/20 border border-gold-500/30 rounded-full px-5 py-2 mb-6">
             <Bed size={18} className="text-gold-400" />
-            <span className="text-sm text-gold-400 font-medium">Hotel de Trânsito</span>
+            <span className="text-sm text-gold-400 font-medium">Hotelaria ASSEGO</span>
           </div>
           
           <h1 className="font-display font-black text-4xl md:text-5xl lg:text-6xl text-white mb-6">
-            Hotel <span className="text-gold-400">ASSEGO</span>
+            Hospedagem para <span className="text-gold-400">Associados</span>
           </h1>
           
           <p className="text-gray-300 text-lg md:text-xl max-w-3xl mx-auto mb-8">
-            Hospedagem confortável e acessível em Goiânia para associados em trânsito. 
-            Localização privilegiada e todas as comodidades que você precisa.
+            A ASSEGO oferece duas opções de hospedagem em Goiânia para associados em trânsito. 
+            Conforto, segurança e preços especiais para você e sua família.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a 
-              href="#quartos"
+              href="#hoteis"
               className="inline-flex items-center justify-center gap-2 bg-gold-500 hover:bg-gold-600 text-black font-bold py-4 px-8 rounded-full transition-all hover:scale-105"
             >
-              Ver Quartos
+              Ver Hotéis
               <ArrowRight size={20} weight="bold" />
-            </a>
-            <a 
-              href="tel:6232813177"
-              className="inline-flex items-center justify-center gap-2 bg-white/10 border border-white/20 text-white font-bold py-4 px-8 rounded-full hover:bg-white/20 transition-all"
-            >
-              <Phone size={20} />
-              Reservar Agora
             </a>
           </div>
         </div>
@@ -142,10 +224,10 @@ function HotelAssego() {
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {[
+              { icon: Bed, label: 'Hotéis', value: '2 opções' },
               { icon: Clock, label: 'Check-in', value: '14h' },
               { icon: Clock, label: 'Check-out', value: '12h' },
-              { icon: Users, label: 'Quartos', value: '20 unidades' },
-              { icon: MapPin, label: 'Local', value: 'Setor Sul, Goiânia' },
+              { icon: MapPin, label: 'Cidade', value: 'Goiânia - GO' },
             ].map((item, index) => (
               <div key={index} className="text-center">
                 <item.icon size={32} className="text-gold-400 mx-auto mb-2" />
@@ -157,15 +239,15 @@ function HotelAssego() {
         </div>
       </section>
 
-      {/* Comodidades */}
+      {/* Comodidades Gerais */}
       <section className="py-16 bg-[#050A18]">
         <div className="container mx-auto px-6">
           <h2 className="text-2xl font-display font-bold text-white mb-8 text-center">
-            Comodidades Inclusas
+            Comodidades Disponíveis
           </h2>
 
           <div className="grid grid-cols-3 md:grid-cols-6 gap-6 max-w-4xl mx-auto">
-            {comodidades.map((item, index) => (
+            {comodidadesGerais.map((item, index) => (
               <div key={index} className="text-center group">
                 <div className="w-16 h-16 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center mx-auto mb-3 group-hover:border-gold-500/50 group-hover:bg-gold-500/10 transition-all">
                   <item.icon size={28} className="text-gold-400" />
@@ -177,51 +259,161 @@ function HotelAssego() {
         </div>
       </section>
 
-      {/* Quartos */}
-      <section id="quartos" className="py-20 bg-[#0B1221]">
+      {/* Hotéis */}
+      <section id="hoteis" className="py-20 bg-[#0B1221]">
         <div className="container mx-auto px-6">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-3xl md:text-4xl font-display font-bold text-white mb-4">
-              Nossos Quartos
+              Nossos Hotéis
             </h2>
             <p className="text-gray-400 text-lg">
-              Acomodações confortáveis para todas as necessidades.
+              Escolha a melhor opção para sua estadia em Goiânia.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {quartos.map((quarto, index) => (
+          <div className="space-y-16">
+            {hoteis.map((hotel, index) => (
               <div 
-                key={index}
-                className="group bg-white/5 border border-white/10 rounded-3xl overflow-hidden hover:border-gold-500/30 transition-all"
+                key={hotel.id}
+                className={`relative bg-white/5 border border-white/10 rounded-3xl overflow-hidden ${
+                  index === 0 ? 'ring-2 ring-gold-500/20' : ''
+                }`}
               >
-                <div className="relative h-48 overflow-hidden">
-                  <img 
-                    src={quarto.imagem} 
-                    alt={quarto.tipo}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
-                  <div className="absolute top-4 right-4 bg-gold-500 text-black text-xs font-bold px-3 py-1 rounded-full">
-                    {quarto.capacidade}
-                  </div>
-                </div>
+                {/* Header do Hotel */}
+                <div className={`h-2 bg-gradient-to-r ${hotel.cor}`}></div>
                 
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-white mb-2">{quarto.tipo}</h3>
-                  <p className="text-gray-400 text-sm mb-4">{quarto.descricao}</p>
-                  
-                  <div className="space-y-2">
-                    {quarto.amenidades.map((amenidade, i) => (
-                      <div key={i} className="flex items-center gap-2 text-gray-300 text-sm">
-                        <CheckCircle size={16} weight="fill" className="text-green-500" />
-                        {amenidade}
+                {index === 0 && (
+                  <div className="absolute top-4 right-4 bg-gold-500 text-black text-xs font-bold px-4 py-1 rounded-full z-20">
+                    SEDE PRINCIPAL
+                  </div>
+                )}
+
+                <div className="grid lg:grid-cols-2 gap-0">
+                  {/* Carrossel de Imagens */}
+                  <div className="relative h-64 lg:h-auto lg:min-h-[450px] overflow-hidden group">
+                    {hotel.imagens.map((img, imgIndex) => (
+                      <div
+                        key={imgIndex}
+                        className={`absolute inset-0 transition-opacity duration-500 ${
+                          imgIndex === (hotelSlides[hotel.id] || 0) ? 'opacity-100' : 'opacity-0'
+                        }`}
+                      >
+                        <img 
+                          src={img} 
+                          alt={`${hotel.nome} - Foto ${imgIndex + 1}`}
+                          className="w-full h-full object-cover"
+                        />
                       </div>
                     ))}
+                    
+                    {/* Gradiente */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
+
+                    {/* Botões de navegação */}
+                    <button
+                      onClick={() => prevSlide(hotel.id, hotel.imagens.length)}
+                      className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/50 hover:bg-black/70 rounded-full flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity z-10"
+                    >
+                      <CaretLeft size={24} weight="bold" />
+                    </button>
+                    <button
+                      onClick={() => nextSlide(hotel.id, hotel.imagens.length)}
+                      className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/50 hover:bg-black/70 rounded-full flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity z-10"
+                    >
+                      <CaretRight size={24} weight="bold" />
+                    </button>
+
+                    {/* Indicadores */}
+                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+                      {hotel.imagens.map((_, dotIndex) => (
+                        <button
+                          key={dotIndex}
+                          onClick={() => setHotelSlides(prev => ({ ...prev, [hotel.id]: dotIndex }))}
+                          className={`w-2 h-2 rounded-full transition-all ${
+                            dotIndex === (hotelSlides[hotel.id] || 0) 
+                              ? 'bg-white w-6' 
+                              : 'bg-white/50'
+                          }`}
+                        />
+                      ))}
+                    </div>
+
+                    {/* Contador */}
+                    <div className="absolute top-4 left-4 bg-black/50 text-white text-xs font-bold px-3 py-1 rounded-full z-10">
+                      {(hotelSlides[hotel.id] || 0) + 1} / {hotel.imagens.length}
+                    </div>
                   </div>
 
-                  <button className="w-full mt-6 bg-gold-500/20 border border-gold-500/30 text-gold-400 font-bold py-3 rounded-xl hover:bg-gold-500 hover:text-black transition-all">
-                    Verificar Disponibilidade
-                  </button>
+                  {/* Conteúdo */}
+                  <div className="p-8 lg:p-10">
+                    <div className="inline-flex items-center gap-2 bg-white/10 rounded-full px-4 py-1 mb-4">
+                      <Bed size={16} className="text-gold-400" />
+                      <span className="text-xs text-gray-300">{hotel.subtitulo}</span>
+                    </div>
+
+                    <h3 className="text-2xl md:text-3xl font-display font-bold text-white mb-4">
+                      {hotel.nome}
+                    </h3>
+                    
+                    <p className="text-gray-400 mb-6 leading-relaxed">
+                      {hotel.descricao}
+                    </p>
+
+                    {/* Diferenciais */}
+                    <div className="grid grid-cols-2 gap-3 mb-6">
+                      {hotel.diferenciais.map((dif, i) => (
+                        <div key={i} className="flex items-center gap-2 text-gray-300 text-sm">
+                          <dif.icon size={18} className="text-gold-400" />
+                          {dif.label}
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Comodidades */}
+                    <div className="mb-6">
+                      <p className="text-gray-500 text-sm mb-3">Comodidades:</p>
+                      <div className="flex flex-wrap gap-2">
+                        {hotel.comodidades.slice(0, 6).map((item, i) => (
+                          <span key={i} className="bg-white/5 border border-white/10 text-gray-300 text-xs px-3 py-1 rounded-full">
+                            {item}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Endereço */}
+                    <div className="bg-white/5 border border-white/10 rounded-xl p-4 mb-6">
+                      <div className="flex items-start gap-3">
+                        <MapPin size={20} className="text-gold-400 flex-shrink-0 mt-0.5" />
+                        <div>
+                          <p className="text-white font-medium">{hotel.endereco}</p>
+                          <p className="text-gray-400 text-sm">{hotel.cidade}</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Botões */}
+                    <div className="flex flex-col sm:flex-row gap-3">
+                      <a 
+                        href={`https://api.whatsapp.com/send?phone=${hotel.whatsapp}&text=Olá!%20Gostaria%20de%20fazer%20uma%20reserva%20no%20${encodeURIComponent(hotel.nome)}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-1 inline-flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-xl transition-all hover:scale-105"
+                      >
+                        <WhatsappLogo size={20} weight="fill" />
+                        {hotel.telefone}
+                      </a>
+                      <a 
+                        href={hotel.mapsLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-1 inline-flex items-center justify-center gap-2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-xl transition-all hover:scale-105"
+                      >
+                        <NavigationArrow size={20} weight="fill" />
+                        Ver no Mapa
+                      </a>
+                    </div>
+                  </div>
                 </div>
               </div>
             ))}
@@ -229,54 +421,89 @@ function HotelAssego() {
         </div>
       </section>
 
-      {/* Localização */}
+      {/* Comparativo */}
       <section className="py-20 bg-[#050A18]">
         <div className="container mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-3xl md:text-4xl font-display font-bold text-white mb-6">
-                Localização Privilegiada
-              </h2>
-              <p className="text-gray-400 text-lg mb-8">
-                O Hotel ASSEGO está localizado no coração de Goiânia, no Setor Sul, 
-                com fácil acesso às principais vias da cidade e próximo a diversos 
-                serviços e comércios.
-              </p>
+          <div className="text-center max-w-3xl mx-auto mb-12">
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-white mb-4">
+              Qual Hotel Escolher?
+            </h2>
+            <p className="text-gray-400 text-lg">
+              Compare as opções e escolha a melhor para você.
+            </p>
+          </div>
 
-              <div className="space-y-4">
-                {[
-                  'Próximo ao Centro de Goiânia',
-                  'Fácil acesso à BR-153 e GO-020',
-                  'Próximo a restaurantes e farmácias',
-                  'Estacionamento gratuito',
-                ].map((item, index) => (
-                  <div key={index} className="flex items-center gap-3">
-                    <CheckCircle size={24} weight="fill" className="text-gold-500" />
-                    <span className="text-gray-300">{item}</span>
-                  </div>
-                ))}
+          <div className="max-w-4xl mx-auto">
+            <div className="grid md:grid-cols-2 gap-6">
+              
+              {/* Hotel ASSEGO */}
+              <div className="bg-gradient-to-br from-[#000e72]/30 to-[#001090]/20 border border-[#000e72]/50 rounded-2xl p-6">
+                <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                  <Bed size={24} className="text-gold-400" />
+                  Hotel da ASSEGO
+                </h3>
+                <ul className="space-y-3">
+                  {[
+                    'Localizado na sede principal',
+                    'Acesso ao parque aquático',
+                    'Restaurante no local',
+                    'Campos de futebol',
+                    'Ideal para família',
+                  ].map((item, i) => (
+                    <li key={i} className="flex items-center gap-2 text-gray-300 text-sm">
+                      <CheckCircle size={18} weight="fill" className="text-green-500 flex-shrink-0" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+                <div className="mt-6 pt-4 border-t border-white/10 flex items-center justify-between">
+                  <p className="text-gold-400 font-bold">(62) 99192-2321</p>
+                  <a 
+                    href="https://maps.app.goo.gl/7zbtxBZGwDBSPufv6"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-400 text-sm hover:underline flex items-center gap-1"
+                  >
+                    <MapPin size={14} />
+                    Ver mapa
+                  </a>
+                </div>
               </div>
 
-              <div className="mt-8 p-6 bg-white/5 border border-white/10 rounded-2xl">
-                <p className="text-gray-400 text-sm mb-2">Endereço</p>
-                <p className="text-white font-bold">Rua 87, Qd. F-23, Lt. 01 - Setor Sul</p>
-                <p className="text-gray-300">Goiânia - GO, CEP 74083-330</p>
+              {/* Hotel 24 de Outubro */}
+              <div className="bg-gradient-to-br from-cyan-500/10 to-cyan-700/10 border border-cyan-500/30 rounded-2xl p-6">
+                <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                  <Bed size={24} className="text-cyan-400" />
+                  Hotel 24 de Outubro
+                </h3>
+                <ul className="space-y-3">
+                  {[
+                    'Próximo ao aeroporto',
+                    'Setor Aeroviário',
+                    'Café da manhã incluso',
+                    'Fácil acesso às BRs',
+                    'Ideal para viagens rápidas',
+                  ].map((item, i) => (
+                    <li key={i} className="flex items-center gap-2 text-gray-300 text-sm">
+                      <CheckCircle size={18} weight="fill" className="text-green-500 flex-shrink-0" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+                <div className="mt-6 pt-4 border-t border-white/10 flex items-center justify-between">
+                  <p className="text-cyan-400 font-bold">(62) 99346-9190</p>
+                  <a 
+                    href="https://maps.app.goo.gl/9gH5fDxkNDjjYwG98"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-400 text-sm hover:underline flex items-center gap-1"
+                  >
+                    <MapPin size={14} />
+                    Ver mapa
+                  </a>
+                </div>
               </div>
-            </div>
 
-            <div className="relative">
-              <div className="aspect-video rounded-3xl overflow-hidden">
-                <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3821.7!2d-49.2567!3d-16.6869!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTbCsDQxJzEyLjgiUyA0OcKwMTUnMjQuMSJX!5e0!3m2!1spt-BR!2sbr!4v1234567890"
-                  width="100%"
-                  height="100%"
-                  style={{ border: 0, minHeight: '300px' }}
-                  allowFullScreen=""
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  className="grayscale hover:grayscale-0 transition-all duration-500"
-                ></iframe>
-              </div>
             </div>
           </div>
         </div>
@@ -292,22 +519,26 @@ function HotelAssego() {
               Reserve Sua Estadia
             </h2>
             <p className="text-blue-100/80 text-lg mb-8">
-              Entre em contato para verificar disponibilidade e fazer sua reserva.
+              Entre em contato diretamente com o hotel de sua preferência para verificar disponibilidade.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a 
-                href="tel:6232813177"
+                href="https://api.whatsapp.com/send?phone=5562991922321&text=Olá!%20Gostaria%20de%20fazer%20uma%20reserva%20no%20Hotel%20da%20ASSEGO"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 bg-gold-500 hover:bg-gold-600 text-black font-bold py-4 px-8 rounded-full transition-all hover:scale-105"
               >
-                <Phone size={20} />
-                (62) 3281-3177
+                <WhatsappLogo size={20} weight="fill" />
+                Hotel ASSEGO
               </a>
               <a 
-                href="#filiar"
-                className="inline-flex items-center justify-center gap-2 bg-white/10 border border-white/20 text-white font-bold py-4 px-8 rounded-full hover:bg-white/20 transition-all"
+                href="https://api.whatsapp.com/send?phone=5562993469190&text=Olá!%20Gostaria%20de%20fazer%20uma%20reserva%20no%20Hotel%2024%20de%20Outubro"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-4 px-8 rounded-full transition-all hover:scale-105"
               >
-                Quero Me Associar
-                <ArrowRight size={20} weight="bold" />
+                <WhatsappLogo size={20} weight="fill" />
+                Hotel 24 de Outubro
               </a>
             </div>
           </div>

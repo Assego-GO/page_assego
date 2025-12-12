@@ -12,14 +12,18 @@ function JuridicoSection() {
     { numero: '+45', label: 'Advogados' },
     { numero: '+15', label: 'Escritórios' },
     { numero: '40.000+', label: 'Atendidos' },
-    { numero: '23', label: 'Ações Coletivas' },
+    { numero: '+20', label: 'Ações Coletivas' },
   ]
 
   const servicos = [
-    'Diferenças Salariais',
-    'Promoções',
-    'Ações Coletivas',
-    'Defesa Administrativa',
+
+'Civel', 
+'Penal',
+'Auditória Militar', 
+'Familia e Sucessões', 
+'Administrativo',
+'Direito Publico',
+
   ]
 
   return (

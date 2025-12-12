@@ -51,12 +51,7 @@ function Destinations() {
             </p>
           </div>
           
-          <a 
-            href="#" 
-            className="px-8 py-3 rounded-full border border-white/20 text-white hover:bg-white hover:text-black transition font-bold text-sm tracking-wider uppercase"
-          >
-            Ver todos os parceiros
-          </a>
+         
         </div>
 
         {/* Grid de destinos */}

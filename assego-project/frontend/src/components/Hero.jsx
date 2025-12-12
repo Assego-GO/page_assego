@@ -5,11 +5,10 @@
  */
 
 import { useState, useEffect } from 'react'
-import { ArrowRight, PlayCircle, CaretDown } from '@phosphor-icons/react'
+import { ArrowRight, PlayCircle } from '@phosphor-icons/react'
 
 // Imagens de fundo para o slider
 const backgroundImages = [
-  
   '/public/foto2.jpg',
   '/public/foto3.JPG',
   '/public/foto11.jpg',
@@ -32,7 +31,7 @@ function Hero() {
 
   return (
     <section 
-      className="relative h-screen flex items-center justify-center overflow-hidden" 
+      className="relative h-screen flex items-center overflow-hidden" 
       id="missao"
     >
       {/* Background Slides com Ken Burns */}
@@ -50,9 +49,9 @@ function Hero() {
         <div className="absolute inset-0 bg-black/30 z-10"></div>
       </div>
 
-      {/* Conteúdo */}
-      <div className="container mx-auto px-6 relative z-20 text-center pt-20">
-        <div className="max-w-5xl mx-auto reveal active">
+      {/* Conteúdo - Alinhado à esquerda */}
+      <div className="container mx-auto px-6 relative z-20 pt-20">
+        <div className="max-w-3xl reveal active">
           
           {/* Badge flutuante com logos */}
           <div className="inline-flex items-center gap-4 mb-8 animate-float">
@@ -87,16 +86,18 @@ function Hero() {
           </h1>
           
           {/* Descrição */}
-          <p className="text-gray-300 text-lg md:text-xl max-w-2xl mx-auto mb-12 font-light leading-relaxed">
+          <p className="text-gray-300 text-lg md:text-xl max-w-2xl mb-12 font-light leading-relaxed">
             A voz definitiva dos Subtenentes e Sargentos de Goiás. 
             Defendemos sua carreira enquanto construímos o futuro 
             da sua família com lazer e segurança.
           </p>
 
           {/* Botões de ação */}
-          <div className="flex flex-col sm:flex-row justify-center gap-6">
+          <div className="flex flex-col sm:flex-row gap-4">
             <a 
-              href="#filiar" 
+              href="https://assego.net.br/associe/index.php"
+              target="_blank"
+              rel="noopener noreferrer"
               className="group relative px-8 py-4 bg-gold-500 text-black font-bold text-lg rounded-full overflow-hidden shadow-[0_0_30px_rgba(255,223,0,0.3)] hover:shadow-[0_0_50px_rgba(255,223,0,0.5)] transition-all duration-300"
             >
               <div className="absolute inset-0 w-full h-full bg-white/20 scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-500"></div>

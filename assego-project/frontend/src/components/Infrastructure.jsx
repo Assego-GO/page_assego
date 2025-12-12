@@ -63,15 +63,8 @@ function Infrastructure() {
               Estrutura de nível internacional exclusiva para nossos associados e familiares.
             </p>
           </div>
-          
-          <a 
-            href="#" 
-            className="group text-white font-bold flex items-center gap-2 mt-6 md:mt-0 hover:text-gold-400 transition"
-          >
-            Explorar Galeria 
-            <ArrowRight className="group-hover:translate-x-1 transition" />
-          </a>
-        </div>
+           </div>
+        
 
         {/* Bento Grid */}
         <div className="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-6 h-auto md:h-[700px]">

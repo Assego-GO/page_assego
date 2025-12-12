@@ -31,17 +31,15 @@ import ScrollToTop from './components/ScrollToTop'
 // Páginas
 import Diretoria from './pages/Diretoria'
 import Historia from './pages/Historia'
-import ConselhoFiscal from './pages/ConselhoFiscal'
 import Juridico from './pages/Juridico'
 import Informativo from './pages/Informativo'
 import NoticiaDetalhe from './pages/Noticiadetalhe.jsx'
 import AssegoPanel from './pages/AssegoPanel'
 import Podcast from './pages/Podcast'
 import Vantagens from './pages/Vantagens.jsx'
-import Servicos from './pages/Servicos'
-import ParqueAquatico from './pages/ParqueAquatico'
+import ParqueAquatico from './pages/Parqueaquatico.jsx'
 import HotelAssego from './pages/HotelAssego'
-import PousadaAruana from './pages/PousadaAruana'
+import PousadaAruana from './pages/Pousadaaruana.jsx'
 import EspacoAssego from './pages/EspacoAssego'
 import Contato from './pages/Contato'
 
@@ -91,14 +89,12 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/diretoria" element={<Diretoria />} />
           <Route path="/historia" element={<Historia />} />
-          <Route path="/conselho-fiscal" element={<ConselhoFiscal />} />
           <Route path="/juridico" element={<Juridico />} />
           <Route path="/informativo" element={<Informativo />} />
           <Route path="/informativo/:id" element={<NoticiaDetalhe />} />
           <Route path="/assego_panel" element={<AssegoPanel />} />
           <Route path="/podcast" element={<Podcast />} />
           <Route path="/vantagens" element={<Vantagens />} />
-          <Route path="/servicos" element={<Servicos />} />
           <Route path="/parque-aquatico" element={<ParqueAquatico />} />
           <Route path="/hotel-assego" element={<HotelAssego />} />
           <Route path="/pousada-aruana" element={<PousadaAruana />} />

@@ -12,7 +12,6 @@ import {
   Users, 
   Clock,
   MapPin,
-  Phone,
   Calendar,
   ArrowRight,
   CheckCircle,
@@ -25,7 +24,8 @@ import {
   CurrencyDollar,
   SpeakerHigh,
   Wine,
-  ForkKnife
+  ForkKnife,
+  WhatsappLogo
 } from '@phosphor-icons/react'
 
 function ParqueAquatico() {
@@ -46,14 +46,14 @@ function ParqueAquatico() {
   const atracoes = [
     {
       icon: SwimmingPool,
-      titulo: 'Piscina Olímpica',
+      titulo: 'Piscina Semiolímpica',
       descricao: 'Piscina semiolímpica aquecida para natação e atividades aquáticas.',
       cor: 'from-blue-500 to-blue-700'
     },
     {
       icon: Waves,
       titulo: 'Toboáguas',
-      descricao: 'Toboáguas radicais para crianças e adultos com total segurança.',
+      descricao: 'Toboáguas para crianças com total segurança.',
       cor: 'from-cyan-500 to-cyan-700'
     },
     {
@@ -152,10 +152,10 @@ function ParqueAquatico() {
                   href="https://api.whatsapp.com/send/?phone=5562992787173&text&type=phone_number&app_absent=0"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 bg-white/10 border border-white/20 text-white font-bold py-4 px-8 rounded-full hover:bg-white/20 transition-all"
+                  className="inline-flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-8 rounded-full transition-all hover:scale-105"
                 >
-                  <Phone size={20} />
-                  Fazer Reserva
+                  <WhatsappLogo size={20} weight="fill" />
+                  Atendimento
                 </a>
               </div>
             </div>
@@ -359,6 +359,7 @@ function ParqueAquatico() {
             <a 
               href="https://assego.net.br/associe/index.php"
               target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 bg-white text-blue-600 font-bold py-4 px-10 rounded-full transition-all hover:scale-105 text-lg"
             >
               Quero Me Associar

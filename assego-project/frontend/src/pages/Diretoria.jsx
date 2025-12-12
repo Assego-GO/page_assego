@@ -1,335 +1,401 @@
 /**
  * ========================================
- * Diretoria - Página da Gestão e Diretores
+ * Diretoria ASSEGO - Gestão 2026
+ * Padrão do site: cores escuras, gold, glass
  * ========================================
  */
 
-import { useState, useEffect } from 'react'
-import { Quotes, Medal, Calendar, Users, TrendUp, Buildings } from '@phosphor-icons/react'
-
 function Diretoria() {
-  // Estado para controlar o slide atual do carrossel
-  const [currentSlide, setCurrentSlide] = useState(0)
-  
-  // Imagens do carrossel de fundo
-  const backgroundImages = [
-    '/fotos/diretoria1.jpg',
-    '/public/foto11.jpg',
-  
+
+  // Conselho Administrativo 2026 - Esquerda
+  const conselhoAdminEsquerda = [
+    { graduacao: 'ST BM', nome: 'WELLINGTON', cargo: 'VICE-PRESIDENTE' },
+    { graduacao: 'TEN PM', nome: 'CLÁUDIO', cargo: 'DIRETOR JURÍDICO' },
+    { graduacao: 'TEN PM', nome: 'ANA PAULA', cargo: '1ª TESOUREIRA' },
   ]
 
-  // Trocar slide automaticamente
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % backgroundImages.length)
-    }, 5000) // Troca a cada 5 segundos
-
-    return () => clearInterval(interval)
-  }, [])
-
-  // Diretoria Principal
-  const diretoriaPrincipal = [
-    { nome: 'Ten. Wesley Davi', cargo: 'Vice-Presidente', foto: '/diretoria/wesley.jpg' },
-    { nome: 'Maj. Niltomar', cargo: 'Tesoureiro', foto: '/diretoria/niltomar.jpg' },
-    { nome: 'Cap. de Paula', cargo: '1º Secretário', foto: '/diretoria/paula.jpg' },
-    { nome: 'Ten. Cláudio', cargo: 'Jurídico', foto: '/diretoria/claudio.jpg' },
-    { nome: 'Ten. Ana Paula', cargo: '2ª Secretária', foto: '/diretoria/anapaula.jpg' },
-    { nome: 'ST. Adailma', cargo: 'Comercial', foto: '/diretoria/adailma.jpg' },
+  // Conselho Administrativo 2026 - Direita
+  const conselhoAdminDireita = [
+    { graduacao: 'ST PM', nome: 'IVALDI', cargo: '2º TESOUREIRO' },
+    { graduacao: 'SGT PM', nome: 'TERRA', cargo: '1º SECRETÁRIO' },
+    { graduacao: 'SGT PM', nome: 'ROCHA', cargo: '2º SECRETÁRIO' },
+    { graduacao: 'TEN BM', nome: 'WESLEY', cargo: 'DIRETOR PATRIMÔNIO' },
   ]
 
-  // Demais Diretores
-  const demaisDiretores = [
-    { nome: 'Maj. Medeiros', cargo: 'Diretor de Transporte', foto: '/diretoria/medeiros.jpg' },
-    { nome: 'ST. Ivaldi', cargo: 'CDF', foto: '/diretoria/ivaldi.jpg' },
-    { nome: 'ST. F. Cardoso', cargo: 'Diretor de Marketing', foto: '/diretoria/cardoso.jpg' },
-    { nome: 'ST. Rui Felicidade', cargo: 'Transporte', foto: '/diretoria/rui.jpg' },
-    { nome: 'Ten. França', cargo: 'Transporte', foto: '/diretoria/franca.jpg' },
-    { nome: 'Ten. Vaz', cargo: 'Transporte', foto: '/diretoria/vaz.jpg' },
-    { nome: 'Sgt. Diony', cargo: 'Parque Aquático', foto: '/diretoria/diony.jpg' },
-    { nome: 'ST. Amauri', cargo: 'Apoio', foto: '/diretoria/amauri.jpg' },
-    { nome: 'ST. Isabel', cargo: 'Patrimônio', foto: '/diretoria/isabel.jpg' },
-    { nome: 'Sgt. Lindomauro', cargo: 'Veteranos', foto: '/diretoria/lindomauro.jpg' },
-    { nome: 'CB. Tadeu Moura', cargo: 'Comercial', foto: '/diretoria/tadeu.jpg' },
-    { nome: 'ST. Wilian Rosa', cargo: 'Relações Públicas', foto: '/diretoria/wilian.jpg' },
+  // Conselho Deliberativo Fiscal 2026 - Titulares (5)
+  const conselhoFiscalTitulares = [
+    { graduacao: 'ST PM', nome: 'ADAILMA', cargo: 'PRESIDENTE' },
+    { graduacao: 'ST BM', nome: 'RUI', cargo: 'VICE-PRESIDENTE' },
+    { graduacao: 'MAJ BM', nome: 'NILTOMAR', cargo: 'RELATOR' },
+    { graduacao: 'TEN BM', nome: 'LEIDYANA', cargo: '1ª VOCAL' },
+    { graduacao: 'TEN PM', nome: 'LUIZ AMARO', cargo: '2º VOCAL' },
   ]
 
-  // Conquistas da Gestão
-  const conquistas = [
-    { icon: Buildings, titulo: 'Espaço das Cores', desc: 'Novo ambiente para eventos' },
-    { icon: TrendUp, titulo: 'Cantinho da Bola', desc: 'Área de lazer infantil' },
-    { icon: Users, titulo: 'Parque Aquático', desc: 'Totalmente reformado' },
-    { icon: Medal, titulo: 'ASSEGO + Saúde', desc: 'Novo programa de saúde' },
+  // Conselho Deliberativo Fiscal 2026 - Suplentes (5)
+  const conselhoFiscalSuplentes = [
+    { graduacao: 'CAP PM', nome: 'DE PAULA', cargo: '1º SUPLENTE' },
+    { graduacao: 'ST PM', nome: 'ISABEL', cargo: '2ª SUPLENTE' },
+    { graduacao: 'TEN PM', nome: 'CIRILO', cargo: '3º SUPLENTE' },
+    { graduacao: 'TEN PM', nome: 'SANTOS', cargo: '4º SUPLENTE' },
+    { graduacao: 'TC PM', nome: 'JUNE', cargo: '5ª SUPLENTE' },
   ]
+
+  // Todos os diretores (36 total = 6x6)
+  const todosDiretores = [
+    { graduacao: 'SGT.', nome: 'DIONE', cargo: 'PARQUE AQUÁTICO' },
+    { graduacao: 'SGT.', nome: 'CLEITON', cargo: 'HOTEL' },
+    { graduacao: 'ST BM', nome: 'PÁDUA', cargo: 'POUSADA ARUANÃ' },
+    { graduacao: 'ST PM', nome: 'ELOY', cargo: 'INFRAESTRUTURA' },
+    { graduacao: 'SGT PM', nome: 'TIAGO RAIZ', cargo: 'MARKETING' },
+    { graduacao: 'SGT.', nome: 'TADEU', cargo: 'COMERCIAL' },
+    { graduacao: 'SGT.', nome: 'TOMAZ', cargo: 'COMERCIAL' },
+    { graduacao: 'TEN BM', nome: 'REGYS', cargo: 'COMPRAS' },
+    { graduacao: 'SGT PM', nome: 'NIEDSON', cargo: 'TEC. INFORMAÇÃO' },
+    { graduacao: 'SGT PM', nome: 'BORGES', cargo: 'CONVÊNIOS' },
+    { graduacao: 'ST PM', nome: 'LEMOS', cargo: 'CONVÊNIOS CALDAS' },
+    { graduacao: 'SGT PM', nome: 'RODRIGO', cargo: 'TURISMO' },
+    { graduacao: 'CAP PM', nome: 'RODOLFO', cargo: 'PEDAGÓGICO' },
+    { graduacao: 'TEN PM', nome: 'KAREN', cargo: 'EVENTOS' },
+    { graduacao: 'SGT.', nome: 'WASHINGTON', cargo: 'EVENTOS VETERANOS' },
+    { graduacao: 'SGT.', nome: 'LINDOMAURO', cargo: 'VETERANOS' },
+    { graduacao: 'SGT', nome: 'JOEL RODRIGUES', cargo: 'INCLUSÃO' },
+    { graduacao: 'ST PM', nome: 'AMAURY', cargo: 'ESPORTES VETERANOS' },
+    { graduacao: 'TEN BM', nome: 'MARQUES', cargo: 'ESPORTES BM' },
+    { graduacao: 'SGT PM', nome: 'PAULO CÉSAR', cargo: 'ESPORTES' },
+    { graduacao: 'MAJ BM', nome: 'MEDEIROS', cargo: 'LOGÍSTICA' },
+    { graduacao: 'TEN BM', nome: 'FRANÇA', cargo: 'LOGÍSTICA' },
+    { graduacao: 'CAP PM', nome: 'LUIZ', cargo: 'TRANSPORTES' },
+    { graduacao: 'SGT PM', nome: 'MANRESA', cargo: 'CAPTAÇÃO RECURSOS' },
+    { graduacao: 'TEN PM', nome: 'MELO', cargo: 'OUVIDORIA' },
+    { graduacao: 'TEN PM', nome: 'CARLOS DINIZ', cargo: 'ASSISTENTE SOCIAL' },
+    { graduacao: 'CAP PM', nome: 'RODRIGO', cargo: 'REL. INSTITUCIONAIS' },
+    { graduacao: 'SGT', nome: 'MENDES', cargo: 'PROJETO MÉRITO' },
+    { graduacao: 'SGT BM', nome: 'LEO FRANCISCO', cargo: 'ASSESS. PARLAMENTAR' },
+    { graduacao: 'ST', nome: 'THIAGO HENRIQUE', cargo: 'REP. CONGRESSO' },
+    { graduacao: 'MAJ PM', nome: 'CARLOS', cargo: 'ARTIC. POLÍTICA' },
+    { graduacao: 'MAJ PM', nome: 'LÁSARO', cargo: 'REGIONAL SUDESTE' },
+    { graduacao: 'ST', nome: 'JUNIOR CESAR', cargo: 'REGIONAL LESTE' },
+    { graduacao: 'ST', nome: 'ELIO DURÃO', cargo: 'REGIÃO NORTE' },
+    { graduacao: 'TEN PM', nome: 'MARCELO', cargo: 'REGIONAL ANÁPOLIS' },
+    { graduacao: 'TEN PM', nome: 'MOURA', cargo: 'REGIÃO NORDESTE' },
+  ]
+
+  // Componente Foto Hexagonal Flat-Top
+  const FotoHexagonal = ({ nome, size = 100 }) => {
+    const height = size * 0.866
+    const id = nome.replace(/\s/g, '-').replace(/[^a-zA-Z0-9-]/g, '')
+    
+    return (
+      <div 
+        className="relative flex-shrink-0"
+        style={{ width: size, height: height }}
+      >
+        <svg 
+          viewBox="0 0 100 86.6" 
+          className="w-full h-full"
+          style={{ filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.5))' }}
+        >
+          <defs>
+            <clipPath id={`hexClip-${id}`}>
+              <polygon points="25,0 75,0 100,43.3 75,86.6 25,86.6 0,43.3" />
+            </clipPath>
+            <linearGradient id={`gold-${id}`} x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#ffdf00" />
+              <stop offset="50%" stopColor="#fff140" />
+              <stop offset="100%" stopColor="#e6c700" />
+            </linearGradient>
+          </defs>
+          {/* Borda dourada */}
+          <polygon 
+            points="25,0 75,0 100,43.3 75,86.6 25,86.6 0,43.3" 
+            fill={`url(#gold-${id})`}
+          />
+          {/* Área interna */}
+          <polygon 
+            points="28,4 72,4 94,43.3 72,82.6 28,82.6 6,43.3" 
+            fill="#1E293B"
+          />
+          <image
+            href={`/diretoria/${nome.toLowerCase().replace(/ /g, '').replace('.', '')}.png`}
+            x="6"
+            y="4"
+            width="88"
+            height="78.6"
+            clipPath={`url(#hexClip-${id})`}
+            preserveAspectRatio="xMidYMid slice"
+          />
+        </svg>
+      </div>
+    )
+  }
+
+  // Componente Membro Esquerda (retângulo à esquerda, hexágono à direita)
+  const MembroEsquerdaHex = ({ membro }) => (
+    <div className="flex items-center gap-3 group">
+      {/* Retângulo glass */}
+      <div className="glass bg-white/5 border border-white/10 rounded-xl px-4 sm:px-5 py-3 sm:py-4 w-[140px] sm:w-[170px] md:w-[200px] group-hover:bg-white/10 transition-all duration-300">
+        <p className="text-white font-bold text-[10px] sm:text-xs md:text-sm leading-tight">
+          {membro.graduacao} {membro.nome}
+        </p>
+        <p className="text-gold-400 text-[8px] sm:text-[10px] md:text-xs uppercase font-medium">
+          {membro.cargo}
+        </p>
+      </div>
+      {/* Foto HEXAGONAL */}
+      <div className="flex-shrink-0 transform group-hover:scale-105 transition-transform duration-300">
+        <FotoHexagonal nome={membro.nome} size={95} />
+      </div>
+    </div>
+  )
+
+  // Componente Membro Direita (hexágono à esquerda, retângulo à direita)
+  const MembroDireitaHex = ({ membro }) => (
+    <div className="flex items-center gap-3 group">
+      {/* Foto HEXAGONAL */}
+      <div className="flex-shrink-0 transform group-hover:scale-105 transition-transform duration-300">
+        <FotoHexagonal nome={membro.nome} size={95} />
+      </div>
+      {/* Retângulo glass */}
+      <div className="glass bg-white/5 border border-white/10 rounded-xl px-4 sm:px-5 py-3 sm:py-4 w-[140px] sm:w-[170px] md:w-[200px] group-hover:bg-white/10 transition-all duration-300">
+        <p className="text-white font-bold text-[10px] sm:text-xs md:text-sm leading-tight">
+          {membro.graduacao} {membro.nome}
+        </p>
+        <p className="text-gold-400 text-[8px] sm:text-[10px] md:text-xs uppercase font-medium">
+          {membro.cargo}
+        </p>
+      </div>
+    </div>
+  )
+
+  // Componente Membro Centro (hexágono em cima, retângulo embaixo)
+  const MembroCentroHex = ({ membro }) => (
+    <div className="flex flex-col items-center gap-2 group">
+      {/* Foto HEXAGONAL */}
+      <div className="transform group-hover:scale-105 transition-transform duration-300">
+        <FotoHexagonal nome={membro.nome} size={95} />
+      </div>
+      {/* Retângulo glass embaixo */}
+      <div className="glass bg-white/5 border border-white/10 rounded-xl px-4 sm:px-5 py-2 sm:py-3 text-center w-[150px] sm:w-[170px] group-hover:bg-white/10 transition-all duration-300">
+        <p className="text-white font-bold text-[10px] sm:text-xs md:text-sm leading-tight">
+          {membro.graduacao} {membro.nome}
+        </p>
+        <p className="text-gold-400 text-[8px] sm:text-[10px] md:text-xs uppercase font-medium">
+          {membro.cargo}
+        </p>
+      </div>
+    </div>
+  )
+
+  // Componente Diretor REDONDO
+  const DiretorRedondo = ({ diretor }) => (
+    <div className="flex flex-col items-center w-full group">
+      <div className="relative w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 mb-2 sm:mb-3 transform group-hover:scale-105 transition-transform duration-300">
+        <div className="absolute inset-0 bg-gradient-to-br from-gold-400 via-gold-500 to-gold-600 rounded-full p-[3px] shadow-lg shadow-gold-500/20">
+          <div className="w-full h-full rounded-full overflow-hidden bg-military-700">
+            <img 
+              src={`/diretoria/${diretor.nome.toLowerCase().replace(/ /g, '').replace('.', '')}.png`}
+              alt={diretor.nome}
+              className="w-full h-full object-cover"
+              onError={(e) => {
+                e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(diretor.nome)}&background=1E293B&color=fff&size=150`
+              }}
+            />
+          </div>
+        </div>
+      </div>
+      <p className="text-white font-bold text-[9px] sm:text-[11px] md:text-xs text-center leading-tight">
+        {diretor.graduacao} {diretor.nome}
+      </p>
+      <p className="text-gold-400/80 text-[7px] sm:text-[9px] md:text-[10px] uppercase text-center leading-tight font-medium">
+        {diretor.cargo}
+      </p>
+    </div>
+  )
 
   return (
-    <div className="min-h-screen bg-[#050A18]">
+    <div className="min-h-screen bg-military-900">
       
-      {/* Hero Section com Carrossel de Fundo */}
-      <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden pt-24 md:pt-28">
-        {/* Background Carrossel */}
-        <div className="absolute inset-0">
-          {backgroundImages.map((img, index) => (
-            <div
-              key={index}
-              className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-                index === currentSlide ? 'opacity-100' : 'opacity-0'
-              }`}
-            >
-              <img 
-                src={img}
-                alt={`Diretoria ASSEGO ${index + 1}`}
-                className="w-full h-full object-cover"
-                onError={(e) => {
-                  e.target.src = 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=1920'
-                }}
-              />
-            </div>
-          ))}
-          {/* Overlay gradiente */}
-          <div className="absolute inset-0 bg-gradient-to-b from-[#050A18]/80 via-[#050A18]/70 to-[#050A18]"></div>
-        </div>
-
-        {/* Conteúdo */}
-        <div className="relative z-10 text-center px-6">
-          {/* Logos */}
-          <div className="flex items-center justify-center gap-6 mb-8">
-            <img 
-              src="/logo.png" 
-              alt="ASSEGO" 
-              className="w-20 h-20 md:w-28 md:h-28 object-contain drop-shadow-2xl"
-            />
-            <div className="w-px h-16 md:h-20 bg-white/20"></div>
-            <img 
-              src="/logopre.png" 
-              alt="Presidente ASSEGO" 
-              className="w-16 h-20 md:w-24 md:h-28 object-contain drop-shadow-2xl"
-            />
-          </div>
-
-          <span className="inline-flex items-center gap-2 bg-gold-500/20 border border-gold-500/30 text-gold-400 px-4 py-2 rounded-full text-sm font-bold mb-6">
-            <Calendar size={18} />
-            GESTÃO 2022 - 2026
-          </span>
-          <h1 className="font-display font-black text-4xl md:text-6xl text-white mb-4">
-            Nossa <span className="text-gold-400">Diretoria</span>
-          </h1>
-          <p className="text-gray-300 text-lg max-w-2xl mx-auto">
-            Liderança comprometida com a classe militar e o crescimento sustentável da ASSEGO
-          </p>
-
-          {/* Indicadores do carrossel */}
-          <div className="flex justify-center gap-2 mt-8">
-            {backgroundImages.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentSlide(index)}
-                className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                  index === currentSlide 
-                    ? 'w-8 bg-gold-500' 
-                    : 'bg-white/30 hover:bg-white/50'
-                }`}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Presidente Section */}
-      <section className="py-20 bg-[#0a0f1c]">
-        <div className="container mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            
-            {/* Foto do Presidente */}
-            <div className="relative">
-              <div className="absolute -inset-4 bg-gradient-to-br from-gold-500/20 to-royal-600/20 rounded-3xl blur-2xl"></div>
-              <div className="relative">
-                <img 
-                  src="/fotos/presidente-sergio.jpg" 
-                  alt="Subtenente PM Sérgio - Presidente"
-                  className="w-full max-w-md mx-auto rounded-2xl shadow-2xl border-4 border-gold-500/20"
-                />
-                {/* Badge */}
-                <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 bg-gradient-to-r from-gold-500 to-gold-600 text-black px-6 py-3 rounded-full shadow-xl">
-                  <p className="font-bold text-sm">SUBTENENTE PM SÉRGIO</p>
-                  <p className="text-xs text-center opacity-80">Presidente</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Texto */}
-            <div>
-              <span className="text-gold-400 font-bold tracking-widest text-xs uppercase">Nosso Líder</span>
-              <h2 className="font-display font-bold text-3xl md:text-4xl text-white mt-2 mb-6">
-                Gestão 2022 a 2026
-              </h2>
-              
-              <div className="space-y-4 text-gray-300 leading-relaxed">
-                <p>
-                  Nosso Presidente, <strong className="text-white">Subtenente PM Sérgio</strong>, é quem lidera a atual gestão da Entidade que segue até 2026. Os valores promovidos pela nova direção são os mais inspiradores possíveis – <span className="text-gold-400">luta classista com responsabilidade, estratégia e comprometimento</span>.
-                </p>
-                <p>
-                  O Subtenente PM Sérgio, além de ser um militar exemplar, já possui um longo histórico dentro da família ASSEGO. Ele começou em 2014 como Gestor de Obras, ajudando a transformar nossa estrutura no que ela é hoje – completa, funcional e aconchegante.
-                </p>
-                <p>
-                  Mais tarde, em 2018, tornou-se <strong className="text-white">Diretor Jurídico</strong> e se destacou por reformular o departamento nas áreas física, estratégica e profissional.
-                </p>
-                <p>
-                  Hoje, como Presidente de uma das Entidades Representativas que mais cresce do Estado de Goiás, trabalha diuturnamente a fim de trazer cada vez mais melhorias para a categoria militar e estimular o crescimento sustentável da nossa Associação.
-                </p>
-              </div>
-
-              {/* Timeline */}
-              <div className="flex gap-6 mt-8">
-                <div className="text-center">
-                  <div className="w-12 h-12 bg-gold-500/20 rounded-full flex items-center justify-center text-gold-400 mb-2">
-                    <span className="font-bold">2014</span>
-                  </div>
-                  <p className="text-xs text-gray-400">Gestor de Obras</p>
-                </div>
-                <div className="text-center">
-                  <div className="w-12 h-12 bg-gold-500/20 rounded-full flex items-center justify-center text-gold-400 mb-2">
-                    <span className="font-bold">2018</span>
-                  </div>
-                  <p className="text-xs text-gray-400">Diretor Jurídico</p>
-                </div>
-                  <div className="text-center">
-                  <div className="w-12 h-12 bg-gold-500/20 rounded-full flex items-center justify-center text-gold-400 mb-2">
-                    <span className="font-bold">2022</span>
-                  </div>
-                  <p className="text-xs text-gray-400">Presidente</p>
-                </div>
-                <div className="text-center">
-                  <div className="w-12 h-12 bg-gold-500 rounded-full flex items-center justify-center text-black mb-2">
-                    <span className="font-bold">2026</span>
-                  </div>
-                  <p className="text-xs text-gray-400">Presidente</p>
-
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Citação do Presidente */}
-      <section className="py-16 bg-gradient-to-r from-royal-600 to-[#050A18] relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 left-0 w-96 h-96 bg-gold-500 rounded-full blur-[150px]"></div>
-        </div>
+      {/* Hero Header */}
+      <section className="relative pt-36 sm:pt-40 pb-12 sm:pb-16 px-4 overflow-hidden">
+        {/* Background gradient */}
+        <div className="absolute inset-0 bg-gradient-to-b from-royal-500/20 via-transparent to-transparent"></div>
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gold-500/10 rounded-full blur-3xl"></div>
         
-        <div className="container mx-auto px-6 relative z-10">
-          <div className="max-w-4xl mx-auto text-center">
-            <Quotes size={64} className="text-gold-500/30 mx-auto mb-6" />
-            <blockquote className="text-xl md:text-2xl text-white font-light italic leading-relaxed mb-8">
-              "Para mim é uma honra enorme estar à frente da ASSEGO, e reconheço também o nível de responsabilidade inerente ao cargo. Com a ajuda dos demais diretores, representantes e colaboradores, estamos juntos na luta pela classe militar em Goiás e para cuidar de todos os nossos queridos associados. <span className="text-gold-400 font-medium">Contem sempre comigo.</span>"
-            </blockquote>
-            <p className="text-gold-400 font-bold">— Presidente Sérgio</p>
-          </div>
+        <div className="relative text-center max-w-4xl mx-auto">
+          <p className="text-gold-400 font-bold text-sm sm:text-base uppercase tracking-[0.3em] mb-3">
+            Gestão 2026 - 2029
+          </p>
+          <h1 className="font-display font-black text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white tracking-tight mb-4">
+            DIRETORIA <span className="text-gradient-gold">ASSEGO</span>
+          </h1>
+          <p className="text-gray-400 text-base sm:text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
+            A força da nossa gestão está na união, no comprometimento 
+            e na dedicação de cada diretor.
+          </p>
         </div>
       </section>
 
-      {/* Palavra do Presidente */}
-      <section className="py-20 bg-[#050A18]">
-        <div className="container mx-auto px-6">
-          <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-12">
-              <span className="text-gold-400 font-bold tracking-widest text-xs uppercase">Mensagem</span>
-              <h2 className="font-display font-bold text-3xl md:text-4xl text-white mt-2">
-                Palavra do Presidente
-              </h2>
+      {/* Conselho Administrativo 2026 + Presidente */}
+      <section className="py-8 sm:py-12 px-4 sm:px-6">
+        <div className="max-w-7xl mx-auto">
+          
+          {/* Título Conselho Administrativo */}
+          <div className="mb-10 sm:mb-14">
+            <div className="inline-flex items-center gap-3">
+              <div className="w-1 h-12 sm:h-16 bg-gradient-to-b from-gold-400 to-gold-600 rounded-full"></div>
+              <div>
+                <p className="text-gold-400 font-bold text-xs sm:text-sm uppercase tracking-wider">Conselho</p>
+                <h2 className="font-display font-black text-2xl sm:text-3xl md:text-4xl text-white">
+                  ADMINISTRATIVO <span className="text-gold-400">2025</span>
+                </h2>
+              </div>
+            </div>
+          </div>
+
+          {/* Grid Principal com Presidente ao Centro */}
+          <div className="flex flex-col xl:flex-row items-center justify-center gap-8 sm:gap-10 xl:gap-16">
+            
+            {/* Coluna Esquerda */}
+            <div className="flex flex-col gap-5 sm:gap-6">
+              {conselhoAdminEsquerda.map((membro, index) => (
+                <MembroEsquerdaHex key={index} membro={membro} />
+              ))}
             </div>
 
-            <div className="bg-white/5 backdrop-blur border border-white/10 rounded-3xl p-8 md:p-12 space-y-6 text-gray-300 leading-relaxed">
-              <p>
-                O divisor de águas da Assego aconteceu há cerca de 8 anos e meio. Embora houvesse uma estrutura com potencial, faltava investimento correto, ampliação e modernização na infraestrutura da entidade. <strong className="text-white">A transformação organizacional modificou a forma como se enxerga a associação atualmente</strong>, destacando-se como entidade militar que mais cresce no país.
-              </p>
-              <p>
-                Após a quitação de uma dívida milionária que a Assego possuía, a aplicação monetária se direcionou para a evolução estrutural da instituição. Com isso, o número de associados aumentou expressivamente e alcançou o nível classista que antes era sonho.
-              </p>
-              <p>
-                Entretanto, essa mudança da água para o vinho só foi possível graças ao <span className="text-gold-400">empenho de cada um dos fundadores, presidentes, diretoria e associados</span> que acreditaram na entidade.
-              </p>
-              <p>
-                Neste ano de 2024 a instituição fez <strong className="text-white">68 anos de atuação e transformação</strong>. Temos listadas grandes vitórias tanto na representação classista, quanto na ampliação e modernização de nossa estrutura física.
-              </p>
-
-              {/* Conquistas */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 py-6">
-                {conquistas.map((item, index) => (
-                  <div key={index} className="text-center p-4 bg-white/5 rounded-xl">
-                    <item.icon size={32} className="text-gold-400 mx-auto mb-2" />
-                    <p className="text-white font-bold text-sm">{item.titulo}</p>
-                    <p className="text-gray-400 text-xs">{item.desc}</p>
-                  </div>
-                ))}
+            {/* Presidente no Centro */}
+            <div className="flex flex-col items-center order-first xl:order-none mb-8 xl:mb-0">
+              
+              {/* Logo do Presidente */}
+              <div className="mb-6 text-center">
+                <img 
+                  src="/diretoria/logo-presidente.png"
+                  alt="Logo Presidente Sérgio"
+                  className="h-16 sm:h-20 md:h-24 object-contain mx-auto"
+                  onError={(e) => {
+                    e.target.style.display = 'none'
+                  }}
+                />
               </div>
 
-              <p>
-                A Assego não para de crescer, pois estamos empenhados na luta constante pelos direitos dos nossos policiais e bombeiros militares. <strong className="text-white">A meta sempre será alcançar melhorias coletivas e valorizar o nosso maior patrimônio que é o associado Assego.</strong>
-              </p>
-              <p>
-                Embora haja muitas missões pela frente, acreditamos que com união e planejamento continuaremos evoluindo e transformando a entidade em um ambiente cada vez melhor.
-              </p>
+              {/* Foto do Presidente */}
+              <div className="relative">
+                {/* Glow effect */}
+                <div className="absolute inset-0 bg-gold-500/20 rounded-full blur-3xl scale-75"></div>
+                <img 
+                  src="/diretoria/presidente.png"
+                  alt="ST PM Sérgio - Presidente"
+                  className="relative h-64 sm:h-80 md:h-96 lg:h-[450px] object-contain drop-shadow-2xl"
+                  onError={(e) => {
+                    e.target.src = '/fotos/presidente-sergio.jpg'
+                  }}
+                />
+              </div>
+              
+              {/* Label do Presidente - Alinhado à direita */}
+              <div className="glass bg-white/5 border-2 border-gold-400 rounded-2xl px-8 sm:px-10 py-3 sm:py-4 text-center -mt-12 sm:-mt-14 md:-mt-16 ml-12 sm:ml-16 md:ml-20 relative z-10 shadow-xl shadow-gold-500/10">
+                <p className="text-white font-display font-bold text-lg sm:text-xl md:text-2xl whitespace-nowrap">
+                  ST PM SÉRGIO
+                </p>
+                <p className="text-gold-400 text-sm sm:text-base uppercase tracking-wider font-semibold">
+                  Presidente
+                </p>
+              </div>
+            </div>
+
+            {/* Coluna Direita */}
+            <div className="flex flex-col gap-5 sm:gap-6">
+              {conselhoAdminDireita.map((membro, index) => (
+                <MembroDireitaHex key={index} membro={membro} />
+              ))}
             </div>
           </div>
         </div>
       </section>
 
-      {/* Diretoria */}
-      <section className="py-20 bg-[#0a0f1c]" id="diretores">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-16">
-            <span className="text-gold-400 font-bold tracking-widest text-xs uppercase">Nossa Equipe</span>
-            <h2 className="font-display font-bold text-3xl md:text-4xl text-white mt-2 mb-4">
-              Diretores
+      {/* Conselho Deliberativo Fiscal 2026 */}
+      <section className="py-8 sm:py-12 px-4 sm:px-6">
+        <div className="max-w-7xl mx-auto">
+          
+          {/* Título Conselho Fiscal */}
+          <div className="mb-10 sm:mb-14">
+            <div className="inline-flex items-center gap-3">
+              <div className="w-1 h-16 sm:h-20 bg-gradient-to-b from-gold-400 to-gold-600 rounded-full"></div>
+              <div>
+                <p className="text-gold-400 font-bold text-xs sm:text-sm uppercase tracking-wider">Conselho</p>
+                <p className="font-display font-black text-xl sm:text-2xl md:text-3xl text-white">DELIBERATIVO</p>
+                <h2 className="font-display font-black text-2xl sm:text-3xl md:text-4xl text-white">
+                  FISCAL <span className="text-gold-400">2026</span>
+                </h2>
+              </div>
+            </div>
+          </div>
+
+          {/* Titulares - 5 por linha */}
+          <div className="mb-8">
+            <p className="text-white/60 text-sm uppercase tracking-wider mb-6 text-center">Titulares</p>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6 justify-items-center">
+              {conselhoFiscalTitulares.map((membro, index) => (
+                <MembroCentroHex key={index} membro={membro} />
+              ))}
+            </div>
+          </div>
+
+          {/* Suplentes - 5 por linha */}
+          <div>
+            <p className="text-white/60 text-sm uppercase tracking-wider mb-6 text-center">Suplentes</p>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6 justify-items-center">
+              {conselhoFiscalSuplentes.map((membro, index) => (
+                <MembroCentroHex key={index} membro={membro} />
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Demais Diretores */}
+      <section className="py-12 sm:py-16 px-4 sm:px-6 bg-military-800/50">
+        <div className="max-w-6xl mx-auto">
+          
+          {/* Título */}
+          <div className="text-center mb-10 sm:mb-14">
+            <p className="text-gold-400 font-bold text-xs sm:text-sm uppercase tracking-wider mb-2">Equipe</p>
+            <h2 className="font-display font-black text-2xl sm:text-3xl md:text-4xl text-white">
+              DIRETORES
             </h2>
-            <p className="text-gray-400 max-w-2xl mx-auto">
-              Conheça os membros que trabalham diariamente para fazer da ASSEGO a melhor associação militar do país.
-            </p>
           </div>
-
-          {/* Grid de Todos os Diretores */}
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
-            {[...diretoriaPrincipal, ...demaisDiretores].map((diretor, index) => (
-              <div key={index} className="group text-center">
-                {/* Foto com borda circular */}
-                <div className="relative mx-auto w-32 h-32 md:w-40 md:h-40 mb-4">
-                  <div className="absolute inset-0 rounded-full border-4 border-cyan-400/50 group-hover:border-gold-500 transition-colors duration-300"></div>
-                  <div className="absolute inset-2 rounded-full overflow-hidden bg-gray-800">
-                    <img 
-                      src={diretor.foto}
-                      alt={diretor.nome}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                      onError={(e) => {
-                        e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(diretor.nome)}&background=1e3a5f&color=fff&size=200`
-                      }}
-                    />
-                  </div>
-                </div>
-                
-                {/* Info */}
-                <h3 className="text-white font-bold text-sm md:text-base">{diretor.nome}</h3>
-                <p className="text-gray-400 text-xs uppercase tracking-wider">{diretor.cargo}</p>
-              </div>
+          
+          {/* Grid 6x6 */}
+          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-5 sm:gap-6 md:gap-8">
+            {todosDiretores.map((diretor, index) => (
+              <DiretorRedondo key={index} diretor={diretor} />
             ))}
           </div>
         </div>
       </section>
 
       {/* CTA */}
-      <section className="py-16 bg-gradient-to-r from-gold-500 to-gold-600">
-        <div className="container mx-auto px-6 text-center">
-          <h2 className="font-display font-bold text-2xl md:text-3xl text-black mb-4">
+      <section className="py-16 sm:py-20 relative overflow-hidden">
+        {/* Background */}
+        <div className="absolute inset-0 bg-gradient-to-r from-gold-500 via-gold-400 to-gold-500"></div>
+        <div className="absolute inset-0 bg-[url('/pattern.png')] opacity-10"></div>
+        
+        <div className="relative container mx-auto px-6 text-center">
+          <h2 className="font-display font-black text-2xl sm:text-3xl md:text-4xl text-military-900 mb-4">
             Faça Parte da Nossa Família
           </h2>
-          <p className="text-black/70 mb-8 max-w-xl mx-auto">
-            Junte-se a milhares de policiais e bombeiros militares que confiam na ASSEGO para defender seus direitos.
+          <p className="text-military-900/70 mb-8 max-w-xl mx-auto text-sm sm:text-base">
+            Junte-se a milhares de policiais e bombeiros militares que confiam na ASSEGO.
           </p>
           <a 
-            href="#filiar"
-            className="inline-flex items-center gap-2 bg-black text-white px-8 py-4 rounded-full font-bold hover:bg-gray-900 transition-all hover:scale-105"
+            href="https://assego.net.br/associe/index.php"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-3 bg-military-900 text-white px-8 sm:px-10 py-4 sm:py-5 rounded-full font-bold text-base sm:text-lg hover:bg-military-800 transform hover:-translate-y-1 transition-all duration-300 shadow-xl"
           >
             QUERO ME ASSOCIAR
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
           </a>
         </div>
       </section>

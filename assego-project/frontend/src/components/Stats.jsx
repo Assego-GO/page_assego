@@ -32,10 +32,15 @@ function calcularAnosDeHistoria() {
   return anos
 }
 
+// Função para formatar número com ponto de milhar
+function formatarNumero(num) {
+  return num.toLocaleString('pt-BR')
+}
+
 // Dados das estatísticas
 const statsData = [
   { value: calcularAnosDeHistoria(), suffix: '', label: 'Anos de História' },
-  { value: 5000, suffix: '+', label: 'Famílias' },
+  { value: 10000, suffix: '+', label: 'Famílias' },
   { value: 24, suffix: 'h', label: 'Jurídico' },
   { value: 100, suffix: '%', label: 'Compromisso' },
 ]
@@ -86,7 +91,7 @@ function AnimatedCounter({ value, suffix }) {
 
   return (
     <div ref={ref} className="text-5xl md:text-6xl font-display font-bold text-white mb-2 flex justify-center items-baseline">
-      <span>{count}</span>
+      <span>{formatarNumero(count)}</span>
       {suffix && <span className="text-3xl text-gold-500">{suffix}</span>}
     </div>
   )

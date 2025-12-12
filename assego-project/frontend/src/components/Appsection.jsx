@@ -24,11 +24,9 @@ function AppSection() {
   // Funcionalidades do app
   const funcionalidades = [
     'Carteirinha Digital',
-    'Agendamento de Serviços',
     'Notícias e Comunicados',
-    'Acesso ao Jurídico',
     'Clube de Vantagens',
-    'Chat com Suporte',
+    'AC4 Calculadora',
   ]
 
   return (
